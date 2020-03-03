@@ -21,7 +21,6 @@ app.use(session({
 // Initialize the view
 app.use(express.static(__dirname + '/'));
 app.set('views', path.join(__dirname, 'views/'));
-
 app.engine('hbs', exphbs.create({
     extname: 'hbs',
     defaultLayout: 'main',
@@ -33,6 +32,7 @@ app.set('view engine', 'hbs');
 // MIDDLEWARES => functions that run before we execute the control functions
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+
 
 // ROUTERS
 const indexRouter = require('./router/indexRouter');

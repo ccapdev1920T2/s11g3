@@ -34,7 +34,6 @@ function findUser(email, pass) {
 
 const indexFunctions = {
 	getHome: function(req, res, next) {
-		console.log(req.session);
 		if (req.session.email) {
 			res.render('home', {
 				name: req.session.fName + " " + req.session.lName
@@ -50,9 +49,8 @@ const indexFunctions = {
 		res.send('Asdf Directory');
 	},
 	
-	// Add this
 	getLogin: function(req, res, next) {
-		res.render('login', { // just render login.hbs
+		res.render('login', { // just renders login.hbs
 			title: 'Login'
 		});
 	},
@@ -63,12 +61,13 @@ const indexFunctions = {
 	},
 	
 	postLogin: function(req, res, next) {
-		console.log(req.body); // data from the form is stored, gets element's names from passed form
+		console.log(req.body); // data from the form is stored
 		let { email, password } = req.body;
 		var matchUser = userList.filter(findUser(email, password));
 		
+		console.log("matchUser contents: ", matchUser);
+		
 		if (matchUser.length === 1) {
-			console.log('hello');
 			req.session.fName = matchUser[0].fName;
 			req.session.lName = matchUser[0].lName;
 			req.session.email = matchUser[0].email;
@@ -89,6 +88,7 @@ const indexFunctions = {
 		}
 	},
 	
+	// populates local storage with sample data
 	initLists: function(req, res, next) {
 		userList.push(mkUser("Matthew Neal",
 				"Lim",
@@ -156,7 +156,7 @@ const indexFunctions = {
 				5,
 				"L",
 				"Men's"));
-		next();
+		res.redirect("/");
 	}
 };
 

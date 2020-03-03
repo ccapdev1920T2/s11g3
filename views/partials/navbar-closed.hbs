@@ -1,19 +1,26 @@
 <nav class="navbar navbar-light navbar-expand-md navigation-clean-button">
 	<div class="container"><div><a href="#" class="btn" onclick="openNav()"><i class="icon ion-android-menu"></i></a></div>
+		<div id="mySideNav" class="sidenav">
+			<a href="#" class="closebtn" onclick="closeNav()"><i class="icon ion-android-close"></i></a>
+			<div>
+				<input type="text" placeholder="Search..."> 
+				<a href="#" class="searchbtn" onclick="search()"> <i class="fa fa-search"></i></a>
+			</div>
+			<a href="/">Home</a>
+			<a href="/account">My Account</a>
+			<a href="womens.html">Women</a>
+			<a href="mens.html">Men</a>
+			<a href="kids.html">Kids</a>
+		</div>
 
-	<div id="mySideNav" class="sidenav">
-	<a href="#" class="closebtn" onclick="closeNav()"><i class="icon ion-android-close"></i></a>
-	<div> <input type="text" placeholder="Search..."> 
-	<a href="#" class="searchbtn" onclick="search()"> <i class="fa fa-search"></i> </a></div>
-	<a href="index.html">Home</a>
-	<a href="account.html">My Account</a>
-	<a href="womens.html">Women</a>
-	<a href="mens.html">Men</a>
-	<a href="kids.html">Kids</a>
-	</div>
-
-	<ul class="nav navbar-nav mr-auto"></ul><button data-toggle="collapse" class="navbar-toggler" data-target="#navcol-1"><span class="sr-only">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
-	<div class="collapse navbar-collapse" id="navcol-1" style="height: 63px;"><a class="navbar-brand text-center mx-auto" href="index.html" style="height: 50px;font-size: 30px;font-family: Abel, sans-serif;width: 60px;">THE SHOP</a><div><a href="#" class="icons" onclick="openNav()"><i class="icon ion-android-search strong"></i></a></div>
-	<div><a href="index.html" class="icons"><i class="icon ion-android-home"></i></a></div></div>
+		<ul class="nav navbar-nav mr-auto"></ul>
+		<button data-toggle="collapse" class="navbar-toggler" data-target="#navcol-1">
+			<span class="sr-only">Toggle navigation</span><span class="navbar-toggler-icon"></span>
+		</button>
+		<div class="collapse navbar-collapse" id="navcol-1" style="height: 63px;">
+			<a class="navbar-brand text-center mx-auto" href="/" style="height: 50px;font-size: 30px;font-family: Abel, sans-serif;width: 60px;">THE SHOP</a>
+			<div><a href="#" class="icons" onclick="openNav()"><i class="icon ion-android-search strong"></i></a></div>
+			<div><a href="/" class="icons"><i class="icon ion-android-home"></i></a></div>
+		</div>
 	</div>
 </nav>
