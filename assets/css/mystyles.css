@@ -1,0 +1,351 @@
+.btn {
+  font-family: Abel, sans-serif;
+}
+
+#shopnowbtn {
+  font-family: Abel, sans-serif;
+  font-size: 60px;
+  color: black;
+  left: 490px;
+  position: relative;
+  top: 20px;
+}
+
+#categbtn-1 {
+  font-family: Abel, sans-serif;
+  font-size: 30px;
+  color: black;
+  position: relative;
+  left: 190px;
+}
+
+.sidenav {
+  height: 100%;
+  width: 0;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-color: #a3b76a;
+  overflow-x: hidden;
+  padding-top: 60px;
+  transition: 0s;
+  font-family: Abel, sans-serif;
+}
+
+h1 {
+  color: black;
+  font-family: Abel, sans-serif;
+  text-align: center;
+}
+
+.forindex {
+  position: relative;
+  top: 200px;
+}
+
+.sidenav a {
+  padding: 8px 8px 8px 32px;
+  text-decoration: none;
+  font-size: 20px;
+  color: white;
+  display: block;
+  transition: 0.3s;
+}
+
+.sidenav a:hover {
+  color: #edd3c0;
+}
+
+.sidenav .closebtn {
+  position: absolute;
+  top: 23px;
+  right: 15px;
+  font-size: 20px;
+  margin-left: 50px;
+}
+
+.sidenav .searchbtn {
+  position: absolute;
+  top: 90px;
+  right: 15px;
+  font-size: 15px;
+  margin-left: 50px;
+}
+
+.sidenav input[type=text] {
+  padding: 8px 8px 8px 32px;
+  border: none;
+  margin-top: 30px;
+  margin-left: 30px;
+  width: 220px;
+}
+
+.icons {
+  color: black;
+  cursor: pointer;
+}
+
+div .icons {
+  margin: 10px;
+}
+
+a:hover {
+  color: #f0f0f0;
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+  font-family: Abel, sans-serif;
+}
+
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+.dropdown-content a:hover {
+  background-color: #f1f1f1;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+.dropbtn {
+  color: black;
+  cursor: pointer;
+}
+
+#headersearch {
+  color: black;
+}
+
+.account-nav-ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  width: 300px;
+  background-color: transparent;
+  position: absolute;
+}
+
+li a.active {
+  background-color: #555;
+  color: white;
+  display: block;
+  padding: 8px 16px;
+  font-family: Abel, sans-serif;
+  font-size: 18px;
+}
+
+li a:hover:not(.active) {
+  background-color: #555;
+  color: white;
+}
+
+.account-nav-li {
+  display: block;
+  color: #000;
+  padding: 8px 16px;
+  font-family: Abel, sans-serif;
+  font-size: 20px;
+}
+
+.account-info {
+  font-family: Abel, sans-serif;
+  font-size: 25px;
+  padding: 8px 16px;
+  color: black;
+  font-weight: 400;
+  background-color: #f0f0f0;
+}
+
+.account-label {
+  font-family: Abel, sans-serif;
+  font-size: 15px;
+  color: black;
+  background-color: #a3b76a;
+}
+
+.order {
+  background-color: white;
+  height: 100%;
+  font-family: Abel, sans-serif;
+  font-size: 20px;
+  position: relative;
+  margin-bottom: 20px;
+  margin-left: 25%;
+}
+
+.order-header {
+  background-color: #a3b76a;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  height: 47px;
+  color: black;
+  box-shadow: 1px 1px 5px rgba(0,0,0,0.1);
+}
+
+.order-date {
+  margin: 10px;
+}
+
+.order-status {
+  margin: 10px;
+}
+
+.trx-container {
+  background-color: white;
+  display: flex;
+  flex-direction: row;
+}
+
+.trx-summary {
+  display: flex;
+  flex-direction: column;
+  padding-top: 10px;
+  width: 20%;
+}
+
+.order-content {
+  font-size: 15px;
+}
+
+.trx-items {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 1000px;
+  margin-left: 35px;
+}
+
+.trx-itemcard {
+  display: flex;
+  flex-direction: row;
+  margin-right: 10px;
+  width: 350px;
+  margin-top: 10px;
+}
+
+.trx-images {
+  width: 184px;
+  height: 228px;
+}
+
+.trx-itemdesc {
+  font-size: 15px;
+  margin-left: 10px;
+}
+
+#stats-nav {
+  background-color: #a3b76a;
+  margin-left: 25%;
+  height: 46px;
+  box-shadow: 1px 1px 5px rgba(0,0,0,0.1);
+  margin-right: 2%;
+  display: flex;
+  flex-direction: row;
+  font-family: Abel sans-serif;
+  font-size: 20px;
+}
+
+.stats-dropdown {
+  position: relative;
+  display: inline-block;
+  margin: 10px;
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
+.stats-dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+  font-family: Abel, sans-serif;
+  height: 200px;
+  overflow: auto;
+}
+
+.stats-dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+.stats-dropdown-content a:hover {
+  background-color: #f1f1f1;
+}
+
+.stats-dropdown:hover .stats-dropdown-content {
+  display: block;
+}
+
+.stats-dropbtn {
+  color: black;
+  cursor: pointer;
+  font-family: Abel, sans-serif;
+  font-size: 20px;
+  display: flex;
+  flex-direction: row;
+}
+
+.stats-container {
+  font-family: Abel, sans-serif;
+  font-size: 20px;
+  color: black;
+  margin-right: 2%;
+  padding-right: 20px;
+  display: flex;
+  flex-direction: row;
+  padding-left: 20px;
+  margin-top: 15px;
+}
+
+.stats-date {
+  display: flex;
+  flex-direction: row;
+  margin-top: 8px;
+  background-color: #f0f0f0;
+  font-size: 20px;
+  font-family: Abel, sans-serif;
+  justify-content: center;
+}
+
+.stats-column {
+  display: flex;
+  flex-direction: column;
+  width: 350px;
+  text-align: center;
+}
+
+#stats {
+  margin-left: 25%;
+  margin-right: 2%;
+}
+
+.stats-go-btn {
+  font-family: Abel;
+  font-size: 20px;
+  height: 46px;
+  background-color: transparent;
+  margin-left: 340px;
+}
+

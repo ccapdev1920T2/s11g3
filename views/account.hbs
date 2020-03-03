@@ -1,0 +1,41 @@
+{{> navbar}}
+<div>
+<ul class="account-nav-ul">
+	<li> <a class="active" href="account.html"> My Profile </a> </li>
+	<li> <a class="account-nav-li" href="orders.html"> My Orders </a> </li>
+	<li> <a class="account-nav-li" href="stats.html"> My Stats </a> </li>
+	<li> <a class="account-nav-li" href="changepass.html"> Change Password </a> </li>
+</ul>
+</div>
+
+<div class="login-clean" style="background-color: #f0f0f0;margin-left: 300px;padding: 0;height: 600px;">
+	<h2 class="sr-only">Login Form</h2>
+	<div class="illustration" style="height: 150px;padding-left: 4px;"><i class="icon ion-ios-person" style="color: #a3b76a;"></i></div>
+	<form method="post" style="background-image: none;background-color: white;box-shadow: none;max-width: 400px;padding: 0px;">
+		<div><div class="account-label">
+		USERNAME
+		</div><div class="account-info" id="acct-username">
+		No Username!
+		</div></div>
+		<div><div class="account-label">
+		NAME
+		</div><div class="account-info" id="acct-username">
+		{{fName}} {{lName}}
+		</div></div>
+		<div><div class="account-label">
+		EMAIL
+		</div><div class="account-info" id="acct-email">
+		{{email}}
+		</div></div>
+		<div><div class="account-label">
+		ADDRESS
+		</div><div class="account-info" id="acct-address">
+		{{addr}}
+		</div></div>
+		<div><div class="account-label">
+		CONTACT NUMBER
+		</div><div class="account-info" id="acct-email">
+		{{contact}}
+		</div></div>
+	</form>
+</div>
