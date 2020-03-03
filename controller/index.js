@@ -57,8 +57,12 @@ const indexFunctions = {
 		});
 	},
 	
-	postLogin: function(req, res, next) {
+	postLogout: function(req, res, next) {
 		req.session.destroy();
+		res.redirect("/login");
+	},
+	
+	postLogin: function(req, res, next) {
 		console.log(req.body); // data from the form is stored, gets element's names from passed form
 		let { email, password } = req.body;
 		var matchUser = userList.filter(findUser(email, password));
@@ -72,6 +76,7 @@ const indexFunctions = {
 			req.session.contact = matchUser[0].contact;
 			
 			// something's supposed to happen here
+			
 			return res.status(200).render('account', {
 				fName: matchUser[0].fName,
 				lName: matchUser[0].lName,
