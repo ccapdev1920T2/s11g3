@@ -45,10 +45,6 @@ const indexFunctions = {
 		}
 	},
 	
-	getAsdf: function(req, res, next) {
-		res.send('Asdf Directory');
-	},
-	
 	getLogin: function(req, res, next) {
 		res.render('login', { // just renders login.hbs
 			title: 'Login'

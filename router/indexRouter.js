@@ -5,7 +5,6 @@ const middleware = require('../middlewares/indexMiddleware');
 
 router.get('/init', controller.initLists);
 router.get('/', controller.getHome);
-router.get('/asdf', controller.getAsdf);
 router.get('/login', controller.getLogin);
 
 router.post('/login', middleware.validateLogin, controller.postLogin);
