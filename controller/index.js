@@ -63,11 +63,12 @@ const indexFunctions = {
 	postLogin: function(req, res, next) {
 		console.log(req.body); // data from the form is stored
 		let { email, password } = req.body;
+		// temp array containing all matches from the "db" to the login input
 		var matchUser = userList.filter(findUser(email, password));
 		
 		console.log("matchUser contents: ", matchUser);
 		
-		if (matchUser.length === 1) {
+		if (matchUser.length === 1) { // must return only one matched user. otherwise, no match found
 			req.session.fName = matchUser[0].fName;
 			req.session.lName = matchUser[0].lName;
 			req.session.email = matchUser[0].email;
@@ -88,74 +89,78 @@ const indexFunctions = {
 		}
 	},
 	
-	// populates local storage with sample data
+	// populates local storage with sample data, will occur only once so as not to have any duplicate records
 	initLists: function(req, res, next) {
-		userList.push(mkUser("Matthew Neal",
-				"Lim",
-				"matthew_neal@gmail.com",
-				"myPass1",
-				"09171111111",
-				"123 Power Drive, Manila City"));
-		userList.push(mkUser("Shannon Gail",
-				"Ho",
-				"shaanon_ho@yahoo.com",
-				"myPass2",
-				"09172222222",
-				"123 Power Drive, Manila City"));
-		userList.push(mkUser("Julia Patricia",
-				"Estella",
-				"julia_patr@gmail.com",
-				"myPass3",
-				"09173333333",
-				"123 Power Drive, Manila City"));
-		userList.push(mkUser("Arren Cappuccino",
-				"Antioquia",
-				"arren_cappu@yahoo.com",
-				"myPass4",
-				"09174444444",
-				"123 Power Drive, Manila City"));
-		userList.push(mkUser("John",
-				"Doe",
-				"hello@testing.com",
-				"myPass5",
-				"09175555555",
-				"123 Power Drive, Manila City"));
+		if (userList.length === 0) {
+			userList.push(mkUser("Matthew Neal",
+					"Lim",
+					"matthew_neal@gmail.com",
+					"myPass1",
+					"09171111111",
+					"123 Power Drive, Manila City"));
+			userList.push(mkUser("Shannon Gail",
+					"Ho",
+					"shaanon_ho@yahoo.com",
+					"myPass2",
+					"09172222222",
+					"123 Power Drive, Manila City"));
+			userList.push(mkUser("Julia Patricia",
+					"Estella",
+					"julia_patr@gmail.com",
+					"myPass3",
+					"09173333333",
+					"123 Power Drive, Manila City"));
+			userList.push(mkUser("Arren Cappuccino",
+					"Antioquia",
+					"arren_cappu@yahoo.com",
+					"myPass4",
+					"09174444444",
+					"123 Power Drive, Manila City"));
+			userList.push(mkUser("John",
+					"Doe",
+					"hello@testing.com",
+					"myPass5",
+					"09175555555",
+					"123 Power Drive, Manila City"));
+		}
 
-		itemList.push(mkProduct("Pink Dress - S",
-				"WC0001",
-				"This is a pink dress",
-				1000.10,
-				10,
-				"S",
-				"Women's Clothes"));
-		itemList.push(mkProduct("Toddler's Jumper - M",
-				"KI0001",
-				"This is a toddler's jumper",
-				400.55,
-				2,
-				"M",
-				"Kids"));
-		itemList.push(mkProduct("Gold Necklace",
-				"WA0001",
-				"This is a gold necklace",
-				20.00,
-				254,
-				"S",
-				"Women's Accessories"));
-		itemList.push(mkProduct("Red Stilettos",
-				"WS0001",
-				"These are red stilettos",
-				500.99,
-				30,
-				"S",
-				"Women's Shoes"));
-		itemList.push(mkProduct("Gray Tuxedo - L",
-				"ME0001",
-				"This is a gray tuxedo",
-				1566.00,
-				5,
-				"L",
-				"Men's"));
+		if (itemList.length === 0) {
+			itemList.push(mkProduct("Pink Dress - S",
+					"WC0001",
+					"This is a pink dress",
+					1000.10,
+					10,
+					"S",
+					"Women's Clothes"));
+			itemList.push(mkProduct("Toddler's Jumper - M",
+					"KI0001",
+					"This is a toddler's jumper",
+					400.55,
+					2,
+					"M",
+					"Kids"));
+			itemList.push(mkProduct("Gold Necklace",
+					"WA0001",
+					"This is a gold necklace",
+					20.00,
+					254,
+					"S",
+					"Women's Accessories"));
+			itemList.push(mkProduct("Red Stilettos",
+					"WS0001",
+					"These are red stilettos",
+					500.99,
+					30,
+					"S",
+					"Women's Shoes"));
+			itemList.push(mkProduct("Gray Tuxedo - L",
+					"ME0001",
+					"This is a gray tuxedo",
+					1566.00,
+					5,
+					"L",
+					"Men's"));
+		}
 		res.redirect("/");
 	}
 };
