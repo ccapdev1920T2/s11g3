@@ -8,7 +8,7 @@ const indexMiddleware = {
 		const { email, password } = req.body;
 		
 		if (!email) { // check if empty
-			return res.status(401).end('401 Unauthorized error, no email'); // 401 Unauthorized error, wrong credential
+			return res.status(401).end('401 Unauthorized error, no email');
 		} else if (!isEmail(email)) { // check if it is a valid email
 			return res.status(401).end('401 Unauthorized error, not an email');
 		}

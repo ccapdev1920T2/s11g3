@@ -51,6 +51,20 @@ const indexFunctions = {
 		});
 	},
 	
+	getStats: function(req, res, next) {
+		res.render('stats', {
+			// idk yet huehue
+		});
+	},
+	
+	postStats: function(req, res, next) {
+		let { month, year } = req.body;
+		res.render('stats', {
+			month: month,
+			year: year
+		});
+	},
+	
 	postLogout: function(req, res, next) {
 		req.session.destroy();
 		res.redirect("/login");

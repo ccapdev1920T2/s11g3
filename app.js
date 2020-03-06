@@ -22,10 +22,10 @@ app.use(session({
 app.use(express.static(__dirname + '/'));
 app.set('views', path.join(__dirname, 'views/'));
 app.engine('hbs', exphbs.create({
-    extname: 'hbs',
-    defaultLayout: 'main',
-    partialsDir: 'views/partials',
-    layoutsDir: 'views/layouts'
+	extname: 'hbs',
+	defaultLayout: 'main',
+	partialsDir: 'views/partials',
+	layoutsDir: 'views/layouts'
 }).engine);
 app.set('view engine', 'hbs');
 
@@ -41,9 +41,10 @@ app.use('/', indexRouter);
 
 // handling 404 errors
 app.get('*', function(req, res, next) {
-    res.status(404).end('404 Not Found');
+	res.status(404).end('404 Not Found');
 });
 
+// log this in console when ran
 app.listen(8000, () => {
-    console.log(`Listening to localhost on port ${PORT}`); // once the app is running, this will be logged
+	console.log(`Listening to localhost on port ${PORT}`);
 });
