@@ -32,6 +32,12 @@ function findUser(email, pass) {
 	};
 }
 
+function findEmail(email) {
+	return function(elem) {
+		return elem.email === email;
+	};
+}
+
 const indexFunctions = {
 	getHome: function(req, res, next) {
 		if (req.session.email) {
@@ -46,9 +52,13 @@ const indexFunctions = {
 	},
 	
 	getLogin: function(req, res, next) {
-		res.render('login', { // just renders login.hbs
-			title: 'Login'
-		});
+		if (req.session) { // check if there's a user logged in
+			res.redirect('/'); // go back to home
+		} else {
+			res.render('login', { // just renders login.hbs
+				title: 'Login'
+			});
+		}
 	},
 	
 	getStats: function(req, res, next) {
@@ -86,6 +96,8 @@ const indexFunctions = {
 		res.redirect("/login");
 	},
 	
+	/** to refactor: move the callback into filter as anonymous function
+	 */
 	postLogin: function(req, res, next) {
 		console.log(req.body); // data from the form is stored
 		let { email, password } = req.body;
@@ -112,6 +124,15 @@ const indexFunctions = {
 			});
 		} else {
 			return res.status(401).end('401 Unauthorized error, no user found!');
+		}
+	},
+	
+	postRegistration: function(req, res, next) {
+		let { email } = req.body;
+		if (userList.filter(function(elem) {
+			return elem.email === email;
+		})) {
+			console.log("reg success");
 		}
 	},
 	

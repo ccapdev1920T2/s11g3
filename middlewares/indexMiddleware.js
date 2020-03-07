@@ -17,6 +17,17 @@ const indexMiddleware = {
 			return res.status(401).end('401 Unauthorized error, no password');
 		
 		next(); // calls the next function
+	},
+	
+	validateReg: function(req, res, next) {
+		const { email, pass } = req.body;
+		if (!email)
+			return res.status(401).end('401, no email');
+		else if (!isEmail(email))
+			return res.status(401).end('401, bad email');
+		else if (!pass)
+			return res.status(401).end('401, bad pass');
+		else next();
 	}
 };
 
