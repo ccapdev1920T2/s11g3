@@ -67,6 +67,12 @@ const indexFunctions = {
 		});
 	},
 	
+	getRegister: function(req, res, next) {
+		res.render('registration', {
+			// idk
+		});
+	},
+	
 	postStats: function(req, res, next) {
 		let { month, year } = req.body;
 		res.render('stats', {

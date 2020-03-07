@@ -33,7 +33,6 @@ app.set('view engine', 'hbs');
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-
 // ROUTERS
 const indexRouter = require('./router/indexRouter');
 
