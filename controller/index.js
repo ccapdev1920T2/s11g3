@@ -57,6 +57,16 @@ const indexFunctions = {
 		});
 	},
 	
+	getAccount: function(req, res, next) {
+		res.render('account', {
+			fName: req.session.fName,
+			lName: req.session.lName,
+			email: req.session.email,
+			addr: req.session.addr,
+			contact: req.session.contact
+		});
+	},
+	
 	postStats: function(req, res, next) {
 		let { month, year } = req.body;
 		res.render('stats', {
