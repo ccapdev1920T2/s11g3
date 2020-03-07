@@ -2,11 +2,12 @@
 const userList = [];
 const itemList = [];
 
-function mkUser(fName, lName, email, pass, contact, addr) {
+function mkUser(fName, lName, email, user, pass, contact, addr) {
 	var tempUser = {
 		fName: fName,
 		lName: lName,
 		email: email,
+		user: user,
 		pass: pass,
 		contact: contact,
 		addr: addr
@@ -145,30 +146,35 @@ const indexFunctions = {
 			userList.push(mkUser("Matthew Neal",
 					"Lim",
 					"matthew_neal@gmail.com",
+					"neallithic",
 					"myPass1",
 					"09171111111",
 					"123 Power Drive, Manila City"));
 			userList.push(mkUser("Shannon Gail",
 					"Ho",
 					"shaanon_ho@yahoo.com",
+					"shannyHoHoHo",
 					"myPass2",
 					"09172222222",
 					"123 Power Drive, Manila City"));
 			userList.push(mkUser("Julia Patricia",
 					"Estella",
 					"julia_patr@gmail.com",
+					"hoolyuh",
 					"myPass3",
 					"09173333333",
 					"123 Power Drive, Manila City"));
 			userList.push(mkUser("Arren Cappuccino",
 					"Antioquia",
 					"arren_cappu@yahoo.com",
+					"arvention",
 					"myPass4",
 					"09174444444",
 					"123 Power Drive, Manila City"));
 			userList.push(mkUser("John",
 					"Doe",
 					"hello@testing.com",
+					"someUsername",
 					"myPass5",
 					"09175555555",
 					"123 Power Drive, Manila City"));

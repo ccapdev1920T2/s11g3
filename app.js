@@ -7,7 +7,7 @@ const cookieParser = require('cookie-parser');
 require('dotenv').config();
 
 const app = express();
-const PORT = process.env.PORT || 8000;
+const PORT = process.env.PORT || 3000;
 
 // Making a session with a given key
 app.use(cookieParser());
@@ -44,6 +44,6 @@ app.get('*', function(req, res, next) {
 });
 
 // log this in console when ran
-app.listen(8000, () => {
+app.listen(3000, () => {
 	console.log(`Listening to localhost on port ${PORT}`);
 });
