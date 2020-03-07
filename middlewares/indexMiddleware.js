@@ -20,13 +20,13 @@ const indexMiddleware = {
 	},
 	
 	validateReg: function(req, res, next) {
-		const { email, pass } = req.body;
-		if (!email)
-			return res.status(401).end('401, no email');
+		const { fname, lname, username, email, password, password_conf, address, phone, checkbox } = req.body;
+		if (!fname || !lname || !username || !email || !password || !password_conf || !address || !phone || !checkbox)
+			return res.status(401).end('401, missing credentials');
 		else if (!isEmail(email))
 			return res.status(401).end('401, bad email');
-		else if (!pass)
-			return res.status(401).end('401, bad pass');
+		else if (password !== password_conf)
+			return res.status(401).end('401, bad pass/conf');
 		else next();
 	}
 };

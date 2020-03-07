@@ -52,7 +52,8 @@ const indexFunctions = {
 	},
 	
 	getLogin: function(req, res, next) {
-		if (req.session) { // check if there's a user logged in
+		console.log(req.session.email);
+		if (req.session.email) { // check if there's a user logged in
 			res.redirect('/'); // go back to home
 		} else {
 			res.render('login', { // just renders login.hbs
@@ -127,12 +128,14 @@ const indexFunctions = {
 		}
 	},
 	
-	postRegistration: function(req, res, next) {
-		let { email } = req.body;
+	postRegister: function(req, res, next) {
+		const { fname, lname, username, email, password, password_conf, address, phone, checkbox } = req.body;
 		if (userList.filter(function(elem) {
 			return elem.email === email;
 		})) {
 			console.log("reg success");
+			userList.push(mkUser(fname, lname, email, password, phone, address));
+			res.redirect('/');
 		}
 	},
 	

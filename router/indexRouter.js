@@ -8,10 +8,10 @@ router.get('/', controller.getHome);
 router.get('/login', controller.getLogin);
 router.get('/stats', controller.getStats);
 router.get('/account', controller.getAccount);
-router.get('/register', controller.getRegister);
+router.get('/registration', controller.getRegister);
 
 router.post('/login', middleware.validateLogin, controller.postLogin);
 router.post('/logout', controller.postLogout);
-router.post('/registration', middleware.validateReg, controller.postRegistration);
+router.post('/registration', middleware.validateReg, controller.postRegister);
 
 module.exports = router;
