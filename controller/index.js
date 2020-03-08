@@ -2,29 +2,24 @@
 const userList = [];
 const itemList = [];
 
-function mkUser(fName, lName, email, user, pass, contact, addr) {
-	var tempUser = {
-		fName: fName,
-		lName: lName,
-		email: email,
-		user: user,
-		pass: pass,
-		contact: contact,
-		addr: addr
-	};
-	return tempUser;
+function User(fName, lName, email, user, pass, contact, addr) {
+	this.fName = fName;
+	this.lName = lName;
+	this.email = email;
+	this.user = user;
+	this.pass = pass;
+	this.contact = contact;
+	this.addr = addr;
 }
-function mkProduct(name, code, desc, price, qty, size, category) {
-	var tempProd = {
-		name: name,
-		code: code,
-		desc: desc,
-		price: price,
-		qty: qty,
-		size: size,
-		category: category
-	};
-	return tempProd;
+
+function Product(name, code, desc, price, qty, size, category) {
+	this.name = name;
+	this.code = code;
+	this.desc = desc;
+	this.price = price;
+	this.qty = qty;
+	this.size = size;
+	this.category = category;
 }
 
 function findUser(email, pass) {
@@ -128,7 +123,7 @@ const indexFunctions = {
 			return elem.email === email;
 		})) {
 			console.log("reg success");
-			userList.push(mkUser(fname, lname, email, username, password, phone, address));
+			userList.push(new User(fname, lname, email, username, password, phone, address));
 			res.redirect('/');
 		}
 	},
@@ -136,35 +131,35 @@ const indexFunctions = {
 	// populates local storage with sample data, will occur only once so as not to have any duplicate records
 	initLists: function(req, res, next) {
 		if (userList.length === 0) {
-			userList.push(mkUser("Matthew Neal",
+			userList.push(new User("Matthew Neal",
 					"Lim",
 					"matthew_neal@gmail.com",
 					"neallithic",
 					"myPass1",
 					"09171111111",
 					"123 Power Drive, Manila City"));
-			userList.push(mkUser("Shannon Gail",
+			userList.push(new User("Shannon Gail",
 					"Ho",
 					"shaanon_ho@yahoo.com",
 					"shannyHoHoHo",
 					"myPass2",
 					"09172222222",
 					"123 Power Drive, Manila City"));
-			userList.push(mkUser("Julia Patricia",
+			userList.push(new User("Julia Patricia",
 					"Estella",
 					"julia_patr@gmail.com",
 					"hoolyuh",
 					"myPass3",
 					"09173333333",
 					"123 Power Drive, Manila City"));
-			userList.push(mkUser("Arren Cappuccino",
+			userList.push(new User("Arren Cappuccino",
 					"Antioquia",
 					"arren_cappu@yahoo.com",
 					"arvention",
 					"myPass4",
 					"09174444444",
 					"123 Power Drive, Manila City"));
-			userList.push(mkUser("John",
+			userList.push(new User("John",
 					"Doe",
 					"hello@testing.com",
 					"someUsername",
@@ -174,35 +169,35 @@ const indexFunctions = {
 		}
 
 		if (itemList.length === 0) {
-			itemList.push(mkProduct("Pink Dress - S",
+			itemList.push(new Product("Pink Dress - S",
 					"WC0001",
 					"This is a pink dress",
 					1000.10,
 					10,
 					"S",
 					"Women's Clothes"));
-			itemList.push(mkProduct("Toddler's Jumper - M",
+			itemList.push(new Product("Toddler's Jumper - M",
 					"KI0001",
 					"This is a toddler's jumper",
 					400.55,
 					2,
 					"M",
 					"Kids"));
-			itemList.push(mkProduct("Gold Necklace",
+			itemList.push(new Product("Gold Necklace",
 					"WA0001",
 					"This is a gold necklace",
 					20.00,
 					254,
 					"S",
 					"Women's Accessories"));
-			itemList.push(mkProduct("Red Stilettos",
+			itemList.push(new Product("Red Stilettos",
 					"WS0001",
 					"These are red stilettos",
 					500.99,
 					30,
 					"S",
 					"Women's Shoes"));
-			itemList.push(mkProduct("Gray Tuxedo - L",
+			itemList.push(new Product("Gray Tuxedo - L",
 					"ME0001",
 					"This is a gray tuxedo",
 					1566.00,
