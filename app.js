@@ -4,6 +4,7 @@ const exphbs = require('express-handlebars');
 const bodyParser = require('body-parser');
 const session = require('express-session');
 const cookieParser = require('cookie-parser');
+const mongoose = require('mongooose');
 require('dotenv').config();
 
 const app = express();
