@@ -33,12 +33,6 @@ function findUser(email, pass) {
 	};
 }
 
-function findEmail(email) {
-	return function(elem) {
-		return elem.email === email;
-	};
-}
-
 const indexFunctions = {
 	getHome: function(req, res, next) {
 		if (req.session.email) {
@@ -71,6 +65,7 @@ const indexFunctions = {
 	
 	getAccount: function(req, res, next) {
 		res.render('account', {
+			user: req.session.user,
 			fName: req.session.fName,
 			lName: req.session.lName,
 			email: req.session.email,
@@ -80,9 +75,7 @@ const indexFunctions = {
 	},
 	
 	getRegister: function(req, res, next) {
-		res.render('registration', {
-			// idk
-		});
+		res.render('registration');
 	},
 	
 	postStats: function(req, res, next) {
@@ -98,7 +91,7 @@ const indexFunctions = {
 		res.redirect("/login");
 	},
 	
-	/** to refactor: move the callback into filter as anonymous function
+	/* to refactor: move the callback into filter as anonymous function
 	 */
 	postLogin: function(req, res, next) {
 		console.log(req.body); // data from the form is stored
@@ -109,15 +102,15 @@ const indexFunctions = {
 		console.log("matchUser contents: ", matchUser);
 		
 		if (matchUser.length === 1) { // must return only one matched user. otherwise, no match found
+			req.session.user = matchUser[0].user;
 			req.session.fName = matchUser[0].fName;
 			req.session.lName = matchUser[0].lName;
 			req.session.email = matchUser[0].email;
 			req.session.addr = matchUser[0].addr;
 			req.session.contact = matchUser[0].contact;
 			
-			// something's supposed to happen here
-			
 			return res.status(200).render('account', {
+				user: matchUser[0].user,
 				fName: matchUser[0].fName,
 				lName: matchUser[0].lName,
 				email: matchUser[0].email,
@@ -135,7 +128,7 @@ const indexFunctions = {
 			return elem.email === email;
 		})) {
 			console.log("reg success");
-			userList.push(mkUser(fname, lname, email, password, phone, address));
+			userList.push(mkUser(fname, lname, email, username, password, phone, address));
 			res.redirect('/');
 		}
 	},
