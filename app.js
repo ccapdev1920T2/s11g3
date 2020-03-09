@@ -4,11 +4,17 @@ const exphbs = require('express-handlebars');
 const bodyParser = require('body-parser');
 const session = require('express-session');
 const cookieParser = require('cookie-parser');
-const mongoose = require('mongooose');
-require('dotenv').config();
+const mongoose = require('mongoose');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
+
+// Starting db for... something
+mongoose.connect('mongodb://localhost/my_db', {useNewUrlParser: true, useUnifiedTopology: true})
+		.then(() => { console.log('cool'); },
+		err => { console.log('theres problems');
+});
+var db = mongoose.connection;
 
 // Making a session with a given key
 app.use(cookieParser());
@@ -36,7 +42,6 @@ app.use(bodyParser.json());
 
 // ROUTERS
 const indexRouter = require('./router/indexRouter');
-
 app.use('/', indexRouter);
 
 // handling 404 errors
