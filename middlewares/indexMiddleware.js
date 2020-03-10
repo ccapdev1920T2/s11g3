@@ -7,13 +7,13 @@ const indexMiddleware = {
 	validateLogin: function(req, res, next) {
 		const { email, password } = req.body;
 		
-		if (!email) { // check if empty
+		if (!email) { // check if field is empty
 			return res.status(401).end('401 Unauthorized error, no email');
 		} else if (!isEmail(email)) { // check if it is a valid email
 			return res.status(401).end('401 Unauthorized error, not an email');
 		}
 		
-		if (!password)
+		if (!password) // check if field is empty
 			return res.status(401).end('401 Unauthorized error, no password');
 		
 		next(); // calls the next function

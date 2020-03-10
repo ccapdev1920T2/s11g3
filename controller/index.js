@@ -1,3 +1,6 @@
+const userModel = require('../model/userdb');
+const prodModel = require('../model/productdb');
+
 // placeholder local storage (hacky db)
 const userList = [];
 const itemList = [];
@@ -206,6 +209,14 @@ const indexFunctions = {
 					"Men's"));
 		}
 		res.redirect("/");
+	},
+	
+	/* draft implementation of POST methods using mongoose. i realise that you probalby
+	 * have to make use of async and await here, but... sigh.
+	 */
+	postLoginDB: function(req, res, next) {
+		let { email, password } = req.body;
+		userModel.find({ email: email, password: password });
 	}
 };
 

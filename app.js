@@ -10,7 +10,7 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 // Starting db for... something
-mongoose.connect('mongodb://localhost/my_db', {useNewUrlParser: true, useUnifiedTopology: true})
+mongoose.connect('mongodb://localhost/TheShop', {useNewUrlParser: true, useUnifiedTopology: true})
 		.then(() => { console.log('cool'); },
 		err => { console.log('theres problems');
 });
