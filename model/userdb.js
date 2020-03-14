@@ -1,6 +1,12 @@
 const mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
+mongoose.connect('mongodb://localhost/TheShop', {useNewUrlParser: true, useUnifiedTopology: true})
+		.then(() => { console.log('cool'); },
+		err => { console.log('theres problems');
+});
+var db = mongoose.connection;
+
 function User(fName, lName, email, user, pass, contact, addr) {
 	this.fName = fName;
 	this.lName = lName;
@@ -22,6 +28,6 @@ var userSchema = new Schema({
 	contact: Number
 });
 
-var userModel = mongoose.model('Users', userSchema);
+const userModel = db.model('Users', userSchema);
 
 module.exports = userModel;

@@ -1,6 +1,12 @@
 const mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
+mongoose.connect('mongodb://localhost/TheShop', {useNewUrlParser: true, useUnifiedTopology: true})
+		.then(() => { console.log('cool'); },
+		err => { console.log('theres problems');
+});
+var db = mongoose.connection;
+
 function Product(name, code, desc, price, qty, size, category) {
 	this.name = name;
 	this.code = code;
@@ -22,6 +28,6 @@ var prodSchema = new Schema({
 	category: [String]
 });
 
-var prodModel = mongoose.model('Products', prodSchema);
+var prodModel = db.model('Products', prodSchema);
 
 module.exports = prodModel;
