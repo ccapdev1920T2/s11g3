@@ -4,7 +4,6 @@ const prodModel = require('../model/productdb');
 // placeholder local storage (hacky db)
 const userList = [];
 const itemList = [];
-const userMod = new userModel();
 
 function User(fName, lName, email, user, pass, contact, addr) {
 	this.fName = fName;
@@ -90,47 +89,16 @@ const indexFunctions = {
 		res.redirect("/login");
 	},
 	
-	/* to refactor: move the callback into filter as anonymous function
-	 */
-//	postLogin: function(req, res, next) {
-//		console.log(req.body); // data from the form is stored
-//		let { email, password } = req.body;
-//		// temp array containing all matches from the "db" to the login input
-//		var matchUser = userList.filter(findUser(email, password));
-//		
-//		console.log("matchUser contents: ", matchUser);
-//		
-//		if (matchUser.length === 1) { // must return only one matched user. otherwise, no match found
-//			req.session.user = matchUser[0].user;
-//			req.session.fName = matchUser[0].fName;
-//			req.session.lName = matchUser[0].lName;
-//			req.session.email = matchUser[0].email;
-//			req.session.addr = matchUser[0].addr;
-//			req.session.contact = matchUser[0].contact;
-//			
-//			return res.status(200).render('account', {
-//				user: matchUser[0].user,
-//				fName: matchUser[0].fName,
-//				lName: matchUser[0].lName,
-//				email: matchUser[0].email,
-//				addr: matchUser[0].addr,
-//				contact: matchUser[0].contact
-//			});
-//		} else {
-//			return res.status(401).end('401 Unauthorized error, no user found!');
+//	postRegister: function(req, res, next) {
+//		const { fname, lname, username, email, password, password_conf, address, phone, checkbox } = req.body;
+//		if (userList.filter(function(elem) {
+//			return elem.email === email;
+//		})) {
+//			console.log("reg success");
+//			userList.push(new User(fname, lname, email, username, password, phone, address));
+//			res.redirect('/');
 //		}
 //	},
-	
-	postRegister: function(req, res, next) {
-		const { fname, lname, username, email, password, password_conf, address, phone, checkbox } = req.body;
-		if (userList.filter(function(elem) {
-			return elem.email === email;
-		})) {
-			console.log("reg success");
-			userList.push(new User(fname, lname, email, username, password, phone, address));
-			res.redirect('/');
-		}
-	},
 	
 	// populates local storage with sample data, will occur only once so as not to have any duplicate records
 	initLists: function(req, res, next) {
@@ -217,31 +185,38 @@ const indexFunctions = {
 	 */
 	postLoginDB: function(req, res, next) {
 		let { email, password } = req.body;
-		var match = userMod.findOne({ email: email, pass: password }, function (err, match) {
+		userModel.findOne({ email: email, pass: password }, function (err, match) {
 			if (err) return res.status(500).end('500 Internal Server Error, something bad happened');
 			if (!match) return res.status(401).end('401 Unauthorized error, no user found!');
-			console.table(match);
-			return match;
+			
+			// must return only one matched user. otherwise, no match found
+			req.session.user = match[0].user;
+			req.session.fName = match[0].fName;
+			req.session.lName = match[0].lName;
+			req.session.email = match[0].email;
+			req.session.addr = match[0].addr;
+			req.session.contact = match[0].contact;
+			
+			return res.status(200).render('account', {
+				user: match[0].user,
+				fName: match[0].fName,
+				lName: match[0].lName,
+				email: match[0].email,
+				addr: match[0].addr,
+				contact: match[0].contact
+			});
 		});
-		
-//		var doc = cursor.next();
-//		console.table(doc);
-		// must return only one matched user. otherwise, no match found
-		req.session.user = match.user;
-		req.session.fName = match.fName;
-		req.session.lName = match.lName;
-		req.session.email = match.email;
-		req.session.addr = match.addr;
-		req.session.contact = match.contact;
-		
-		return res.status(200).render('account', {
-			user: match.user,
-			fName: match.fName,
-			lName: match.lName,
-			email: match.email,
-			addr: match.addr,
-			contact: match.contact
-		});
+	},
+	
+	postRegDB: function(req, res, next) {
+		const { fname, lname, username, email, password, password_conf, address, phone, checkbox } = req.body;
+		if (userList.filter(function(elem) {
+			return elem.email === email;
+		})) {
+			console.log("reg success");
+			userList.push(new User(fname, lname, email, username, password, phone, address));
+			res.redirect('/');
+		}
 	}
 };
 
