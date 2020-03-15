@@ -186,7 +186,8 @@ const indexFunctions = {
 	postLoginDB: function(req, res, next) {
 		let { email, password } = req.body;
 		userModel.findOne({ email: email, pass: password }, function (err, match) {
-			if (err) return res.status(500).end('500 Internal Server Error, something bad happened');
+			console.table(match);
+			if (err) return res.status(500).end('500 Internal Server error, something bad happened');
 			if (!match) return res.status(401).end('401 Unauthorized error, no user found!');
 			
 			// must return only one matched user. otherwise, no match found
@@ -210,13 +211,21 @@ const indexFunctions = {
 	
 	postRegDB: function(req, res, next) {
 		const { fname, lname, username, email, password, password_conf, address, phone, checkbox } = req.body;
-		if (userList.filter(function(elem) {
-			return elem.email === email;
-		})) {
-			console.log("reg success");
-			userList.push(new User(fname, lname, email, username, password, phone, address));
-			res.redirect('/');
-		}
+		
+		userModel.find({email: email}, function(err, match) {
+			if (err) return res.status(500).end('500 Internal Server error, this shouldnt happen');
+			if (match.length !== 0) {
+				console.log(match);
+				return res.status(401).end('401 Unauth error, user already exists');
+			}
+			
+			var insertUser = new User(fname, lname, email, username, password, phone, address);
+			userModel.create(insertUser, function(err) {
+				if (err) return res.status(500).end('500 Internal Server error, cant register');
+				console.log("reg success");
+				res.redirect('/');
+			});
+		});
 	}
 };
 

@@ -12,6 +12,6 @@ router.get('/registration', controller.getRegister);
 
 router.post('/login', middleware.validateLogin, controller.postLoginDB);
 router.post('/logout', controller.postLogout);
-router.post('/registration', middleware.validateReg, controller.postRegister);
+router.post('/registration', middleware.validateReg, controller.postRegDB);
 
 module.exports = router;
