@@ -186,25 +186,27 @@ const indexFunctions = {
 	postLoginDB: function(req, res, next) {
 		let { email, password } = req.body;
 		userModel.findOne({ email: email, pass: password }, function (err, match) {
-			console.table(match);
+			console.log(match);
 			if (err) return res.status(500).end('500 Internal Server error, something bad happened');
 			if (!match) return res.status(401).end('401 Unauthorized error, no user found!');
 			
+			
+			
 			// must return only one matched user. otherwise, no match found
-			req.session.user = match[0].user;
-			req.session.fName = match[0].fName;
-			req.session.lName = match[0].lName;
-			req.session.email = match[0].email;
-			req.session.addr = match[0].addr;
-			req.session.contact = match[0].contact;
+			req.session.user = match.user;
+			req.session.fName = match.fName;
+			req.session.lName = match.lName;
+			req.session.email = match.email;
+			req.session.addr = match.addr;
+			req.session.contact = match.contact;
 			
 			return res.status(200).render('account', {
-				user: match[0].user,
-				fName: match[0].fName,
-				lName: match[0].lName,
-				email: match[0].email,
-				addr: match[0].addr,
-				contact: match[0].contact
+				user: match.user,
+				fName: match.fName,
+				lName: match.lName,
+				email: match.email,
+				addr: match.addr,
+				contact: match.contact
 			});
 		});
 	},
