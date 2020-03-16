@@ -10,4 +10,4 @@ Current dependencies used are:
 - Body-Parser
 - Cookie-Parser
 - Dotenv
-- Mongoose (currently not being used, will be used in later commits)
+- Mongoose
