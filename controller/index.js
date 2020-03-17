@@ -77,48 +77,7 @@ const indexFunctions = {
 		});
 	},
 	
-	postLogout: function(req, res, next) {
-		req.session.destroy();
-		res.redirect("/login");
-	},
-	
-//	itemList.push(new Product("Pink Dress - S",
-//			"WC0001",
-//			"This is a pink dress",
-//			1000.10,
-//			10,
-//			"S",
-//			"Women's Clothes"));
-//	itemList.push(new Product("Toddler's Jumper - M",
-//			"KI0001",
-//			"This is a toddler's jumper",
-//			400.55,
-//			2,
-//			"M",
-//			"Kids"));
-//	itemList.push(new Product("Gold Necklace",
-//			"WA0001",
-//			"This is a gold necklace",
-//			20.00,
-//			254,
-//			"S",
-//			"Women's Accessories"));
-//	itemList.push(new Product("Red Stilettos",
-//			"WS0001",
-//			"These are red stilettos",
-//			500.99,
-//			30,
-//			"S",
-//			"Women's Shoes"));
-//	itemList.push(new Product("Gray Tuxedo - L",
-//			"ME0001",
-//			"This is a gray tuxedo",
-//			1566.00,
-//			5,
-//			"L",
-//			"Men's"));
-	
-	postLoginDB: function(req, res, next) {
+	postLogin: function(req, res, next) {
 		let { email, password } = req.body;
 		userModel.findOne({ email: email, pass: password }, function (err, match) {
 			console.log(match);
@@ -144,7 +103,12 @@ const indexFunctions = {
 		});
 	},
 	
-	postRegDB: function(req, res, next) {
+	postLogout: function(req, res, next) {
+		req.session.destroy();
+		res.redirect("/login");
+	},
+	
+	postReg: function(req, res, next) {
 		const { fname, lname, username, email, password, password_conf, address, phone, checkbox } = req.body;
 		
 		userModel.find({email: email}, function(err, match) {
