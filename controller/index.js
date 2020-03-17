@@ -1,9 +1,6 @@
 const userModel = require('../model/userdb');
 const prodModel = require('../model/productdb');
-
-// placeholder local storage (hacky db)
-const userList = [];
-const itemList = [];
+const ordModel = require('../model/orderdb');
 
 function User(fName, lName, email, user, pass, contact, addr) {
 	this.fName = fName;
@@ -14,7 +11,6 @@ function User(fName, lName, email, user, pass, contact, addr) {
 	this.contact = contact;
 	this.addr = addr;
 }
-
 function Product(name, code, desc, price, qty, size, category) {
 	this.name = name;
 	this.code = code;
@@ -24,11 +20,8 @@ function Product(name, code, desc, price, qty, size, category) {
 	this.size = size;
 	this.category = category;
 }
-
-function findUser(email, pass) {
-	return function(elem) {
-		return elem.email === email && elem.pass === pass;
-	};
+function Order(/* params */) {
+	/* add constructor details */
 }
 
 const indexFunctions = {
@@ -89,108 +82,48 @@ const indexFunctions = {
 		res.redirect("/login");
 	},
 	
-//	postRegister: function(req, res, next) {
-//		const { fname, lname, username, email, password, password_conf, address, phone, checkbox } = req.body;
-//		if (userList.filter(function(elem) {
-//			return elem.email === email;
-//		})) {
-//			console.log("reg success");
-//			userList.push(new User(fname, lname, email, username, password, phone, address));
-//			res.redirect('/');
-//		}
-//	},
+//	itemList.push(new Product("Pink Dress - S",
+//			"WC0001",
+//			"This is a pink dress",
+//			1000.10,
+//			10,
+//			"S",
+//			"Women's Clothes"));
+//	itemList.push(new Product("Toddler's Jumper - M",
+//			"KI0001",
+//			"This is a toddler's jumper",
+//			400.55,
+//			2,
+//			"M",
+//			"Kids"));
+//	itemList.push(new Product("Gold Necklace",
+//			"WA0001",
+//			"This is a gold necklace",
+//			20.00,
+//			254,
+//			"S",
+//			"Women's Accessories"));
+//	itemList.push(new Product("Red Stilettos",
+//			"WS0001",
+//			"These are red stilettos",
+//			500.99,
+//			30,
+//			"S",
+//			"Women's Shoes"));
+//	itemList.push(new Product("Gray Tuxedo - L",
+//			"ME0001",
+//			"This is a gray tuxedo",
+//			1566.00,
+//			5,
+//			"L",
+//			"Men's"));
 	
-	// populates local storage with sample data, will occur only once so as not to have any duplicate records
-	initLists: function(req, res, next) {
-		if (userList.length === 0) {
-			userList.push(new User("Matthew Neal",
-					"Lim",
-					"matthew_neal@gmail.com",
-					"neallithic",
-					"myPass1",
-					"09171111111",
-					"123 Power Drive, Manila City"));
-			userList.push(new User("Shannon Gail",
-					"Ho",
-					"shaanon_ho@yahoo.com",
-					"shannyHoHoHo",
-					"myPass2",
-					"09172222222",
-					"123 Power Drive, Manila City"));
-			userList.push(new User("Julia Patricia",
-					"Estella",
-					"julia_patr@gmail.com",
-					"hoolyuh",
-					"myPass3",
-					"09173333333",
-					"123 Power Drive, Manila City"));
-			userList.push(new User("Arren Cappuccino",
-					"Antioquia",
-					"arren_cappu@yahoo.com",
-					"arvention",
-					"myPass4",
-					"09174444444",
-					"123 Power Drive, Manila City"));
-			userList.push(new User("John",
-					"Doe",
-					"hello@testing.com",
-					"someUsername",
-					"myPass5",
-					"09175555555",
-					"123 Power Drive, Manila City"));
-		}
-
-		if (itemList.length === 0) {
-			itemList.push(new Product("Pink Dress - S",
-					"WC0001",
-					"This is a pink dress",
-					1000.10,
-					10,
-					"S",
-					"Women's Clothes"));
-			itemList.push(new Product("Toddler's Jumper - M",
-					"KI0001",
-					"This is a toddler's jumper",
-					400.55,
-					2,
-					"M",
-					"Kids"));
-			itemList.push(new Product("Gold Necklace",
-					"WA0001",
-					"This is a gold necklace",
-					20.00,
-					254,
-					"S",
-					"Women's Accessories"));
-			itemList.push(new Product("Red Stilettos",
-					"WS0001",
-					"These are red stilettos",
-					500.99,
-					30,
-					"S",
-					"Women's Shoes"));
-			itemList.push(new Product("Gray Tuxedo - L",
-					"ME0001",
-					"This is a gray tuxedo",
-					1566.00,
-					5,
-					"L",
-					"Men's"));
-		}
-		res.redirect("/");
-	},
-	
-	/* draft implementation of POST methods using mongoose. i realise that you probalby
-	 * have to make use of async and await here, but... sigh.
-	 */
 	postLoginDB: function(req, res, next) {
 		let { email, password } = req.body;
 		userModel.findOne({ email: email, pass: password }, function (err, match) {
 			console.log(match);
 			if (err) return res.status(500).end('500 Internal Server error, something bad happened');
 			if (!match) return res.status(401).end('401 Unauthorized error, no user found!');
-			
-			
 			
 			// must return only one matched user. otherwise, no match found
 			req.session.user = match.user;
