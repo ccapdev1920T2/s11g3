@@ -1,7 +1,7 @@
 # s11g3
 
 # TheShop
-This is a shopping application. At the moment, only buyer users will be made available here. Specifications of the application may be found [here](https://docs.google.com/document/d/1BNDqhEBwYx-oDIyUpYC_Kg9g4d_6IyVjuf0V9pTiOe4/edit?usp=sharing).
+This is a shopping application. At the moment, only buyer users will be made available here. Specifications of the application may be found [here](https://github.com/ccapdev1920T2/s11g3/blob/master/Group3%20S11%20MP%20Specifications.pdf).
 
 Current dependencies used are:
 - Express

@@ -3,7 +3,6 @@ const router = express();
 const controller = require('../controller/index');
 const middleware = require('../middlewares/indexMiddleware');
 
-router.get('/init', controller.initLists);
 router.get('/', controller.getHome);
 router.get('/login', controller.getLogin);
 router.get('/stats', controller.getStats);
