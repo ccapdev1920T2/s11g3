@@ -7,7 +7,10 @@ mongoose.connect('mongodb://localhost/TheShop', {useNewUrlParser: true, useUnifi
 var db = mongoose.connection;
 
 var ordSchema = new mongoose.Schema({
-	/* add fields here */
+	dateOrd: { type: Date, default: Date.now },
+	status: String,
+	buyer: User,
+	products: [Product]
 }, {collection: "Orders"});
 
 const ordModel = db.model('Products', ordSchema);

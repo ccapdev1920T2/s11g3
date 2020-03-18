@@ -11,17 +11,21 @@ function User(fName, lName, email, user, pass, contact, addr) {
 	this.contact = contact;
 	this.addr = addr;
 }
-function Product(name, code, desc, price, qty, size, category) {
+function Product(name, code, desc, price, qty, size, filename, category) {
 	this.name = name;
 	this.code = code;
 	this.desc = desc;
 	this.price = price;
 	this.qty = qty;
 	this.size = size;
-	this.category = category;
+	this.filename = filename;
+	this.category = [...category];
 }
-function Order(/* params */) {
-	/* add constructor details */
+function Order(dateOrd, status, buyer, products) {
+	this.dateOrd = dateOrd;
+	this.status = status;
+	this.buyer = buyer;
+	this.products = [...products];
 }
 
 const indexFunctions = {
@@ -109,7 +113,7 @@ const indexFunctions = {
 	},
 	
 	postReg: function(req, res, next) {
-		const { fname, lname, username, email, password, password_conf, address, phone, checkbox } = req.body;
+		let { fname, lname, username, email, password, address, phone, checkbox } = req.body;
 		
 		userModel.find({email: email}, function(err, match) {
 			if (err) return res.status(500).end('500 Internal Server error, this shouldnt happen');
@@ -125,6 +129,10 @@ const indexFunctions = {
 				res.redirect('/');
 			});
 		});
+	},
+	
+	postChangePW: function(req, res, next) {
+		
 	}
 };
 

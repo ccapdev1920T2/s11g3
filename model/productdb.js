@@ -13,6 +13,7 @@ var prodSchema = new mongoose.Schema({
 	price: Number,
 	qty: Number,
 	size: String,
+	filename: String,
 	category: [String]
 }, {collection: "Products"});
 
