@@ -8,10 +8,12 @@ router.get('/login', controller.getLogin);
 router.get('/stats', controller.getStats);
 router.get('/account', controller.getAccount);
 router.get('/registration', controller.getRegister);
+router.get('/changepass', controller.getChangePW);
 
 router.post('/stats', controller.postStats);
 router.post('/login', middleware.validateLogin, controller.postLogin);
 router.post('/logout', controller.postLogout);
 router.post('/registration', middleware.validateReg, controller.postReg);
+router.post('/changepass', middleware.validateChangePW, controller.postChangePW);
 
 module.exports = router;

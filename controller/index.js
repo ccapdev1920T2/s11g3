@@ -73,6 +73,10 @@ const indexFunctions = {
 		res.render('registration');
 	},
 	
+	getChangePW: function(req, res, next) {
+		res.render('changepass');
+	},
+	
 	postStats: function(req, res, next) {
 		let { month, year } = req.body;
 		res.render('stats', {
@@ -132,7 +136,15 @@ const indexFunctions = {
 	},
 	
 	postChangePW: function(req, res, next) {
+		let { oldpass, newpass } = req.body;
 		
+		userModel.findOne({pass: oldpass}, function(err, match) {
+			if (err) return res.status(500).end('500 internal error, this shouldnt happen wtf');
+			if (!match) return res.stats(401).end('401, password forbidden');
+		});
+		
+		// userModel.update IDK WEFHJDSAFHKJSA
+		// .updateOne()? ? ? still not sure
 	}
 };
 
