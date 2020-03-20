@@ -138,13 +138,14 @@ const indexFunctions = {
 	postChangePW: function(req, res, next) {
 		let { oldpass, newpass } = req.body;
 		
-		userModel.findOne({pass: oldpass}, function(err, match) {
+		userModel.findOneAndUpdate({pass: oldpass}, { $set:{pass: newpass} }, function(err, match) {
 			if (err) return res.status(500).end('500 internal error, this shouldnt happen wtf');
-			if (!match) return res.stats(401).end('401, password forbidden');
+			if (!match) return res.status(401).end('401, password forbidden');
+			
+			console.log(match);
 		});
 		
-		// userModel.update IDK WEFHJDSAFHKJSA
-		// .updateOne()? ? ? still not sure
+		res.redirect('/');
 	}
 };
 
