@@ -32,10 +32,12 @@ const indexFunctions = {
 	getHome: function(req, res, next) {
 		if (res.session.logUser) {
 			res.render('home', {
+				title: 'TheShop',
 				name: res.session.logUser.fName + " " + res.session.logUser.lName
 			});
 		} else {
 			res.render('home', {
+				title: 'TheShop',
 				name: "Unknown"
 			});
 		}
@@ -47,7 +49,7 @@ const indexFunctions = {
 			res.redirect('/'); // go back to home
 		} else {
 			res.render('login', { // just renders login.hbs
-				title: 'Login'
+				title: 'TheShop - Login'
 			});
 		}
 	},
@@ -55,11 +57,13 @@ const indexFunctions = {
 	getStats: function(req, res, next) {
 		res.render('stats', {
 			// idk yet huehue
+			title: 'TheShop - My Stats'
 		});
 	},
 	
 	getAccount: function(req, res, next) {
 		res.render('account', {
+			title: 'TheShop - My Acount',
 			user: res.session.logUser.user,
 			fName: res.session.logUser.fName,
 			lName: res.session.logUser.lName,
@@ -70,16 +74,28 @@ const indexFunctions = {
 	},
 	
 	getRegister: function(req, res, next) {
-		res.render('registration');
+		res.render('registration', {
+			title: 'TheShop - Registration'
+		});
 	},
 	
 	getChangePW: function(req, res, next) {
-		res.render('changepass');
+		res.render('changepass', {
+			title: 'TheShop - Change Password'
+		});
+	},
+	
+	getProducts: function(req, res, next) {
+		
+		res.render('products', {
+			title: 'TheShop - All Products'
+		});
 	},
 	
 	postStats: function(req, res, next) {
 		let { month, year } = req.body;
 		res.render('stats', {
+			title: 'TheShop - My Stats',
 			month: month,
 			year: year
 		});
@@ -96,6 +112,7 @@ const indexFunctions = {
 			res.session.logUser = match;
 			
 			return res.status(200).render('account', {
+				title: 'TheShop - My Acount',
 				user: match.user,
 				fName: match.fName,
 				lName: match.lName,

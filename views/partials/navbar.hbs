@@ -17,7 +17,7 @@
 			<div class="dropdown-content">
 				<a href="/account"> My Account </a>
 				<form action="/logout" method="post">
-					<button type="submit"> Log Out </button>
+					<a onclick="this.parentNode.submit();">Log Out</a>
 				</form>
 			</div>
 		</div>
@@ -38,8 +38,8 @@
 <div>
 	<ul class="account-nav-ul">
 		<li> <a class="active" href="/account"> My Profile </a> </li>
-		<li> <a class="account-nav-li" href="orders.html"> My Orders </a> </li>
-		<li> <a class="account-nav-li" href="stats.html"> My Stats </a> </li>
-		<li> <a class="account-nav-li" href="changepass.html"> Change Password </a> </li>
+		<li> <a class="account-nav-li" href="/orders"> My Orders </a> </li>
+		<li> <a class="account-nav-li" href="/stats"> My Stats </a> </li>
+		<li> <a class="account-nav-li" href="/changepass"> Change Password </a> </li>
 	</ul>
 </div>

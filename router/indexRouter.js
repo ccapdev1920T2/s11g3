@@ -9,6 +9,7 @@ router.get('/stats', controller.getStats);
 router.get('/account', controller.getAccount);
 router.get('/registration', controller.getRegister);
 router.get('/changepass', controller.getChangePW);
+router.get('/products', controller.getProducts);
 
 router.post('/stats', controller.postStats);
 router.post('/login', middleware.validateLogin, controller.postLogin);
