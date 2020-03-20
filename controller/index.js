@@ -30,10 +30,10 @@ function Order(dateOrd, status, buyer, products) {
 
 const indexFunctions = {
 	getHome: function(req, res, next) {
-		if (res.session.logUser) {
+		if (req.session.logUser) {
 			res.render('home', {
 				title: 'TheShop',
-				name: res.session.logUser.fName + " " + res.session.logUser.lName
+				name: req.session.logUser.fName + " " + req.session.logUser.lName
 			});
 		} else {
 			res.render('home', {
@@ -44,8 +44,8 @@ const indexFunctions = {
 	},
 	
 	getLogin: function(req, res, next) {
-		console.log(res.session.logUser);
-		if (res.session.logUser.email) { // check if there's a user logged in
+		console.log(req.session.logUser);
+		if (req.session.logUser) { // check if there's a user logged in
 			res.redirect('/'); // go back to home
 		} else {
 			res.render('login', { // just renders login.hbs
@@ -64,12 +64,12 @@ const indexFunctions = {
 	getAccount: function(req, res, next) {
 		res.render('account', {
 			title: 'TheShop - My Acount',
-			user: res.session.logUser.user,
-			fName: res.session.logUser.fName,
-			lName: res.session.logUser.lName,
-			email: res.session.logUser.email,
-			addr: res.session.logUser.addr,
-			contact: res.session.logUser.contact
+			user: req.session.logUser.user,
+			fName: req.session.logUser.fName,
+			lName: req.session.logUser.lName,
+			email: req.session.logUser.email,
+			addr: req.session.logUser.addr,
+			contact: req.session.logUser.contact
 		});
 	},
 	
@@ -86,9 +86,17 @@ const indexFunctions = {
 	},
 	
 	getProducts: function(req, res, next) {
-		
-		res.render('products', {
-			title: 'TheShop - All Products'
+		prodModel.find({}, function(err, match) {
+			if (err) return res.status(500).end('500 Internal Server error, this shouldnt happen');
+			if (match.length === 0) {
+				return res.status(500).end('500, no products found');
+			}
+			var prods = JSON.parse(JSON.stringify(match));
+			console.table(prods);
+			res.render('products', {
+				title: 'TheShop - All Products',
+				prods: prods
+			});
 		});
 	},
 	
@@ -109,7 +117,7 @@ const indexFunctions = {
 			if (!match) return res.status(401).end('401 Unauthorized error, no user found!');
 			
 			// must return only one matched user. otherwise, no match found
-			res.session.logUser = match;
+			req.session.logUser = match;
 			
 			return res.status(200).render('account', {
 				title: 'TheShop - My Acount',

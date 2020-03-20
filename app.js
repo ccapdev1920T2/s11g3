@@ -32,7 +32,16 @@ app.engine('hbs', exphbs.create({
 	extname: 'hbs',
 	defaultLayout: 'main',
 	partialsDir: 'views/partials',
-	layoutsDir: 'views/layouts'
+	layoutsDir: 'views/layouts',
+	helpers: {
+		getPImg: function(filename) {
+			return 'assets/img/' + filename;
+		},
+
+		getPLink: function(code) {
+			return '/products/' + code;
+		}
+	}
 }).engine);
 app.set('view engine', 'hbs');
 
