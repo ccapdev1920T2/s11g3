@@ -10,6 +10,8 @@ function User(fName, lName, email, user, pass, contact, addr) {
 	this.pass = pass;
 	this.contact = contact;
 	this.addr = addr;
+	this.cart = [];
+	this.wishlist = [];
 }
 function Product(name, code, desc, price, qty, size, filename, category) {
 	this.name = name;
@@ -44,7 +46,6 @@ const indexFunctions = {
 	},
 	
 	getLogin: function(req, res, next) {
-		console.log(req.session.logUser);
 		if (req.session.logUser) { // check if there's a user logged in
 			res.redirect('/'); // go back to home
 		} else {
@@ -92,7 +93,6 @@ const indexFunctions = {
 				return res.status(500).end('500, no products found');
 			}
 			var prods = JSON.parse(JSON.stringify(match));
-			console.table(prods);
 			res.render('products', {
 				title: 'TheShop - All Products',
 				prods: prods
@@ -112,7 +112,6 @@ const indexFunctions = {
 	postLogin: function(req, res, next) {
 		let { email, password } = req.body;
 		userModel.findOne({ email: email, pass: password }, function (err, match) {
-			console.log(match);
 			if (err) return res.status(500).end('500 Internal Server error, something bad happened');
 			if (!match) return res.status(401).end('401 Unauthorized error, no user found!');
 			
@@ -142,14 +141,12 @@ const indexFunctions = {
 		userModel.find({email: email}, function(err, match) {
 			if (err) return res.status(500).end('500 Internal Server error, this shouldnt happen');
 			if (match.length !== 0) {
-				console.log(match);
 				return res.status(401).end('401 Unauth error, user already exists');
 			}
 			
 			var insertUser = new User(fname, lname, email, username, password, phone, address);
 			userModel.create(insertUser, function(err) {
 				if (err) return res.status(500).end('500 Internal Server error, cant register');
-				console.log("reg success");
 				res.redirect('/');
 			});
 		});
@@ -161,11 +158,40 @@ const indexFunctions = {
 		userModel.findOneAndUpdate({pass: oldpass}, { $set:{pass: newpass} }, {useFindAndModify: false}, function(err, match) {
 			if (err) return res.status(500).end('500 internal error, this shouldnt happen wtf');
 			if (!match) return res.status(401).end('401, password forbidden');
-			
-			console.log(match);
 		});
 		
 		res.redirect('/');
+	},
+	
+	getSearchPName: function(req, res, next) {
+		let query = new RegExp(req.query.sQuery, 'gi');
+		
+		prodModel.aggregate([{ '$match': {name: query} }], function(err, match) {
+			if (err) return res.status(500).end('500 Internal Server error, this shouldnt happen');
+			var prods = JSON.parse(JSON.stringify(match));
+			res.render('products', {
+				title: 'TheShop - Search Results',
+				prods: prods
+			});
+		});
+	},
+	
+	getSearchCat: function(req, res, next) {
+		console.log(req.url.substring(10));
+		
+//		let 
+		
+		prodModel.find({}, function(err, match) {
+			if (err) return res.status(500).end('500 Internal Server error, this shouldnt happen');
+			if (match.length === 0) {
+				return res.status(500).end('500, no products found');
+			}
+			var prods = JSON.parse(JSON.stringify(match));
+			res.render('products', {
+				title: 'TheShop - All Products',
+				prods: prods
+			});
+		});
 	}
 };
 
