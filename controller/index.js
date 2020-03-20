@@ -30,9 +30,9 @@ function Order(dateOrd, status, buyer, products) {
 
 const indexFunctions = {
 	getHome: function(req, res, next) {
-		if (req.session.email) {
+		if (res.session.logUser) {
 			res.render('home', {
-				name: req.session.fName + " " + req.session.lName
+				name: res.session.logUser.fName + " " + res.session.logUser.lName
 			});
 		} else {
 			res.render('home', {
@@ -42,8 +42,8 @@ const indexFunctions = {
 	},
 	
 	getLogin: function(req, res, next) {
-		console.log(req.session.email);
-		if (req.session.email) { // check if there's a user logged in
+		console.log(res.session.logUser);
+		if (res.session.logUser.email) { // check if there's a user logged in
 			res.redirect('/'); // go back to home
 		} else {
 			res.render('login', { // just renders login.hbs
@@ -60,12 +60,12 @@ const indexFunctions = {
 	
 	getAccount: function(req, res, next) {
 		res.render('account', {
-			user: req.session.user,
-			fName: req.session.fName,
-			lName: req.session.lName,
-			email: req.session.email,
-			addr: req.session.addr,
-			contact: req.session.contact
+			user: res.session.logUser.user,
+			fName: res.session.logUser.fName,
+			lName: res.session.logUser.lName,
+			email: res.session.logUser.email,
+			addr: res.session.logUser.addr,
+			contact: res.session.logUser.contact
 		});
 	},
 	
@@ -93,12 +93,7 @@ const indexFunctions = {
 			if (!match) return res.status(401).end('401 Unauthorized error, no user found!');
 			
 			// must return only one matched user. otherwise, no match found
-			req.session.user = match.user;
-			req.session.fName = match.fName;
-			req.session.lName = match.lName;
-			req.session.email = match.email;
-			req.session.addr = match.addr;
-			req.session.contact = match.contact;
+			res.session.logUser = match;
 			
 			return res.status(200).render('account', {
 				user: match.user,
@@ -117,7 +112,7 @@ const indexFunctions = {
 	},
 	
 	postReg: function(req, res, next) {
-		let { fname, lname, username, email, password, address, phone, checkbox } = req.body;
+		let { fname, lname, username, email, password, address, phone } = req.body;
 		
 		userModel.find({email: email}, function(err, match) {
 			if (err) return res.status(500).end('500 Internal Server error, this shouldnt happen');
