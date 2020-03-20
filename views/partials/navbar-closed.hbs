@@ -2,15 +2,15 @@
 	<div class="container"><div><a href="#" class="btn" onclick="openNav()"><i class="icon ion-android-menu"></i></a></div>
 		<div id="mySideNav" class="sidenav">
 			<a href="#" class="closebtn" onclick="closeNav()"><i class="icon ion-android-close"></i></a>
-			<div>
-				<input type="text" placeholder="Search..."> 
-				<a href="#" class="searchbtn" onclick="search()"> <i class="fa fa-search"></i></a>
-			</div>
+			<div><form action="/search" method="get">
+				<input type="text" placeholder="Search..." name="sQuery"> 
+				<a class="searchbtn" onclick="this.parentNode.submit()"> <i class="fa fa-search"></i></a>
+			</form></div>
 			<a href="/">Home</a>
 			<a href="/account">My Account</a>
-			<a href="womens.html">Women</a>
-			<a href="mens.html">Men</a>
-			<a href="kids.html">Kids</a>
+			<a href="/category/womens">Women</a>
+			<a href="/category/mens">Men</a>
+			<a href="/category/kids">Kids</a>
 		</div>
 
 		<ul class="nav navbar-nav mr-auto"></ul>

@@ -30,6 +30,17 @@ function Order(dateOrd, status, buyer, products) {
 	this.products = [...products];
 }
 
+function getCateg(categ) {
+	switch (categ) {
+		case 'womens': return new RegExp("Women's", "g");
+		case 'mens': return "Men's";
+		case 'kids': return "Kid's";
+		case 'waccessories': return "Women's Accessories";
+		case 'wclothes': return "Women's Clothes";
+		case 'wshoes': return "Women's Shoes";
+	}
+}
+
 const indexFunctions = {
 	getHome: function(req, res, next) {
 		if (req.session.logUser) {
@@ -177,11 +188,9 @@ const indexFunctions = {
 	},
 	
 	getSearchCat: function(req, res, next) {
-		console.log(req.url.substring(10));
+		let categ = getCateg(req.url.substring(10));
 		
-//		let 
-		
-		prodModel.find({}, function(err, match) {
+		prodModel.find({"category": categ}, function(err, match) {
 			if (err) return res.status(500).end('500 Internal Server error, this shouldnt happen');
 			if (match.length === 0) {
 				return res.status(500).end('500, no products found');
@@ -192,6 +201,10 @@ const indexFunctions = {
 				prods: prods
 			});
 		});
+	},
+	
+	getProdPage: function(req, res, next) {
+		
 	}
 };
 

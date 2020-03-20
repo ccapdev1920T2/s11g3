@@ -35,7 +35,7 @@ app.engine('hbs', exphbs.create({
 	layoutsDir: 'views/layouts',
 	helpers: {
 		getPImg: function(filename) {
-			return 'assets/img/' + filename;
+			return '../assets/img/' + filename;
 		},
 
 		getPLink: function(code) {
