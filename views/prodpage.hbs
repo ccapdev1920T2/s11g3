@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<div class="product" style="height: 98px;margin-top: -42px;">
+	{{> navbar-closed}}
+	
+	<div style="height: 70%;margin-bottom: 15%;">
+		<div class="productContainer" style="margin-right: 10%;width: auto;margin-left: 10%;">
+			<div style="margin-left: 5%;width: 50%;">
+				<h4 style="color: rgb(87,126,105);width: auto;margin: 0;">{{p.name}} ({{p.code}})</h4>
+			</div>
+			<div class="d-block float-right justify-content-end align-items-end align-content-end align-self-end" style="margin-right: 5%;width: 50%;">
+				<h4 class="text-right float-right justify-content-end align-items-end" style="color: rgb(87,126,105);padding: 0px;margin: 0;width: auto;margin-top: 0;margin-right: 5%;">Php {{p.price}}</h4>
+			</div>
+		</div>
+		<div class="text-left d-inline-flex categoryContainer" style="width: 100%;height: auto;margin-bottom: 20%;">
+			<p style="color: rgb(128,145,133);height: 44px;margin: 5px 250px 0px;margin-left: 14%;">Category: {{#each p.category}}{{this}}{{/each}}</p>
+		</div>
+	</div>
+</div>
+<div class="container" style="margin-top: 5%;">
+	<div class="row" style="height: auto;width: 100%;">
+		<div class="col-md-6 col-xl-7" style="width: 50%;height: auto;">
+			<div class="carousel slide" data-ride="carousel" data-pause="false" id="carousel">
+				<div class="carousel-inner" role="listbox" style="height: 410px;">
+					<div class="carousel-item active">
+						<img class="w-100 d-block" id="carousel" src="{{{getPImg p.filename}}}" alt="Slide Image" style="height: auto;margin-top: 5%;width: auto;">
+					</div>
+				</div>
+				<div>
+					<a class="carousel-control-prev" href="#carousel" role="button" data-slide="prev">
+						<span class="carousel-control-prev-icon"></span>
+						<span class="sr-only">Previous</span>
+					</a>
+					<a class="carousel-control-next" href="#carousel" role="button" data-slide="next">
+						<span class="carousel-control-next-icon"></span>
+						<span class="sr-only">Next</span>
+					</a>
+				</div>
+				<ol class="carousel-indicators">
+					<li data-target="#carousel" data-slide-to="0" class="active"></li>
+				</ol>
+			</div>
+		</div>
+		<div class="col-md-6 col-lg-6 col-xl-5" style="width: 70%;">
+			<div class="table-responsive" style="margin-top: 15px;">
+				<table class="table">
+					<thead>
+						<tr>
+							<th style="padding: 0px;">
+								<div style="margin-top: -8px;">
+									<h6 class="text-center" style="color: rgb(0,0,0);font-size: 18px;margin-top: 20px;height: 25px;margin-bottom: 10px;">Product Descriptions</h6>
+								</div>
+							</th>
+						</tr>
+					</thead>
+					<tbody style="margin-top: 99px;">
+						<tr>
+							<td style="height: 62px;padding: 0px;margin-top: 7px;">
+								<ul style="margin-left: 10%;margin-right: 10%;margin-top: 15px;">
+									<li style="color: rgb(0,0,0);font-size: 16px;">Size: {{getSize p.size}}</li>
+									<li style="color: rgb(0,0,0);font-size: 16px;">Quantity Left: {{p.qty}}</li>
+								</ul>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<span class="d-inline-flex actions" style="width: 100%;">
+				<a class="btn btn-light border rounded action-button" role="button" href="sorey.html" style="background-color: #515939;font-family: Abel, sans-serif;font-size: 20px;width: 50%;margin: 10px 10px;color: rgb(255,255,255);margin-top: 25px;margin-left: 14%;">Add to Cart</a>
+				<a class="btn btn-light border rounded action-button" role="button" href="sorey.html" style="background-color: #6a6a5a;font-family: Abel, sans-serif;font-size: 20px;width: 50%;color: rgb(255,255,255);margin: 0px 0px 0px 10px;margin-top: 25px;margin-right: 14%;height: 44px;">Wishlist</a>
+			</span>
+		</div>
+	</div>
+</div>
+
+
+
+<!--
+<div class="photo-gallery">
+	<div class="container" style="margin-top: 28px;">
+		<div class="intro">
+			<h2 class="text-center">Other Products</h2>
+		</div>
+		<div class="row">
+			<div class="col-xl-2 offset-xl-0" style="margin: 0px 0px 30px 0px;height: 270px;margin-top: 1%;margin-right: 15px;margin-left: 15px;">
+				<a href="KI02.html">Link
+					<div class="card-img-overlay" style="height: auto;width: auto;padding: 1px;margin-right: 1%;margin-left: 1%;">
+						<div style="width: auto;height: auto;">
+							<img src="assets/img/KI1.jpeg" style="width: 184px;height: 228px;">
+						</div>
+						<div>
+							<h4 class="text-left" style="margin-top: 2px;color: rgb(0,0,0);font-size: 14px;margin-bottom: 0px;margin-left: 0px;margin-right: 0px;width: 184px;">Kids Blue Jacket&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; KI02</h4>
+						</div>
+						<div class="productContainer" style="width: 184px;height: 21px;margin-top: 1px;">
+							<div style="width: 140px;">
+								<h4 class="text-left float-left" style="color: rgb(119,123,114);font-size: 14px;margin-bottom: 0;">Php 450.00</h4>
+							</div>
+							<div class="text-right" style="width: 44px;align-content: flex-end;">
+								<h4 class="text-right float-right" style="color: rgb(119,123,114);font-size: 14px;width: 33px;margin-bottom: 0;">8</h4>
+							</div>
+						</div>
+					</div>
+				</a>
+			</div>
+			
+		</div>
+	</div>
+</div>
+-->

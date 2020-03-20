@@ -40,6 +40,14 @@ app.engine('hbs', exphbs.create({
 
 		getPLink: function(code) {
 			return '/products/' + code;
+		},
+		
+		getSize: function(size) {
+			switch(size) {
+				case 'S': return "Small";
+				case 'M': return "Medium";
+				case 'L': return "Large";
+			}
 		}
 	}
 }).engine);

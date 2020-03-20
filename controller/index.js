@@ -197,14 +197,24 @@ const indexFunctions = {
 			}
 			var prods = JSON.parse(JSON.stringify(match));
 			res.render('products', {
-				title: 'TheShop - All Products',
+				title: 'TheShop - Category',
 				prods: prods
 			});
 		});
 	},
 	
 	getProdPage: function(req, res, next) {
-		
+		prodModel.findOne({code: req.url.substring(10)}, function(err, match) {
+			if (err) return res.status(500).end('500 Internal Server error, this shouldnt happen');
+			if (!match) return res.status(500).end('500, no products found');
+			
+			let pp = JSON.parse(JSON.stringify(match));
+			
+			res.render('prodpage', {
+				title: 'TheShop - ' + pp.code,
+				p: pp
+			});
+		});
 	}
 };
 
