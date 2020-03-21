@@ -163,6 +163,19 @@ const indexFunctions = {
 		});
 	},
 	
+	getCart: function(req, res, next) {
+		if (req.session.logUser) {
+			userModel.findOne({email: req.session.logUser.email})
+					.populate('cart')
+					.then(function (user) {
+						res.render('cart', {
+							title: 'TheShop - Cart',
+							cart: JSON.parse(JSON.stringify(user.cart))
+						});
+					});
+		} else res.redirect("/");
+	},
+	
 	postStats: function(req, res, next) {
 		let { month, year } = req.body;
 		res.render('stats', {

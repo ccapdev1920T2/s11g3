@@ -14,8 +14,8 @@ var userSchema = new mongoose.Schema({
 	email: String,
 	addr: String,
 	contact: Number,
-	cart: [{type: mongoose.Schema.Types.ObjectId, ref: 'Product'}],
-	wishlist: [{type: mongoose.Schema.Types.ObjectId, ref: 'Product'}]
+	cart: [{type: mongoose.Schema.Types.ObjectId, ref: 'Products'}],
+	wishlist: [{type: mongoose.Schema.Types.ObjectId, ref: 'Products'}]
 }, {collection: "Users"});
 
 const userModel = db.model('Users', userSchema);
