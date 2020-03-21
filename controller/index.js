@@ -113,6 +113,56 @@ const indexFunctions = {
 		});
 	},
 	
+	getSearchPName: function(req, res, next) {
+		let query = new RegExp(req.query.sQuery, 'gi');
+		// use regex to make search queries much easier
+		// flags: g=global, i=ignorecase
+		
+		// generate a new collection whose name match the search query
+		prodModel.aggregate([{ '$match': {name: query} }], function(err, match) {
+			if (err) return res.status(500).end('500 Internal Server error, this shouldnt happen');
+			var prods = JSON.parse(JSON.stringify(match));
+			// mongodb returns something similar to json, but not really. this converts it to a js object
+			res.render('products', {
+				title: 'TheShop - Search Results',
+				prods: prods
+			});
+		});
+	},
+	
+	getSearchCat: function(req, res, next) {
+		let categ = getCateg(req.url.substring(10));
+		// chop off the "/category/" part in the URL, then convert it with getCateg()
+		// search records that contain the category in the category[]
+		prodModel.find({"category": categ}, function(err, match) {
+			if (err) return res.status(500).end('500 Internal Server error, this shouldnt happen');
+			if (match.length === 0) {
+				return res.status(500).end('500, no products found');
+			}
+			var prods = JSON.parse(JSON.stringify(match));
+			res.render('products', {
+				title: 'TheShop - Category',
+				prods: prods
+			});
+		});
+	},
+	
+	getProdPage: function(req, res, next) {
+		// chop off again the /product/
+		prodModel.findOne({code: req.url.substring(10)}, function(err, match) {
+			if (err) return res.status(500).end('500 Internal Server error, this shouldnt happen');
+			if (!match) return res.status(500).end('500, no products found');
+			
+			// pp === product details
+			let pp = JSON.parse(JSON.stringify(match));
+			
+			res.render('prodpage', {
+				title: 'TheShop - ' + pp.code,
+				p: pp
+			});
+		});
+	},
+	
 	postStats: function(req, res, next) {
 		let { month, year } = req.body;
 		res.render('stats', {
@@ -178,54 +228,41 @@ const indexFunctions = {
 		res.redirect('/');
 	},
 	
-	getSearchPName: function(req, res, next) {
-		let query = new RegExp(req.query.sQuery, 'gi');
-		// use regex to make search queries much easier
-		// flags: g=global, i=ignorecase
-		
-		// generate a new collection whose name match the search query
-		prodModel.aggregate([{ '$match': {name: query} }], function(err, match) {
-			if (err) return res.status(500).end('500 Internal Server error, this shouldnt happen');
-			var prods = JSON.parse(JSON.stringify(match));
-			// mongodb returns something similar to json, but not really. this converts it to a js object
-			res.render('products', {
-				title: 'TheShop - Search Results',
-				prods: prods
+	/* Both postAddCart and postAddWish function exactly the same way, with the exception
+	 * of what array gets updated. Here's the algo:
+	 * 1. Get the product ID through req.params.id
+	 * 2. Check if there's a user logged in
+	 * 3. If there's a user logged in, assume product exists and get Product object
+	 * 4. Assume user also exists and append to array of choice
+	 */
+	postAddCart: function(req, res, next) {
+		if (req.session.logUser) {
+			prodModel.findOne({code: req.params.id}, function(err, match) {
+				if (err) res.status(500).end('500, db err');
+				else {
+					userModel.findOneAndUpdate({email: req.session.logUser.email}, {$push: {cart: match}},
+							{useFindAndModify: false}, function(err) {
+						if (err) res.status(500).end('500, db err');
+						res.redirect("/products");
+					});
+				}
 			});
-		});
+		} else res.redirect("/product/" + req.params.id);
 	},
 	
-	getSearchCat: function(req, res, next) {
-		let categ = getCateg(req.url.substring(10));
-		// chop off the "/category/" part in the URL, then convert it with getCateg()
-		// search records that contain the category in the category[]
-		prodModel.find({"category": categ}, function(err, match) {
-			if (err) return res.status(500).end('500 Internal Server error, this shouldnt happen');
-			if (match.length === 0) {
-				return res.status(500).end('500, no products found');
-			}
-			var prods = JSON.parse(JSON.stringify(match));
-			res.render('products', {
-				title: 'TheShop - Category',
-				prods: prods
+	postAddWish: function(req, res, next) {
+		if (req.session.logUser) {
+			prodModel.findOne({code: req.params.id}, function(err, match) {
+				if (err) res.status(500).end('500, db err');
+				else {
+					userModel.findOneAndUpdate({email: req.session.logUser.email}, {$push: {wishlist: match}},
+							{useFindAndModify: false}, function(err) {
+						if (err) res.status(500).end('500, db err');
+						res.redirect("/products");
+					});
+				}
 			});
-		});
-	},
-	
-	getProdPage: function(req, res, next) {
-		// chop off again the /product/
-		prodModel.findOne({code: req.url.substring(10)}, function(err, match) {
-			if (err) return res.status(500).end('500 Internal Server error, this shouldnt happen');
-			if (!match) return res.status(500).end('500, no products found');
-			
-			// pp === product details
-			let pp = JSON.parse(JSON.stringify(match));
-			
-			res.render('prodpage', {
-				title: 'TheShop - ' + pp.code,
-				p: pp
-			});
-		});
+		} else res.redirect("/product/" + req.params.id);
 	}
 };
 

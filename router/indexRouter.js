@@ -19,5 +19,7 @@ router.post('/login', middleware.validateLogin, controller.postLogin);
 router.post('/logout', controller.postLogout);
 router.post('/registration', middleware.validateReg, controller.postReg);
 router.post('/changepass', middleware.validateChangePW, controller.postChangePW);
+router.post('/addtocart/:id', controller.postAddCart);
+router.post('/wishlist/:id', controller.postAddWish);
 
 module.exports = router;
