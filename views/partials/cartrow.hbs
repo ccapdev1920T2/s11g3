@@ -3,18 +3,18 @@
 		<div class="d-inline-flex" style="width: 1000px;">
 			<div class="text-center" style="width: 5%;padding-top: 25px;margin-left: 10%;margin-right: 5%;"><input type="checkbox" style="margin-top: 48px;"></div>
 			<div style="width: 20%;"><img style="width: 200px;height: 150px;" src="{{{getPImg filename}}}"></div>
-			<div style="width: 55%;padding-left: 5%;">
+			<div class="desc" style="width: 55%;padding-left: 5%;">
 				<p style="margin-bottom: 0px;width: auto;font-size: 20px;">Product Code: <strong>{{code}}</strong></p>
 				<p style="margin-bottom: 0px;width: auto;">Product Name: <strong>{{name}}</strong></p>
-				<p style="margin-bottom: 0px;width: auto;">Category: <strong>NaN</strong></p>
-				<p style="margin-bottom: 0px;width: auto;">Price: <strong>Php {{getPrice price}}</strong></p>
-				<p style="margin-bottom: 0px;width: auto;">Quantity: <strong></strong></p>
+				<p style="margin-bottom: 0px;width: auto;">Category: <strong>{{#each category}}{{this}}{{/each}}</strong></p>
+				<p style="margin-bottom: 0px;width: auto;">Price: <strong class="price">Php {{getPrice price}}</strong></p>
+				<p style="margin-bottom: 0px;width: auto;">Quantity: <strong class="qty">{{qty}}</strong></p>
 				<a href="{{{getPLink code 1}}}">Look</a>
 			</div>
 			<div class="text-center d-inline-flex" style="width: 20%;padding-top: 15px;">
-				<button class="btn btn-primary" type="submit" style="height: 37px;background-color: #a3b76a;margin-top: 25px;"><i class="fa fa-minus" style="font-size: 27px;padding-top: 0px;"></i></button>
-				<h1 style="font-size: 27px;padding-top: 27px;padding-right: 37px;padding-bottom: 0px;padding-left: 44px;"><strong>{{qty}}</strong></h1>
-				<button class="btn btn-primary" type="submit" style="height: 37px;background-color: #a3b76a;margin-top: 25px;"><i class="fa fa-plus" style="font-size: 27px;padding-top: 0px;"></i></button>
+				<button class="btn btn-primary minus" style="height: 37px;background-color: #a3b76a;margin-top: 25px;"><i class="fa fa-minus" style="font-size: 27px;padding-top: 0px;"></i></button>
+				<h1 class="qtyBuy" style="font-size: 27px;padding-top: 27px;padding-right: 37px;padding-bottom: 0px;padding-left: 44px;">{{qty}}</h1>
+				<button class="btn btn-primary plus" style="height: 37px;background-color: #a3b76a;margin-top: 25px;"><i class="fa fa-plus" style="font-size: 27px;padding-top: 0px;"></i></button>
 			</div>
 		</div>
 	</div>

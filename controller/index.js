@@ -163,8 +163,16 @@ const indexFunctions = {
 		});
 	},
 	
-	getCart: function(req, res, next) {
+	getCart: async function(req, res, next) {
 		if (req.session.logUser) {
+			
+			try {
+				var cart = await userModel.findOne({email: req.session.logUser.email});
+				console.table(JSON.parse(JSON.stringify(cart.cart)));
+			} catch (e) {
+				console.log(e);
+			}
+			
 			userModel.findOne({email: req.session.logUser.email})
 					.populate('cart')
 					.then(function (user) {
@@ -248,8 +256,16 @@ const indexFunctions = {
 	 * 3. If there's a user logged in, assume product exists and get Product object
 	 * 4. Assume user also exists and append to array of choice
 	 */
-	postAddCart: function(req, res, next) {
+	postAddCart: async function(req, res, next) {
 		if (req.session.logUser) {
+			
+			try {
+				var prod = await prodModel.findOne({code: req.params.id});
+				console.log(JSON.parse(JSON.stringify(prod)));
+			} catch (e) {
+				console.log(e);
+			}
+			
 			prodModel.findOne({code: req.params.id}, function(err, match) {
 				if (err) res.status(500).end('500, db err');
 				else {

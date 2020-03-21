@@ -65,8 +65,14 @@ app.engine('hbs', exphbs.create({
 		
 		getPriceTotal: function(cart) {
 			return cart.reduce(function(total, item) {
-				return total + item.price;
+				return total + item.price * item.qty;
 			}, 0.00).toFixed(2);
+		},
+		
+		getQtyTotal: function(cart) {
+			return cart.reduce(function(total, item) {
+				return total + item.qty;
+			}, 0);
 		}
 	}
 }).engine);
