@@ -292,6 +292,11 @@ const indexFunctions = {
 				}
 			});
 		} else res.redirect("/product/" + req.params.id);
+	},
+	
+	postUpdateCart: function(req, res, next) {
+		console.log(req.body);
+		// TODO: query the 
 	}
 };
 
