@@ -48,6 +48,10 @@ app.engine('hbs', exphbs.create({
 				case 'M': return "Medium";
 				case 'L': return "Large";
 			}
+		},
+		
+		getPrice: function(price) {
+			return price.toFixed(2);
 		}
 	}
 }).engine);

@@ -1,7 +1,10 @@
+/** Accessing the models (db) of each class
+ */
 const userModel = require('../model/userdb');
 const prodModel = require('../model/productdb');
 const ordModel = require('../model/orderdb');
 
+/* Object constructors */
 function User(fName, lName, email, user, pass, contact, addr) {
 	this.fName = fName;
 	this.lName = lName;
@@ -41,9 +44,11 @@ function getCateg(categ) {
 	}
 }
 
+/** Indexian of functions used for app functions
+ */
 const indexFunctions = {
 	getHome: function(req, res, next) {
-		if (req.session.logUser) {
+		if (req.session.logUser) { // check if there's a logged in user
 			res.render('home', {
 				title: 'TheShop',
 				name: req.session.logUser.fName + " " + req.session.logUser.lName
@@ -51,7 +56,7 @@ const indexFunctions = {
 		} else {
 			res.render('home', {
 				title: 'TheShop',
-				name: "Unknown"
+				name: "Unknown" // display "unknown" if no user logged in
 			});
 		}
 	},
@@ -100,9 +105,6 @@ const indexFunctions = {
 	getProducts: function(req, res, next) {
 		prodModel.find({}, function(err, match) {
 			if (err) return res.status(500).end('500 Internal Server error, this shouldnt happen');
-			if (match.length === 0) {
-				return res.status(500).end('500, no products found');
-			}
 			var prods = JSON.parse(JSON.stringify(match));
 			res.render('products', {
 				title: 'TheShop - All Products',
@@ -126,7 +128,7 @@ const indexFunctions = {
 			if (err) return res.status(500).end('500 Internal Server error, something bad happened');
 			if (!match) return res.status(401).end('401 Unauthorized error, no user found!');
 			
-			// must return only one matched user. otherwise, no match found
+			// if no match found, return 401 error
 			req.session.logUser = match;
 			
 			return res.status(200).render('account', {
@@ -143,7 +145,7 @@ const indexFunctions = {
 	
 	postLogout: function(req, res, next) {
 		req.session.destroy();
-		res.redirect("/login");
+		res.redirect("/");
 	},
 	
 	postReg: function(req, res, next) {
@@ -151,10 +153,11 @@ const indexFunctions = {
 		
 		userModel.find({email: email}, function(err, match) {
 			if (err) return res.status(500).end('500 Internal Server error, this shouldnt happen');
-			if (match.length !== 0) {
+			if (match.length !== 0) { // check if email already exists in db
 				return res.status(401).end('401 Unauth error, user already exists');
 			}
 			
+			// insert user in db if reg is successful
 			var insertUser = new User(fname, lname, email, username, password, phone, address);
 			userModel.create(insertUser, function(err) {
 				if (err) return res.status(500).end('500 Internal Server error, cant register');
@@ -166,6 +169,7 @@ const indexFunctions = {
 	postChangePW: function(req, res, next) {
 		let { oldpass, newpass } = req.body;
 		
+		// search entries with oldpass, then set them to newpass
 		userModel.findOneAndUpdate({pass: oldpass}, { $set:{pass: newpass} }, {useFindAndModify: false}, function(err, match) {
 			if (err) return res.status(500).end('500 internal error, this shouldnt happen wtf');
 			if (!match) return res.status(401).end('401, password forbidden');
@@ -176,10 +180,14 @@ const indexFunctions = {
 	
 	getSearchPName: function(req, res, next) {
 		let query = new RegExp(req.query.sQuery, 'gi');
+		// use regex to make search queries much easier
+		// flags: g=global, i=ignorecase
 		
+		// generate a new collection whose name match the search query
 		prodModel.aggregate([{ '$match': {name: query} }], function(err, match) {
 			if (err) return res.status(500).end('500 Internal Server error, this shouldnt happen');
 			var prods = JSON.parse(JSON.stringify(match));
+			// mongodb returns something similar to json, but not really. this converts it to a js object
 			res.render('products', {
 				title: 'TheShop - Search Results',
 				prods: prods
@@ -189,7 +197,8 @@ const indexFunctions = {
 	
 	getSearchCat: function(req, res, next) {
 		let categ = getCateg(req.url.substring(10));
-		
+		// chop off the "/category/" part in the URL, then convert it with getCateg()
+		// search records that contain the category in the category[]
 		prodModel.find({"category": categ}, function(err, match) {
 			if (err) return res.status(500).end('500 Internal Server error, this shouldnt happen');
 			if (match.length === 0) {
@@ -204,10 +213,12 @@ const indexFunctions = {
 	},
 	
 	getProdPage: function(req, res, next) {
+		// chop off again the /product/
 		prodModel.findOne({code: req.url.substring(10)}, function(err, match) {
 			if (err) return res.status(500).end('500 Internal Server error, this shouldnt happen');
 			if (!match) return res.status(500).end('500, no products found');
 			
+			// pp === product details
 			let pp = JSON.parse(JSON.stringify(match));
 			
 			res.render('prodpage', {
