@@ -63,8 +63,10 @@ app.engine('hbs', exphbs.create({
 			return price.toFixed(2);
 		},
 		
-		printCart: function(cart) {
-			console.table(cart[0]);
+		getPriceTotal: function(cart) {
+			return cart.reduce(function(total, item) {
+				return total + item.price;
+			}, 0.00).toFixed(2);
 		}
 	}
 }).engine);
