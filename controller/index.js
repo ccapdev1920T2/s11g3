@@ -258,7 +258,6 @@ const indexFunctions = {
 	 */
 	postAddCart: async function(req, res, next) {
 		if (req.session.logUser) {
-			
 			try {
 				var prod = await prodModel.findOne({code: req.params.id});
 				console.log(JSON.parse(JSON.stringify(prod)));
@@ -269,7 +268,7 @@ const indexFunctions = {
 			prodModel.findOne({code: req.params.id}, function(err, match) {
 				if (err) res.status(500).end('500, db err');
 				else {
-					userModel.findOneAndUpdate({email: req.session.logUser.email}, {$push: {cart: match}},
+					userModel.findOneAndUpdate({email: req.session.logUser.email}, {$push: {cart: {item: match, prodQty: match.qty}}},
 							{useFindAndModify: false}, function(err) {
 						if (err) res.status(500).end('500, db err');
 						res.redirect("/products");
