@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 mongoose.connect('mongodb://localhost/TheShop', {useNewUrlParser: true, useUnifiedTopology: true})
-		.then(() => { console.log('connect done: prod'); },
+		.then(() => { console.log('prod'); },
 		err => { console.log('theres problems');
 });
 var db = mongoose.connection;

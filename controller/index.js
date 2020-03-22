@@ -167,20 +167,15 @@ const indexFunctions = {
 		if (req.session.logUser) {
 			
 			try {
-				var cart = await userModel.findOne({email: req.session.logUser.email});
-				console.table(JSON.parse(JSON.stringify(cart.cart)));
+				var user = await userModel.findOne({email: req.session.logUser.email}).populate('cart.item');
+				console.log(JSON.parse(JSON.stringify(user.cart)));
+				res.render('cart', {
+					title: 'TheShop - Cart',
+					cart: JSON.parse(JSON.stringify(user.cart))
+				});
 			} catch (e) {
 				console.log(e);
 			}
-			
-			userModel.findOne({email: req.session.logUser.email})
-					.populate('cart')
-					.then(function (user) {
-						res.render('cart', {
-							title: 'TheShop - Cart',
-							cart: JSON.parse(JSON.stringify(user.cart))
-						});
-					});
 		} else res.redirect("/");
 	},
 	
@@ -260,7 +255,7 @@ const indexFunctions = {
 		if (req.session.logUser) {
 			try {
 				var prod = await prodModel.findOne({code: req.params.id});
-				console.log(JSON.parse(JSON.stringify(prod)));
+				console.log('\nAWAIT PROD\n' + JSON.parse(JSON.stringify(prod)) + '\n');
 			} catch (e) {
 				console.log(e);
 			}
@@ -293,8 +288,14 @@ const indexFunctions = {
 		} else res.redirect("/product/" + req.params.id);
 	},
 	
-	postUpdateCart: function(req, res, next) {
+	postUpdateCart: async function(req, res, next) {
 		console.log(req.body);
+		
+		req.body.forEach(async function(elem) {
+			var prod = await prodModel.findOne({code: elem.code});
+			console.log(prod);
+		});
+		
 		// TODO: query the 
 	}
 };
