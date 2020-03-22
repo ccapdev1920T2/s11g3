@@ -168,7 +168,6 @@ const indexFunctions = {
 			
 			try {
 				var user = await userModel.findOne({email: req.session.logUser.email}).populate('cart.item');
-				console.log(JSON.parse(JSON.stringify(user.cart)));
 				res.render('cart', {
 					title: 'TheShop - Cart',
 					cart: JSON.parse(JSON.stringify(user.cart))
@@ -263,7 +262,8 @@ const indexFunctions = {
 			prodModel.findOne({code: req.params.id}, function(err, match) {
 				if (err) res.status(500).end('500, db err');
 				else {
-					userModel.findOneAndUpdate({email: req.session.logUser.email}, {$push: {cart: {item: match, prodQty: match.qty}}},
+					userModel.findOneAndUpdate({email: req.session.logUser.email},
+							{$push: {cart: {item: match, prodQty: match.qty}}},
 							{useFindAndModify: false}, function(err) {
 						if (err) res.status(500).end('500, db err');
 						res.redirect("/products");
@@ -278,7 +278,8 @@ const indexFunctions = {
 			prodModel.findOne({code: req.params.id}, function(err, match) {
 				if (err) res.status(500).end('500, db err');
 				else {
-					userModel.findOneAndUpdate({email: req.session.logUser.email}, {$push: {wishlist: match}},
+					userModel.findOneAndUpdate({email: req.session.logUser.email},
+							{$push: {wishlist: match}},
 							{useFindAndModify: false}, function(err) {
 						if (err) res.status(500).end('500, db err');
 						res.redirect("/products");
@@ -289,14 +290,23 @@ const indexFunctions = {
 	},
 	
 	postUpdateCart: async function(req, res, next) {
-		console.log(req.body);
+		/* TODO: query the prodModel forEach elem in req.body, then match each to
+		 * ???, then update prodQty with req.body[x].qty
+		 */
+		console.table(req.body);
 		
 		req.body.forEach(async function(elem) {
-			var prod = await prodModel.findOne({code: elem.code});
-			console.log(prod);
+			try {
+				var prod = await prodModel.findOne({code: elem.code});
+				var prom = await userModel.findOneAndUpdate({email: req.session.logUser.email, 'cart.$': prod._id},
+						{useFindAndModify: false},
+						{$set: {'prodQty': elem.qty}});
+				console.log(prom.cart + '\n\n');
+			} catch (e) {
+				console.log(e);
+			}
 		});
-		
-		// TODO: query the 
+		res.redirect('#');
 	}
 };
 
