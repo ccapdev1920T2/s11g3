@@ -42,6 +42,7 @@ function updateCartQty() {
 }
 
 $(document).ready(function () {
+	updateTotals();
 	function updateTotals() {
 		var prices = $("strong.price"), qtys = $(".qtyBuy"),
 				pArr = [], qArr = [];
@@ -74,8 +75,8 @@ $(document).ready(function () {
 	
 	$(".plus").click(function() {
 		var qty = Number.parseInt($(this).prev().text());
-		var max = $(this).parent().siblings(".desc").children("p .qty").text();
-		if (qty < Number.parseInt(max))
+		var max = Number.parseInt($(this).parent().prev().children("a").prev().children("strong").text());
+		if (qty < max)
 			$(this).prev().text(qty+1);
 		updateTotals();
 	});
