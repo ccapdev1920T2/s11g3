@@ -293,15 +293,11 @@ const indexFunctions = {
 		/* TODO: query the prodModel forEach elem in req.body, then match each to
 		 * ???, then update prodQty with req.body[x].qty
 		 */
-		console.table(req.body);
-		
 		req.body.forEach(async function(elem) {
 			try {
 				var prod = await prodModel.findOne({code: elem.code});
-				var prom = await userModel.findOneAndUpdate({email: req.session.logUser.email, 'cart.$': prod._id},
-						{useFindAndModify: false},
-						{$set: {'prodQty': elem.qty}});
-				console.log(prom.cart + '\n\n');
+				await userModel.updateOne({email: req.session.logUser.email, 'cart.item': prod._id},
+						{$set: {'cart.$.prodQty': elem.qty}});
 			} catch (e) {
 				console.log(e);
 			}
