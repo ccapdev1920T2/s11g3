@@ -26,11 +26,14 @@ function Product(name, code, desc, price, qty, size, filename, category) {
 	this.filename = filename;
 	this.category = [...category];
 }
-function Order(dateOrd, status, buyer, products) {
-	this.dateOrd = dateOrd;
-	this.status = status;
+/* bound to change, will think about how the object's data are collected first.
+ */
+function Order(buyer, products) {
+	this.dateOrd = Date.now();
+	this.status = 'PROCESSING';
 	this.buyer = buyer;
 	this.products = [...products];
+	console.log(this);
 }
 
 function getCateg(categ) {
@@ -299,8 +302,13 @@ const indexFunctions = {
 		res.redirect('#');
 	},
 	
-	postCheckOut: function(req, res, next) {
-		
+	postCheckOut: async function(req, res) {
+		if (req.session.logUser) {
+			var buyer = await userModel.findOne({email: req.session.logUser.email});
+			var newOrd = new Order(JSON.parse(JSON.stringify(buyer)), JSON.parse(JSON.stringify(buyer.cart)));
+			// ordModel.create(newOrd) here
+			// update cart to empty it!
+		} else res.status(401).end('401, how the heck are you seeing this???');
 	}
 };
 

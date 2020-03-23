@@ -7,7 +7,7 @@ mongoose.connect('mongodb://localhost/TheShop', {useNewUrlParser: true, useUnifi
 var db = mongoose.connection;
 
 var ordSchema = new mongoose.Schema({
-	dateOrd: { type: Date, default: Date.now },
+	dateOrd: { type: Date, default: Date.now() },
 	status: String,
 	buyer: {type: mongoose.Schema.Types.ObjectId, ref: 'Users'},
 	products: [{type: mongoose.Schema.Types.ObjectId, ref: 'Products'}]
