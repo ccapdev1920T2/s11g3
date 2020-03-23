@@ -47,7 +47,7 @@ function getCateg(categ) {
 /** Indexian of functions used for app functions
  */
 const indexFunctions = {
-	getHome: function(req, res, next) {
+	getHome: function(req, res) {
 		if (req.session.logUser) { // check if there's a logged in user
 			res.render('home', {
 				title: 'TheShop',
@@ -61,7 +61,7 @@ const indexFunctions = {
 		}
 	},
 	
-	getLogin: function(req, res, next) {
+	getLogin: function(req, res) {
 		if (req.session.logUser) { // check if there's a user logged in
 			res.redirect('/'); // go back to home
 		} else {
@@ -71,14 +71,14 @@ const indexFunctions = {
 		}
 	},
 	
-	getStats: function(req, res, next) {
+	getStats: function(req, res) {
 		res.render('stats', {
 			// idk yet huehue
 			title: 'TheShop - My Stats'
 		});
 	},
 	
-	getAccount: function(req, res, next) {
+	getAccount: function(req, res) {
 		res.render('account', {
 			title: 'TheShop - My Acount',
 			user: req.session.logUser.user,
@@ -90,19 +90,19 @@ const indexFunctions = {
 		});
 	},
 	
-	getRegister: function(req, res, next) {
+	getRegister: function(req, res) {
 		res.render('registration', {
 			title: 'TheShop - Registration'
 		});
 	},
 	
-	getChangePW: function(req, res, next) {
+	getChangePW: function(req, res) {
 		res.render('changepass', {
 			title: 'TheShop - Change Password'
 		});
 	},
 	
-	getProducts: function(req, res, next) {
+	getProducts: function(req, res) {
 		prodModel.find({}, function(err, match) {
 			if (err) return res.status(500).end('500 Internal Server error, this shouldnt happen');
 			var prods = JSON.parse(JSON.stringify(match));
@@ -113,7 +113,7 @@ const indexFunctions = {
 		});
 	},
 	
-	getSearchPName: function(req, res, next) {
+	getSearchPName: function(req, res) {
 		let query = new RegExp(req.query.sQuery, 'gi');
 		// use regex to make search queries much easier
 		// flags: g=global, i=ignorecase
@@ -130,15 +130,12 @@ const indexFunctions = {
 		});
 	},
 	
-	getSearchCat: function(req, res, next) {
+	getSearchCat: function(req, res) {
 		let categ = getCateg(req.url.substring(10));
 		// chop off the "/category/" part in the URL, then convert it with getCateg()
 		// search records that contain the category in the category[]
 		prodModel.find({"category": categ}, function(err, match) {
 			if (err) return res.status(500).end('500 Internal Server error, this shouldnt happen');
-			if (match.length === 0) {
-				return res.status(500).end('500, no products found');
-			}
 			var prods = JSON.parse(JSON.stringify(match));
 			res.render('products', {
 				title: 'TheShop - Category',
@@ -147,7 +144,7 @@ const indexFunctions = {
 		});
 	},
 	
-	getProdPage: function(req, res, next) {
+	getProdPage: function(req, res) {
 		// chop off again the /product/
 		prodModel.findOne({code: req.url.substring(10)}, function(err, match) {
 			if (err) return res.status(500).end('500 Internal Server error, this shouldnt happen');
@@ -163,7 +160,7 @@ const indexFunctions = {
 		});
 	},
 	
-	getCart: async function(req, res, next) {
+	getCart: async function(req, res) {
 		if (req.session.logUser) {
 			
 			try {
@@ -178,7 +175,7 @@ const indexFunctions = {
 		} else res.redirect("/");
 	},
 	
-	postStats: function(req, res, next) {
+	postStats: function(req, res) {
 		let { month, year } = req.body;
 		res.render('stats', {
 			title: 'TheShop - My Stats',
@@ -187,7 +184,7 @@ const indexFunctions = {
 		});
 	},
 	
-	postLogin: function(req, res, next) {
+	postLogin: function(req, res) {
 		let { email, password } = req.body;
 		userModel.findOne({ email: email, pass: password }, function (err, match) {
 			if (err) return res.status(500).end('500 Internal Server error, something bad happened');
@@ -208,7 +205,7 @@ const indexFunctions = {
 		});
 	},
 	
-	postLogout: function(req, res, next) {
+	postLogout: function(req, res) {
 		req.session.destroy();
 		res.redirect("/");
 	},
@@ -231,7 +228,7 @@ const indexFunctions = {
 		});
 	},
 	
-	postChangePW: function(req, res, next) {
+	postChangePW: function(req, res) {
 		let { oldpass, newpass } = req.body;
 		
 		// search entries with oldpass, then set them to newpass
@@ -250,7 +247,7 @@ const indexFunctions = {
 	 * 3. If there's a user logged in, assume product exists and get Product object
 	 * 4. Assume user also exists and append to array of choice
 	 */
-	postAddCart: async function(req, res, next) {
+	postAddCart: async function(req, res) {
 		if (req.session.logUser) {
 			try {
 				var prod = await prodModel.findOne({code: req.params.id});
@@ -273,7 +270,7 @@ const indexFunctions = {
 		} else res.redirect("/product/" + req.params.id);
 	},
 	
-	postAddWish: function(req, res, next) {
+	postAddWish: function(req, res) {
 		if (req.session.logUser) {
 			prodModel.findOne({code: req.params.id}, function(err, match) {
 				if (err) res.status(500).end('500, db err');
@@ -289,10 +286,7 @@ const indexFunctions = {
 		} else res.redirect("/product/" + req.params.id);
 	},
 	
-	postUpdateCart: async function(req, res, next) {
-		/* TODO: query the prodModel forEach elem in req.body, then match each to
-		 * ???, then update prodQty with req.body[x].qty
-		 */
+	postUpdateCart: async function(req, res) {
 		req.body.forEach(async function(elem) {
 			try {
 				var prod = await prodModel.findOne({code: elem.code});
@@ -303,6 +297,10 @@ const indexFunctions = {
 			}
 		});
 		res.redirect('#');
+	},
+	
+	postCheckOut: function(req, res, next) {
+		
 	}
 };
 
