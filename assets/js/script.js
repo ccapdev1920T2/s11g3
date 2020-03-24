@@ -7,8 +7,8 @@ function closeNav() {
 }
 
 function extractCodeQty(string) {
-	var arr = string.split('\n\t\t\t\t\t\t\t');
-	return {code: arr[1].substring(14), qty: Number.parseInt(arr[8])};
+	var arr = string.split('\n\t\t\t\t\t\t\t'); console.log(arr);
+	return {code: arr[4].substring(15), qty: Number.parseInt(arr[13].substring(1))};
 }
 
 /* Sends a POST request to update the user's cart based on the submitted pCodes and qty
@@ -59,8 +59,6 @@ $(document).ready(function () {
 			tPrice += pArr[i]*qArr[i];
 			tQty += qArr[i];
 		}
-		
-		console.log(pArr, qArr, tPrice, tQty);
 		
 		$(".tPrice").text('Total: Php ' + tPrice.toFixed(2));
 		$(".tQty").text('Items: ' + tQty);

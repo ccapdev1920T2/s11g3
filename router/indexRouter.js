@@ -23,5 +23,6 @@ router.post('/changepass', middleware.validateChangePW, controller.postChangePW)
 router.post('/addtocart/:id', controller.postAddCart);
 router.post('/wishlist/:id', controller.postAddWish);
 router.post('/updateCart', controller.postUpdateCart);
+router.post('/checkout', controller.postCheckOut);
 
 module.exports = router;

@@ -289,25 +289,29 @@ const indexFunctions = {
 		} else res.redirect("/product/" + req.params.id);
 	},
 	
-	postUpdateCart: async function(req, res) {
-		req.body.forEach(async function(elem) {
-			try {
+	postUpdateCart: async function(req, res) { console.log(req.body);
+		try {
+			req.body.forEach(async function(elem) {
 				var prod = await prodModel.findOne({code: elem.code});
 				await userModel.updateOne({email: req.session.logUser.email, 'cart.item': prod._id},
 						{$set: {'cart.$.prodQty': elem.qty}});
-			} catch (e) {
-				console.log(e);
-			}
-		});
-		res.redirect('#');
+			});
+			res.redirect('/products');
+		} catch (e) {
+			console.log(e);
+			res.redirect("/");
+		}
 	},
 	
 	postCheckOut: async function(req, res) {
+		// 
 		if (req.session.logUser) {
 			var buyer = await userModel.findOne({email: req.session.logUser.email});
 			var newOrd = new Order(JSON.parse(JSON.stringify(buyer)), JSON.parse(JSON.stringify(buyer.cart)));
+			console.log(newOrd);
 			// ordModel.create(newOrd) here
-			// update cart to empty it!
+			// also, deduct the product quantities
+			// then, update cart to empty it!
 		} else res.status(401).end('401, how the heck are you seeing this???');
 	}
 };
