@@ -8,7 +8,7 @@ function closeNav() {
 
 function extractCodeQty(string) {
 	var arr = string.split('\n\t\t\t\t\t\t\t'); console.log(arr);
-	return {code: arr[4].substring(15), qty: Number.parseInt(arr[13].substring(1))};
+	return {code: arr[6].substring(15), qty: Number.parseInt(arr[15].substring(1))};
 }
 
 /* Sends a POST request to update the user's cart based on the submitted pCodes and qty
@@ -23,7 +23,7 @@ function updateCartQty() {
 	rows.forEach(function(node) {
 		prodCodeQty.push(extractCodeQty(node.textContent));
 	});
-	console.log(prodCodeQty);
+	console.log("PCQ: " + prodCodeQty);
 	
 	// make XHR object and prep it
 	let xhr = new XMLHttpRequest();

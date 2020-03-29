@@ -10,7 +10,7 @@ var ordSchema = new mongoose.Schema({
 	dateOrd: { type: Date, default: Date.now() },
 	status: String,
 	buyer: {type: mongoose.Schema.Types.ObjectId, ref: 'Users'},
-	products: [{type: mongoose.Schema.Types.ObjectId, ref: 'Products'}]
+	products: [{item: {type: mongoose.Schema.Types.ObjectId, ref: 'Products'}, prodQty: Number}]
 }, {collection: "Orders"});
 
 const ordModel = db.model('Orders', ordSchema);

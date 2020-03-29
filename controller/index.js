@@ -289,7 +289,7 @@ const indexFunctions = {
 		} else res.redirect("/product/" + req.params.id);
 	},
 	
-	postUpdateCart: async function(req, res) { console.log(req.body);
+	postUpdateCart: async function(req, res) { /*console.log(req.body);*/
 		try {
 			req.body.forEach(async function(elem) {
 				var prod = await prodModel.findOne({code: elem.code});
@@ -303,16 +303,30 @@ const indexFunctions = {
 		}
 	},
 	
+	/* Given a POST checkout, do the following steps:
+	 * - 
+	 */
 	postCheckOut: async function(req, res) {
-		// 
-		if (req.session.logUser) {
-			var buyer = await userModel.findOne({email: req.session.logUser.email});
-			var newOrd = new Order(JSON.parse(JSON.stringify(buyer)), JSON.parse(JSON.stringify(buyer.cart)));
-			console.log(newOrd);
-			// ordModel.create(newOrd) here
-			// also, deduct the product quantities
-			// then, update cart to empty it!
-		} else res.status(401).end('401, how the heck are you seeing this???');
+		try {
+			let pCodes = Object.keys(req.body); // array of product codes to buy
+			if (req.session.logUser) {
+				var buyer = JSON.parse(JSON.stringify(await userModel.findOne({email: req.session.logUser.email})));
+
+				let buyCart = [];
+				
+				console.log(buyCart);
+				JSON.parse(JSON.stringify(buyer.cart));
+				// pick out only the ones that are present in toBuy[]
+				
+				new Order(buyer, buyCart);
+				// ordModel.create(new Order()) here
+				// also, deduct the product quantities
+				// then, update cart to delete (pull) checked out items!
+				res.redirect("/cart");
+			} else res.status(401).end('401, how the heck are you seeing this???');
+		} catch(e) {
+			console.log(e);
+		}
 	}
 };
 

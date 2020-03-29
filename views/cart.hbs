@@ -3,10 +3,13 @@
 	<h1 class="text-center" style="color: rgb(0,0,0);margin-bottom: 5%;">YOUR CART</h1>
 	<hr></hr>
 	<div class="container" style="margin-top: 37px;">
-		<form method="post" action="/checkout">
+		<form method="post" action="/checkout"> 
 			{{#each cart}}
 				{{> cartrow this}}
 			{{/each}}
+			<button class="btn btn-primary text-center float-right" type="submit" style="margin-right: 44%;background-color: #a3b76a;width: 139px;padding-left: 0;margin-top: 11px;">
+				<a style="color: rgb(255,255,255);margin-right: 0px;margin-left: 11px;">Check Out</a>
+			</button>
 		</form>
 	</div>
 	
@@ -17,11 +20,8 @@
 		</div>
 	</div>
 	<div>
-		<button class="btn btn-primary text-center float-right" type="button" style="margin-right: 44%;background-color: #a3b76a;width: 139px;padding-left: 0;margin-top: 11px;">
-			<a href="/checkout" style="color: rgb(255,255,255);margin-right: 0px;margin-left: 11px;">Check Out</a>
-		</button>
-		<button class="btn btn-primary text-center float-right" type="button" onclick="updateCartQty();" style="margin-right: 44%;background-color: rgb(90,106,123);width: 139px;padding-left: 0;margin-top: 10px;">
-			<span class="text-center" style="color: rgb(255,255,255);margin-left: 13px;">Save and Back to Products</span>
+		<button class="btn btn-primary text-center float-right" type="button" onclick="updateCartQty();" style="margin-right: 44%;background-color: rgb(90,106,123);width: 139px;">
+			<span class="text-center" style="color: rgb(255,255,255);">Save and Back to Products</span>
 		</button>
 	</div>
 </div>

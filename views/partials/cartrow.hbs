@@ -2,7 +2,7 @@
 	<div class="col-xl-12 d-flex" style="padding: 5px;width: 100%;">
 		<div class="d-inline-flex prodRow" style="width: 1000px;">
 			<div class="text-center" style="width: 5%;padding-top: 25px;margin-left: 10%;margin-right: 5%;">
-				<input type="checkbox" class="cartcheck" name="{{{item.code}}}"></input>
+				<input type="checkbox" class="cartcheck" name="{{{item.code}}}" checked></input>
 			</div>
 			<div style="width: 20%;"><img style="width: 200px;height: 150px;" src="{{{getPImg item.filename}}}"></div>
 			<div class="desc" style="width: 55%;padding-left: 5%;">
@@ -14,9 +14,9 @@
 				<a href="{{{getPLink item.code 1}}}">Look</a>
 			</div>
 			<div class="text-center d-inline-flex" style="width: 20%;padding-top: 15px;">
-				<button class="btn btn-primary minus" style="height: 37px;background-color: #a3b76a;margin-top: 25px;"><i class="fa fa-minus" style="font-size: 27px;padding-top: 0px;"></i></button>
+				<button type="button" class="btn btn-primary minus" style="height: 37px;background-color: #a3b76a;margin-top: 25px;"><i class="fa fa-minus" style="font-size: 27px;padding-top: 0px;"></i></button>
 				<h1 class="qtyBuy" style="font-size: 27px;padding-top: 27px;padding-right: 37px;padding-bottom: 0px;padding-left: 44px;">{{prodQty}}</h1>
-				<button class="btn btn-primary plus" style="height: 37px;background-color: #a3b76a;margin-top: 25px;"><i class="fa fa-plus" style="font-size: 27px;padding-top: 0px;"></i></button>
+				<button type="button" class="btn btn-primary plus" style="height: 37px;background-color: #a3b76a;margin-top: 25px;"><i class="fa fa-plus" style="font-size: 27px;padding-top: 0px;"></i></button>
 			</div>
 		</div>
 	</div>
