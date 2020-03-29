@@ -33,7 +33,7 @@ function Order(buyer, products) {
 	this.status = 'PROCESSING';
 	this.buyer = buyer;
 	this.products = [...products];
-	console.log(this);
+//	console.log(this);
 }
 
 function getCateg(categ) {
@@ -304,42 +304,49 @@ const indexFunctions = {
 	},
 	
 	postCheckOut: async function(req, res) {
+		let pCodes = Object.keys(req.body); // array of product codes to buy
+		var buyCart = [];
+		var emailO = {email: req.session.logUser.email};
 		try {
-			let pCodes = Object.keys(req.body); // array of product codes to buy
-			var buyCart = [];
-			
 			if (req.session.logUser) {
-				var buyer = JSON.parse(JSON.stringify(await userModel.findOne({email: req.session.logUser.email}).populate('cart')));
-				console.log(buyer);
+				var buyer = await userModel.findOne(emailO).populate('cart.item');
+//				console.log(buyer.cart);
 				/* CHECK OUT SEQUENCE
 				 * 1. update prodModel quantity
 				 * 2. store prod:_id and prod:buyQty in buyCart
 				 * 3. pull item from userModel cart
+				 * 4. make new Order object
 				 */
 				pCodes.forEach(async function(e) {
 					// get item from user's cart
 					let cartItem = buyer.cart.find(function(cartElem) {
-						return cartElem.code === e;
+						return cartElem.item.code === e;
 					});
+//					console.log(cartItem);
 					
 					// #2
-					buyCart.push({item: cartItem.item, prodQty: cartItem.prodQty});
+					buyCart.push({item: cartItem.item._id, prodQty: cartItem.prodQty});
 					
 					// #1
-					prodModel.findOneAndUpdate({code: e}, /*{"$inc": {"...": -cartItem.qty}},*/ {useFindAndModify: false}, function(err, doc) {
-						console.log("DOC DETAILS:");
-						console.log(doc);
+					await prodModel.findOneAndUpdate({code: e},
+//							{"$inc": {"...": -cartItem.prodQty}},
+							{useFindAndModify: false},
+							{'new': true}, function(err, doc) {
+//						console.log(doc);
 					});
 					
 					// #3
-					var idkanymore = buyer.cart.find(function(elem) {
-						return elem.code === e;
+					await userModel.findOneAndUpdate(emailO,
+//							{'$pull': {item: cartItem._id}},
+							{useFindAndModify: false}, function(e, d) {
+						
 					});
-					console.log(idkanymore);
 				});
+//				console.log(buyCart);
 				
-				console.log(new Order(buyer, buyCart));
-				// ordModel.create(new Order(buyer, buyCart)) here
+//				// #4
+//				console.log(new Order(buyer._id, buyCart));
+//				ordModel.create(new Order(buyer, buyCart)) here
 				res.redirect("/cart");
 			} else res.status(401).end('401, how the heck are you seeing this???');
 		} catch(e) {
