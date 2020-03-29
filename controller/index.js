@@ -303,25 +303,43 @@ const indexFunctions = {
 		}
 	},
 	
-	/* Given a POST checkout, do the following steps:
-	 * - 
-	 */
 	postCheckOut: async function(req, res) {
 		try {
 			let pCodes = Object.keys(req.body); // array of product codes to buy
+			var buyCart = [];
+			
 			if (req.session.logUser) {
-				var buyer = JSON.parse(JSON.stringify(await userModel.findOne({email: req.session.logUser.email})));
-
-				let buyCart = [];
+				var buyer = JSON.parse(JSON.stringify(await userModel.findOne({email: req.session.logUser.email}).populate('cart')));
+				console.log(buyer);
+				/* CHECK OUT SEQUENCE
+				 * 1. update prodModel quantity
+				 * 2. store prod:_id and prod:buyQty in buyCart
+				 * 3. pull item from userModel cart
+				 */
+				pCodes.forEach(async function(e) {
+					// get item from user's cart
+					let cartItem = buyer.cart.find(function(cartElem) {
+						return cartElem.code === e;
+					});
+					
+					// #2
+					buyCart.push({item: cartItem.item, prodQty: cartItem.prodQty});
+					
+					// #1
+					prodModel.findOneAndUpdate({code: e}, /*{"$inc": {"...": -cartItem.qty}},*/ {useFindAndModify: false}, function(err, doc) {
+						console.log("DOC DETAILS:");
+						console.log(doc);
+					});
+					
+					// #3
+					var idkanymore = buyer.cart.find(function(elem) {
+						return elem.code === e;
+					});
+					console.log(idkanymore);
+				});
 				
-				console.log(buyCart);
-				JSON.parse(JSON.stringify(buyer.cart));
-				// pick out only the ones that are present in toBuy[]
-				
-				new Order(buyer, buyCart);
-				// ordModel.create(new Order()) here
-				// also, deduct the product quantities
-				// then, update cart to delete (pull) checked out items!
+				console.log(new Order(buyer, buyCart));
+				// ordModel.create(new Order(buyer, buyCart)) here
 				res.redirect("/cart");
 			} else res.status(401).end('401, how the heck are you seeing this???');
 		} catch(e) {
