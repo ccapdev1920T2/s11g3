@@ -303,6 +303,12 @@ const indexFunctions = {
 		}
 	},
 	
+	/* CHECK OUT SEQUENCE
+	 * 1. update prodModel quantity
+	 * 2. store prod:_id and prod:buyQty in buyCart
+	 * 3. pull item from userModel cart
+	 * 4. make new Order object
+	 */
 	postCheckOut: async function(req, res) {
 		let pCodes = Object.keys(req.body); // array of product codes to buy
 		var buyCart = [];
@@ -311,12 +317,6 @@ const indexFunctions = {
 			if (req.session.logUser) {
 				var buyer = await userModel.findOne(emailO).populate('cart.item');
 //				console.log(buyer.cart);
-				/* CHECK OUT SEQUENCE
-				 * 1. update prodModel quantity
-				 * 2. store prod:_id and prod:buyQty in buyCart
-				 * 3. pull item from userModel cart
-				 * 4. make new Order object
-				 */
 				pCodes.forEach(async function(e) {
 					// get item from user's cart
 					let cartItem = buyer.cart.find(function(cartElem) {
@@ -339,7 +339,7 @@ const indexFunctions = {
 					await userModel.findOneAndUpdate(emailO,
 //							{'$pull': {item: cartItem._id}},
 							{useFindAndModify: false}, function(e, d) {
-						
+						console.log(d);
 					});
 				});
 //				console.log(buyCart);
