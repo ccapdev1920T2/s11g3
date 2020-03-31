@@ -288,13 +288,13 @@ const indexFunctions = {
 		} else res.redirect("/product/" + req.params.id);
 	},
 	
-	postUpdateCart: async function(req, res) { /*console.log(req.body);*/
+	putUpdateCart: function(req, res) {
 		req.body.forEach(async function(elem) {
 			var prod = await prodModel.findOne({code: elem.code});
-			userModel.updateOne({email: req.session.logUser.email, 'cart.item': prod._id},
+			await userModel.updateOne({email: req.session.logUser.email, 'cart.item': prod._id},
 					{$set: {'cart.$.prodQty': elem.qty}});
 		});
-		await res.redirect('/');
+		return res.status(200).redirect('/products');
 	},
 	
 	/* CHECK OUT SEQUENCE

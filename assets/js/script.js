@@ -7,7 +7,7 @@ function closeNav() {
 }
 
 function extractCodeQty(string) {
-	var arr = string.split('\n\t\t\t\t\t\t\t'); console.log(arr);
+	var arr = string.split('\n\t\t\t\t\t\t\t');
 	return {code: arr[6].substring(15), qty: Number.parseInt(arr[15].substring(1))};
 }
 
@@ -23,19 +23,18 @@ function updateCartQty() {
 	rows.forEach(function(node) {
 		prodCodeQty.push(extractCodeQty(node.textContent));
 	});
-	console.log("PCQ: " + prodCodeQty);
 	
 	// make XHR object and prep it
 	let xhr = new XMLHttpRequest();
-	xhr.open("POST", "/updateCart", true);
+	xhr.open("PUT", "/updateCart", true);
 	xhr.setRequestHeader("Content-Type", "application/json");
 	
 	// make state change callback: print data from server
-	xhr.onreadystatechange = function() {
-		if (xhr.readyState === 4 && xhr.status === 200)
-			console.log(this.responseText);
-	};
-	
+//	xhr.onreadystatechange = function() {
+//		if (xhr.readyState === 4 && xhr.status === 200)
+//			console.log(this.responseText);
+//	};
+	 
 	// stringify JSON data and POST to server
 	var data = JSON.stringify(prodCodeQty);
 	xhr.send(data);
