@@ -33,7 +33,6 @@ function Order(buyer, products) {
 	this.status = 'PROCESSING';
 	this.buyer = buyer;
 	this.products = [...products];
-//	console.log(this);
 }
 
 function getCateg(categ) {
@@ -290,17 +289,12 @@ const indexFunctions = {
 	},
 	
 	postUpdateCart: async function(req, res) { /*console.log(req.body);*/
-		try {
-			req.body.forEach(async function(elem) {
-				var prod = await prodModel.findOne({code: elem.code});
-				await userModel.updateOne({email: req.session.logUser.email, 'cart.item': prod._id},
-						{$set: {'cart.$.prodQty': elem.qty}});
-			});
-			res.redirect('/products');
-		} catch (e) {
-			console.log(e);
-			res.redirect("/");
-		}
+		req.body.forEach(async function(elem) {
+			var prod = await prodModel.findOne({code: elem.code});
+			userModel.updateOne({email: req.session.logUser.email, 'cart.item': prod._id},
+					{$set: {'cart.$.prodQty': elem.qty}});
+		});
+		await res.redirect('/');
 	},
 	
 	/* CHECK OUT SEQUENCE
@@ -313,41 +307,41 @@ const indexFunctions = {
 		let pCodes = Object.keys(req.body); // array of product codes to buy
 		var buyCart = [];
 		var emailO = {email: req.session.logUser.email};
+		
 		try {
 			if (req.session.logUser) {
 				var buyer = await userModel.findOne(emailO).populate('cart.item');
-//				console.log(buyer.cart);
+				
 				pCodes.forEach(async function(e) {
 					// get item from user's cart
 					let cartItem = buyer.cart.find(function(cartElem) {
 						return cartElem.item.code === e;
 					});
-//					console.log(cartItem);
 					
 					// #2
 					buyCart.push({item: cartItem.item._id, prodQty: cartItem.prodQty});
 					
 					// #1
-					await prodModel.findOneAndUpdate({code: e},
-//							{"$inc": {"...": -cartItem.prodQty}},
-							{useFindAndModify: false},
-							{'new': true}, function(err, doc) {
-//						console.log(doc);
+					await prodModel.findOneAndUpdate({code: e}, {"$inc": {qty: -cartItem.prodQty}},
+							{useFindAndModify: false, 'new': true}, function(err, doc) {
+						console.log(doc);
 					});
 					
 					// #3
-					await userModel.findOneAndUpdate(emailO,
-//							{'$pull': {item: cartItem._id}},
-							{useFindAndModify: false}, function(e, d) {
-						console.log(d);
+					await userModel.findOneAndUpdate(emailO, {'$pull': {cart: cartItem}},
+							{useFindAndModify: false, 'new': true}, function(err, doc) {
+						console.log(doc);
 					});
 				});
+				
 //				console.log(buyCart);
 				
-//				// #4
+				// #4
 //				console.log(new Order(buyer._id, buyCart));
-//				ordModel.create(new Order(buyer, buyCart)) here
-				res.redirect("/cart");
+				ordModel.create(new Order(buyer._id, buyCart), function(err) {
+					if (err) return res.status(500).end('500, ?????????');
+					res.redirect("/cart");
+				});
 			} else res.status(401).end('401, how the heck are you seeing this???');
 		} catch(e) {
 			console.log(e);
