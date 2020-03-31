@@ -291,10 +291,10 @@ const indexFunctions = {
 	putUpdateCart: function(req, res) {
 		req.body.forEach(async function(elem) {
 			var prod = await prodModel.findOne({code: elem.code});
-			await userModel.updateOne({email: req.session.logUser.email, 'cart.item': prod._id},
+			userModel.updateOne({email: req.session.logUser.email, 'cart.item': prod._id},
 					{$set: {'cart.$.prodQty': elem.qty}});
 		});
-		return res.status(200).redirect('/products');
+		res.status(200);
 	},
 	
 	/* CHECK OUT SEQUENCE

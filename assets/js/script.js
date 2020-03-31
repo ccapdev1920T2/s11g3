@@ -30,12 +30,12 @@ function updateCartQty() {
 	xhr.setRequestHeader("Content-Type", "application/json");
 	
 	// make state change callback: print data from server
-//	xhr.onreadystatechange = function() {
-//		if (xhr.readyState === 4 && xhr.status === 200)
-//			console.log(this.responseText);
-//	};
+	xhr.onreadystatechange = function() {
+		if (xhr.readyState === 4 && xhr.status === 200)
+			window.location.replace('/products');
+	};
 	 
-	// stringify JSON data and POST to server
+	// stringify JSON data and PUT to server
 	var data = JSON.stringify(prodCodeQty);
 	xhr.send(data);
 }
