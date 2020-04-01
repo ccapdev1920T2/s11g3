@@ -1,4 +1,4 @@
-/** Accessing the models (db) of each class
+/* Accessing the models (db) of each class
  */
 const userModel = require('../model/userdb');
 const prodModel = require('../model/productdb');
@@ -81,15 +81,17 @@ const indexFunctions = {
 	},
 	
 	getAccount: function(req, res) {
-		res.render('account', {
-			title: 'TheShop - My Acount',
-			user: req.session.logUser.user,
-			fName: req.session.logUser.fName,
-			lName: req.session.logUser.lName,
-			email: req.session.logUser.email,
-			addr: req.session.logUser.addr,
-			contact: req.session.logUser.contact
-		});
+		if (req.session.logUser) {
+			res.render('account', {
+				title: 'TheShop - My Acount',
+				user: req.session.logUser.user,
+				fName: req.session.logUser.fName,
+				lName: req.session.logUser.lName,
+				email: req.session.logUser.email,
+				addr: req.session.logUser.addr,
+				contact: req.session.logUser.contact
+			});
+		} else res.status(403).end('403 forbidden, please log in');
 	},
 	
 	getRegister: function(req, res) {
@@ -99,9 +101,11 @@ const indexFunctions = {
 	},
 	
 	getChangePW: function(req, res) {
-		res.render('changepass', {
-			title: 'TheShop - Change Password'
-		});
+		if (req.session.logUser) {
+			res.render('changepass', {
+				title: 'TheShop - Change Password'
+			});
+		} else res.redirect('/');
 	},
 	
 	getProducts: function(req, res) {
@@ -164,11 +168,30 @@ const indexFunctions = {
 	
 	getOrders: async function(req, res) {
 		if (req.session.logUser) {
+			let aggrPipelines = [
+				{'$lookup': {
+					'from': 'Users',
+					'localField': 'buyer',
+					'foreignField': '_id',
+					'as': 'buyer'
+				}},
+				{'$match': {
+					'buyer.email': req.session.logUser.email
+				}},
+				{'$lookup': {
+					'from': 'Products',
+					'localField': 'products',
+					'foreignField': '_id',
+					'as': 'products'
+				}}
+			];
+			
 			try {
-				var user = await ordModel.find();
+				var ords = await ordModel.aggregate(aggrPipelines);
+				console.log('\n\n'); console.log(ords); console.log('\n\n');
 				res.render('orders', {
-					title: 'TheShop - Cart',
-					orders: 'something'
+					title: 'TheShop - My Orders',
+					orders: ords
 				});
 			} catch (e) {
 				console.log(e);
@@ -181,7 +204,7 @@ const indexFunctions = {
 			try {
 				var user = await userModel.findOne({email: req.session.logUser.email}).populate('wishlist');
 				res.render('wishlist', {
-					title: 'TheShop - Cart',
+					title: 'TheShop - My Wishlist',
 					wishlist: JSON.parse(JSON.stringify(user.wishlist))
 				});
 			} catch (e) {
@@ -195,7 +218,7 @@ const indexFunctions = {
 			try {
 				var user = await userModel.findOne({email: req.session.logUser.email}).populate('cart.item');
 				res.render('cart', {
-					title: 'TheShop - Cart',
+					title: 'TheShop - My Cart',
 					cart: JSON.parse(JSON.stringify(user.cart))
 				});
 			} catch (e) {

@@ -66,6 +66,10 @@ app.engine('hbs', exphbs.create({
 			return cart.reduce(function(total, item) {
 				return total + item.qty;
 			}, 0);
+		},
+		
+		stringifyDate: function(mili) {
+			return new Date(mili).toISOString().substring(0, 10);
 		}
 	}
 }).engine);
