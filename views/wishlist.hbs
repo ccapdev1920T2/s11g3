@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<div class="register-photo" style="background-color: #ffffff;margin-left: 20px;">
+	<div class="form-container" style="margin-bottom: 72px;height: 140px;width: 100%;">
+		<div class="justify-content-center align-items-center align-content-center align-self-center image-holder" style="height: 160px;width: 1400px;"></div>
+	</div>
+	
+	<hr>
+	
+	<h1 class="text-center" style="color: rgb(0,0,0);margin-bottom: 5%;width: auto;font-family: Abel, sans-serif;font-size: 40px;margin-top: 50px;">YOUR WISHLIST</h1>
+	
+	<hr>
+	
+	<div class="container">
+		
+		{{#each wishlist}}
+			<div class="row" style="margin-top: 5px;margin-bottom: 10px;">
+				<div class="col-xl-6 d-flex" style="padding: 5px;width: 50%;">
+					<div style="width: 500px;">
+						<div><img style="width: 200px;height: 150px;" src="assets/img/WA4.jpg"></div>
+						<div style="width: auto;margin-left: 214px;margin-top: -150px;">
+							<p style="margin-bottom: 0px;width: auto;font-size: 20px;">Product Code:<strong>WA04</strong></p>
+							<p style="margin-bottom: 0px;width: auto;">Product Name: Large Shades</p>
+							<p style="margin-bottom: 0px;width: auto;">Category: Women Accessories</p>
+							<p style="margin-bottom: 0px;width: auto;">Price: Php 399.00</p>
+							<p style="margin-bottom: 0px;width: auto;">Quantity: 0</p>
+							<a href="WA04.html" style="margin-right: 16px;">Look</a>
+							<a href="#" style="margin-left: 0px;">Remove</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		{{/each}}
+		
+		<div style="margin-top: 29px;">
+			<button class="btn btn-primary text-center float-right" type="button" style="margin-right: 44%;background-color: #a3b76a;width: 118px;padding-left: 0;margin-top: 11px;color: #a3b76a;">
+				<a href="/cart" style="color: rgb(255,255,255);margin-right: 0px;margin-left: 11px;">SAVE<br></a>
+			</button>
+			<button class="btn btn-primary text-center float-right" type="button" style="margin-right: 44%;background-color: #a3b76a;width: 118px;padding-left: 0;margin-top: 11px;color: #a3b76a;">
+				<a href="/cart" style="color: rgb(255,255,255);margin-right: 0px;margin-left: 11px;">Go to Cart<br></a>
+			</button>
+			<button class="btn btn-primary text-center float-right" type="button" style="margin-right: 44%;background-color: rgb(90,106,123);width: 119px;padding-left: 0;margin-top: 10px;">
+				<a class="text-center" href="products.html" style="color: rgb(255,255,255);margin-left: 8px;">Go to Products</a>
+			</button>
+		</div>
+		<div style="margin-top: 97px;"></div>
+		<div style="margin-top: 97px;">
+			<a id="scroll-to-top" title="Scroll to top" href="#">
+				<i class="fas fa-angle-up"></i>
+			</a>
+		</div>
+	</div>
+</div>

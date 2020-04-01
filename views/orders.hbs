@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<div id="myorders">
+    <div class="order">
+        {{#each orders}}
+			<div class="order-header"> 
+				<div class="order-date" id="order-date">
+					02/29/2020
+				</div>
+				<div class="order-status" id="order-status">
+					Processing
+				</div>
+			</div>
+			
+			<div class="trx-container">
+				<div class="trx-summary">
+					<div class="order-content" id="order-number">
+						Order#: 2020005
+					</div>
+					<div class="order-content" id="order-numitems">
+						Total items: 2
+					</div>
+					<br>
+					<div class="order-content" id="order-address">
+						<b> Shipping Address </b> <br>
+						122 E. De Guzman St., Malibay, Brgy. 171, Pasay City
+					</div>
+					<br>
+					<div class="order-content" id="order-totalprice">
+						<b> TOTAL </b>
+						<br> Php 500.00
+					</div>
+				</div>
+				
+				<div class="trx-items" id="trx-items">
+					{{> orditem this}}
+				</div>
+			</div>
+        {{/each}}
+    </div>
+</div>

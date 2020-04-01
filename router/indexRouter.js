@@ -13,6 +13,7 @@ router.get('/products', controller.getProducts);
 router.get('/search', controller.getSearchPName);
 router.get('/category/*', controller.getSearchCat);
 router.get('/products/*', controller.getProdPage);
+router.get('/wishlist', controller.getWishlist);
 router.get('/cart', controller.getCart);
 
 router.post('/stats', controller.postStats);

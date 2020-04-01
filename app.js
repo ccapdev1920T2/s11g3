@@ -79,8 +79,8 @@ app.use(bodyParser.json());
 const indexRouter = require('./router/indexRouter');
 app.use('/', indexRouter);
 
-// handling 404 errors
-app.get('*', function(req, res, next) {
+// handling 404 requests
+app.get('*', function(req, res) {
 	res.status(404).end('404 Not Found');
 });
 

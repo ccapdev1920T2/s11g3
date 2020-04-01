@@ -162,9 +162,36 @@ const indexFunctions = {
 		});
 	},
 	
+	getOrders: async function(req, res) {
+		if (req.session.logUser) {
+			try {
+				var user = await ordModel.find();
+				res.render('orders', {
+					title: 'TheShop - Cart',
+					orders: 'something'
+				});
+			} catch (e) {
+				console.log(e);
+			}
+		} else res.redirect("/");
+	},
+	
+	getWishlist: async function(req, res) {
+		if (req.session.logUser) {
+			try {
+				var user = await userModel.findOne({email: req.session.logUser.email}).populate('wishlist');
+				res.render('wishlist', {
+					title: 'TheShop - Cart',
+					wishlist: JSON.parse(JSON.stringify(user.wishlist))
+				});
+			} catch (e) {
+				console.log(e);
+			}
+		} else res.redirect("/");
+	},
+	
 	getCart: async function(req, res) {
 		if (req.session.logUser) {
-			
 			try {
 				var user = await userModel.findOne({email: req.session.logUser.email}).populate('cart.item');
 				res.render('cart', {
