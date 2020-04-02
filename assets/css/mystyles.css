@@ -204,11 +204,11 @@ li a:hover:not(.active) {
 }
 
 .order-header-processing {
-  background-color: #ff9305;
+  background-color: #cc613b;
 }
 
 .order-header-cancelled {
-  background-color: #f22a13;
+  background-color: #c9324e;
 }
 
 .order-date {
