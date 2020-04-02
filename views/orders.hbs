@@ -1,8 +1,10 @@
 <!DOCTYPE html>
+
+{{> navbar}}
 <div id="myorders">
     <div class="order">
         {{#each orders}}
-			<div class="order-header"> 
+			<div class="order-header {{{getOrdHeadClass status}}}"> 
 				<div class="order-date" id="order-date">
 					{{stringifyDate dateOrd}}
 				</div>
@@ -14,10 +16,10 @@
 			<div class="trx-container">
 				<div class="trx-summary">
 					<div class="order-content" id="order-number">
-						Order#: hmmm
+						Order#: {{getOrdCode _id}}
 					</div>
 					<div class="order-content" id="order-numitems">
-						Total items: yikes
+						Total items: {{getOrdQty this.prods}}
 					</div>
 					<br>
 					<div class="order-content" id="order-address">
@@ -27,12 +29,12 @@
 					<br>
 					<div class="order-content" id="order-totalprice">
 						<b> TOTAL </b>
-						<br> Php ded
+						<br> Php {{getOrdPrice this.prods}}
 					</div>
 				</div>
 				
 				<div class="trx-items" id="trx-items">
-					{{#each prodOrds}} {{> orditem this}} {{/each}}
+					{{#each prods}} {{> orditem this}} {{/each}}
 				</div>
 			</div>
         {{/each}}

@@ -49,6 +49,11 @@ function getCateg(categ) {
 /** Indexian of functions used for app functions
  */
 const indexFunctions = {
+	
+	/*
+	 * GET METHODS
+	 */
+	
 	getHome: function(req, res) {
 		if (req.session.logUser) { // check if there's a logged in user
 			res.render('home', {
@@ -182,16 +187,17 @@ const indexFunctions = {
 					'from': 'Products',
 					'localField': 'products.item',
 					'foreignField': '_id',
-					'as': 'products.item'
+					'as': 'prods'
 				}}
 			];
 			
 			try {
 				var ords = await ordModel.aggregate(aggrPipelines);
 				
-				console.log(ords[0]); console.log('\n');
-				// let details = classes.map((item, i) => Object.assign({}, item, classes[i].courseId));
-				console.log(ords[0]);  console.log('\n');
+				ords.forEach(function(ordElem) {
+					for (var i = 0; i < ordElem.prods.length; i++)
+						ordElem.prods[i].prodQty = ordElem.products[i].prodQty;
+				});
 				
 				res.render('orders', {
 					title: 'TheShop - My Orders',
@@ -230,6 +236,10 @@ const indexFunctions = {
 			}
 		} else res.redirect("/");
 	},
+	
+	/*
+	 * POST METHODS
+	 */
 	
 	postStats: function(req, res) {
 		let { month, year } = req.body;
@@ -342,15 +352,6 @@ const indexFunctions = {
 		} else res.redirect("/product/" + req.params.id);
 	},
 	
-	putUpdateCart: function(req, res) {
-		req.body.forEach(async function(elem) {
-			var prod = await prodModel.findOne({code: elem.code});
-			userModel.updateOne({email: req.session.logUser.email, 'cart.item': prod._id},
-					{$set: {'cart.$.prodQty': elem.qty}});
-		});
-		res.status(200);
-	},
-	
 	/* CHECK OUT SEQUENCE
 	 * 1. update prodModel quantity
 	 * 2. store prod:_id and prod:buyQty in buyCart
@@ -400,6 +401,19 @@ const indexFunctions = {
 		} catch(e) {
 			console.log(e);
 		}
+	},
+	
+	/*
+	 * PUT METHODS
+	 */
+	
+	putUpdateCart: function(req, res) {
+		req.body.forEach(async function(elem) {
+			var prod = await prodModel.findOne({code: elem.code});
+			userModel.updateOne({email: req.session.logUser.email, 'cart.item': prod._id},
+					{$set: {'cart.$.prodQty': elem.qty}}, function(e, m) {  });
+		});
+		res.status(200);
 	}
 };
 

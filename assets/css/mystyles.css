@@ -191,13 +191,24 @@ li a:hover:not(.active) {
 }
 
 .order-header {
-  background-color: #a3b76a;
   display: flex;
   flex-direction: row;
   justify-content: center;
   height: 47px;
   color: black;
   box-shadow: 1px 1px 5px rgba(0,0,0,0.1);
+}
+
+.order-header-complete {
+  background-color: #a3b76a;
+}
+
+.order-header-processing {
+  background-color: #ff9305;
+}
+
+.order-header-cancelled {
+  background-color: #f22a13;
 }
 
 .order-date {

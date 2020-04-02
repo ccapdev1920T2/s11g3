@@ -72,17 +72,31 @@ app.engine('hbs', exphbs.create({
 			return new Date(mili).toISOString().substring(0, 10);
 		},
 		
-		getOrdPrice: function() {
-			return 
+		getOrdPrice: function(prods) {
+			var price = prods.reduce(function(a, b) {
+				return a + (b.prodQty * b.price);
+			}, 0.0);
+			return price.toFixed(2);
 		},
 		
-		getOrdQty: function() {
-			return 
+		getOrdQty: function(prods) {
+			var qty = prods.reduce(function(a, b) {
+				return a + b.prodQty;
+			}, 0);
+			return qty;
 		},
 		
-		getOrdNum: function() {
-			return 
+		getOrdCode: function(objID) {
+			return objID.toString().substring(4);
 		},
+		
+		getOrdHeadClass: function(ordStatus) {
+			switch(ordStatus) {
+				case 'PROCESSING': return "order-header-processing";
+				case 'COMPLETE': return "order-header-complete";
+				case 'CANCELLED': return "order-header-cancelled";
+			}
+		}
 	}
 }).engine);
 app.set('view engine', 'hbs');
@@ -97,7 +111,9 @@ app.use('/', indexRouter);
 
 // handling 404 requests
 app.get('*', function(req, res) {
-	res.status(404).end('404 Not Found');
+	res.render('error', {
+		title: 'The Shop - 404 Error'
+	});
 });
 
 // log this in console when ran
