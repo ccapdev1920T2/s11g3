@@ -4,7 +4,7 @@
         {{#each orders}}
 			<div class="order-header"> 
 				<div class="order-date" id="order-date">
-					{{stringifyDate dateOrg}}
+					{{stringifyDate dateOrd}}
 				</div>
 				<div class="order-status" id="order-status">
 					{{status}}
@@ -22,7 +22,7 @@
 					<br>
 					<div class="order-content" id="order-address">
 						<b> Shipping Address </b> <br>
-						{{buyer.addr}}
+						{{buyer.0.addr}}
 					</div>
 					<br>
 					<div class="order-content" id="order-totalprice">
@@ -32,7 +32,7 @@
 				</div>
 				
 				<div class="trx-items" id="trx-items">
-					{{#each this.products}} {{> orditem this}} {{/each}}
+					{{#each prodOrds}} {{> orditem this}} {{/each}}
 				</div>
 			</div>
         {{/each}}

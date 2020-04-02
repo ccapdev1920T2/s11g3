@@ -1,17 +1,16 @@
-<!DOCTYPE html>
 <div class="trx-itemcard" id="trx-itemcard">
 	<div id="trx-images">
-		<img class="trx-images" src="{{{getPImg item.filename}}}">
+		<img class="trx-images" src="{{{getPImg filename}}}">
 	</div>
 	<div class="trx-itemdesc">
 		<div id="trx-price" style="padding-bottom: 5px">
-			<b> Php {{getPrice item.price}} </b>
+			<b> Php {{getPrice price}} </b>
 		</div>
 		<div id="trx-itemname" style="padding-bottom: 5px">
-			{{item.name}}
+			{{name}}
 		</div>
 		<div id="trx-itemcode" style="padding-bottom: 5px">
-			<b> {{item.code}} </b>
+			<b> {{code}} </b>
 		</div>
 		<br> <br>
 		<div id="trx-itemqty">

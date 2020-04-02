@@ -70,7 +70,19 @@ app.engine('hbs', exphbs.create({
 		
 		stringifyDate: function(mili) {
 			return new Date(mili).toISOString().substring(0, 10);
-		}
+		},
+		
+		getOrdPrice: function() {
+			return 
+		},
+		
+		getOrdQty: function() {
+			return 
+		},
+		
+		getOrdNum: function() {
+			return 
+		},
 	}
 }).engine);
 app.set('view engine', 'hbs');

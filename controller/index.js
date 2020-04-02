@@ -180,15 +180,19 @@ const indexFunctions = {
 				}},
 				{'$lookup': {
 					'from': 'Products',
-					'localField': 'products',
+					'localField': 'products.item',
 					'foreignField': '_id',
-					'as': 'products'
+					'as': 'products.item'
 				}}
 			];
 			
 			try {
 				var ords = await ordModel.aggregate(aggrPipelines);
-				console.log('\n\n'); console.log(ords); console.log('\n\n');
+				
+				console.log(ords[0]); console.log('\n');
+				// let details = classes.map((item, i) => Object.assign({}, item, classes[i].courseId));
+				console.log(ords[0]);  console.log('\n');
+				
 				res.render('orders', {
 					title: 'TheShop - My Orders',
 					orders: ords
