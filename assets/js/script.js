@@ -79,16 +79,32 @@ $(document).ready(function () {
 		updateTotals();
 	});
 	
-	// check if email already exists in db
+	// check if email already exists in db and if email is email
 	$('#email').keyup(function() {
 		var emailIn = $('#email').val();
-		$.get('/checkEmail', {email: emailIn}, function(result) {
-			if(result.email === emailIn) {
-				$('#email').css('background-color', 'red');
-				// $('#error').text('ID number already registered');
+		$.get('/checkEmail', {email: emailIn}, function(result) { // result is bool
+			if(result) { // if result is true, either NOT email or EXISTING user
+				$('#email').css('border-color', 'red');
+				// $('#error').text('email already exists');
 				$('#regSub').prop('disabled', true);
 			} else {
-				$('#email').css('background-color', '#dfe7f1');
+				$('#email').css('border-color', '#dfe7f1');
+				// $('#error').text('');
+				$('#regSub').prop('disabled', false);
+			}
+		});
+	});
+	
+	// check if username already exists in db
+	$('#username').keyup(function() {
+		var userIn = $('#username').val();
+		$.get('/checkUser', {user: userIn}, function(result) { // result is bool
+			if(result) {
+				$('#username').css('border-color', 'red');
+				// $('#error').text('email already exists');
+				$('#regSub').prop('disabled', true);
+			} else {
+				$('#username').css('border-color', '#dfe7f1');
 				// $('#error').text('');
 				$('#regSub').prop('disabled', false);
 			}

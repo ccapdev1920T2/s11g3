@@ -63,7 +63,7 @@ const indexFunctions = {
 		} else {
 			res.render('home', {
 				title: 'TheShop',
-				message: "Welcome to TheShop! Log in to access our features." // message if no user logged in
+				message: "Welcome to TheShop! Log in or sign up to access our features." // message if no user logged in
 			});
 		}
 	},
@@ -235,14 +235,6 @@ const indexFunctions = {
 				console.log(e);
 			}
 		} else res.redirect("/");
-	},
-	
-	getCheckEmail: function(req, res) {
-		var emailIn = req.query.email;
-		userModel.findOne({email: emailIn}, function(err, match) {
-			console.log(match);
-			res.send(match);
-		});
 	},
 	
 	/*

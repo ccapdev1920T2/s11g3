@@ -29,6 +29,6 @@ router.post('/checkout', controller.postCheckOut);
 router.put('/updateCart', controller.putUpdateCart);
 
 // AJAX methods
-router.get('/checkEmail', controller.getCheckEmail);
+router.get('/checkEmail', middleware.getCheckEmail);
 
 module.exports = router;

@@ -1,3 +1,9 @@
+/* Accessing the models (db) of each class
+ */
+const userModel = require('../model/userdb');
+const prodModel = require('../model/productdb');
+const ordModel = require('../model/orderdb');
+
 function isEmail(email) {
 	let regex = /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/;
 	return regex.test(email);
@@ -40,6 +46,24 @@ const indexMiddleware = {
 		else if (newpass !== confnewpass)
 			return res.status(401).end('401, bad newpass/newconf');
 		else next();
+	},
+	
+	getCheckEmail: function(req, res) {
+		var emailIn = req.query.email;
+		userModel.findOne({email: emailIn}, function(err, match) {
+			if (match)
+				res.send(match.email === emailIn);
+			else res.send(false || !isEmail(emailIn));
+		});
+	},
+	
+	getCheckUser: function(req, res) {
+		var userIn = req.query.user;
+		userModel.findOne({user: userIn}, function(err, match) {
+			if (match)
+				res.send(match.user === userIn);
+			else res.send(true);
+		});
 	}
 };
 
