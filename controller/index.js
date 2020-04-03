@@ -237,6 +237,14 @@ const indexFunctions = {
 		} else res.redirect("/");
 	},
 	
+	getCheckEmail: function(req, res) {
+		var emailIn = req.query.email;
+		userModel.findOne({email: emailIn}, function(err, match) {
+			console.log(match);
+			res.send(match);
+		});
+	},
+	
 	/*
 	 * POST METHODS
 	 */

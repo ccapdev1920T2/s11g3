@@ -200,15 +200,15 @@ li a:hover:not(.active) {
 }
 
 .order-header-complete {
-  background-color: #a3b76a;
+  background-color: #7da06a;
 }
 
 .order-header-processing {
-  background-color: #cc613b;
+  background-color: #f9dc5c;
 }
 
 .order-header-cancelled {
-  background-color: #c9324e;
+  background-color: #d36060;
 }
 
 .order-date {

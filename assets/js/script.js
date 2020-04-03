@@ -31,8 +31,8 @@ function updateCartQty() {
 	
 	// make state change callback: print data from server
 	xhr.onreadystatechange = function() {
-		if (xhr.readyState === 4 && xhr.status === 200)
-			window.location.replace('/products');
+		alert('saved');
+		//window.location.replace('/products');
 	};
 	 
 	// stringify JSON data and PUT to server
@@ -41,6 +41,7 @@ function updateCartQty() {
 }
 
 $(document).ready(function () {
+	// for cart page
 	updateTotals();
 	function updateTotals() {
 		var prices = $("strong.price"), qtys = $(".qtyBuy"),
@@ -76,5 +77,21 @@ $(document).ready(function () {
 		if (qty < max)
 			$(this).prev().text(qty+1);
 		updateTotals();
+	});
+	
+	// check if email already exists in db
+	$('#email').keyup(function() {
+		var emailIn = $('#email').val();
+		$.get('/checkEmail', {email: emailIn}, function(result) {
+			if(result.email === emailIn) {
+				$('#email').css('background-color', 'red');
+				// $('#error').text('ID number already registered');
+				$('#regSub').prop('disabled', true);
+			} else {
+				$('#email').css('background-color', '#dfe7f1');
+				// $('#error').text('');
+				$('#regSub').prop('disabled', false);
+			}
+		});
 	});
 });
