@@ -110,4 +110,12 @@ $(document).ready(function () {
 			}
 		});
 	});
+	
+	$("button.delCart").click(function() {
+		let code = $(this).siblings(".desc").text(), codeDel = code.substring(22, 33).trim();
+		
+		$.post('/delCartItem', {code: codeDel}, function(result) {
+			console.log('result: ' + result);
+		});
+	});
 });

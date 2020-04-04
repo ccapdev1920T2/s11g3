@@ -389,8 +389,6 @@ const indexFunctions = {
 					});
 				});
 				
-//				console.log(buyCart);
-				
 				// #4
 //				console.log(new Order(buyer._id, buyCart));
 				ordModel.create(new Order(buyer._id, buyCart), function(err) {
@@ -403,6 +401,50 @@ const indexFunctions = {
 		}
 	},
 	
+	postDelCartItem: async function(req, res) {
+		let {code} = req.body;
+		let emailO = {email: req.session.logUser.email};
+		var user = await userModel.findOne(emailO).populate('cart.item');
+		console.log(user.cart);
+		
+		// find the cart item
+		var cartItem = user.cart.find(function(cartElem) {
+			return cartElem.code === code;
+		});
+		
+		// remove from cart
+		await userModel.findOneAndUpdate(emailO, {'$pull': {cart: cartItem}},
+				{useFindAndModify: false, 'new': true}, function(err, doc) {
+			if (err) res.send(false);
+			else {
+				console.log(doc);
+				res.send(true);
+			}
+		});
+	},
+	
+	postDelWishItem: async function(req, res) {
+		let {code} = req.body;
+		let emailO = {email: req.session.logUser.email};
+		var user = await userModel.findOne(emailO).populate('wishlist');
+		console.log(user.wishlist);
+		
+		// find the wishlist item
+		var wishItem = user.wishlist.find(function(wishElem) {
+			return wishElem.code === code;
+		});
+		
+		// remove from cart
+		await userModel.findOneAndUpdate(emailO, {'$pull': {wishlist: wishItem}},
+				{useFindAndModify: false, 'new': true}, function(err, doc) {
+			if (err) res.send(false);
+			else {
+				console.log(doc);
+				res.send(true);
+			}
+		});
+	},
+	
 	/*
 	 * PUT METHODS
 	 */
@@ -413,8 +455,10 @@ const indexFunctions = {
 			userModel.updateOne({email: req.session.logUser.email, 'cart.item': prod._id},
 					{$set: {'cart.$.prodQty': elem.qty}}, function(e, m) {  });
 		});
-		res.status(200);
+		res.redirect(303, '/products');
 	}
+	
+	
 };
 
 module.exports = indexFunctions;

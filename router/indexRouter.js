@@ -30,5 +30,7 @@ router.put('/updateCart', controller.putUpdateCart);
 
 // AJAX methods
 router.get('/checkEmail', middleware.getCheckEmail);
+router.post('/delCartItem', controller.postDelCartItem);
+router.post('/delWishItem', controller.postDelWishItem);
 
 module.exports = router;
