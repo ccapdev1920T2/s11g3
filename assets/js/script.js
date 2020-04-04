@@ -52,8 +52,7 @@ function updateCartQty() {
 	
 	// make state change callback: print data from server
 	xhr.onreadystatechange = function() {
-		alert('saved');
-		//window.location.replace('/products');
+		// window.location.replace('/products');
 	};
 	 
 	// stringify JSON data and PUT to server

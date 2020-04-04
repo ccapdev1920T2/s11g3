@@ -39,7 +39,7 @@ function getCateg(categ) {
 	switch (categ) {
 		case 'womens': return new RegExp("Women's", "g");
 		case 'mens': return "Men's";
-		case 'kids': return "Kid's";
+		case 'kids': return "Kids";
 		case 'waccessories': return "Women's Accessories";
 		case 'wclothes': return "Women's Clothes";
 		case 'wshoes': return "Women's Shoes";
@@ -317,22 +317,16 @@ const indexFunctions = {
 		if (req.session.logUser) {
 			try {
 				var prod = await prodModel.findOne({code: req.params.id});
-				console.log('\nAWAIT PROD\n' + JSON.parse(JSON.stringify(prod)) + '\n');
+				console.log(JSON.parse(JSON.stringify(prod)));
+				userModel.findOneAndUpdate({email: req.session.logUser.email},
+						{$push: {cart: {item: prod, prodQty: prod.qty}}},
+						{useFindAndModify: false}, function(err) {
+					if (err) res.status(500).end('500, db err');
+					else res.redirect("/products");
+				});
 			} catch (e) {
 				console.log(e);
 			}
-			
-			prodModel.findOne({code: req.params.id}, function(err, match) {
-				if (err) res.status(500).end('500, db err');
-				else {
-					userModel.findOneAndUpdate({email: req.session.logUser.email},
-							{$push: {cart: {item: match, prodQty: match.qty}}},
-							{useFindAndModify: false}, function(err) {
-						if (err) res.status(500).end('500, db err');
-						res.redirect("/products");
-					});
-				}
-			});
 		} else res.redirect("/product/" + req.params.id);
 	},
 	
