@@ -11,6 +11,27 @@ function extractCodeQty(string) {
 	return {code: arr[6].substring(15), qty: Number.parseInt(arr[15].substring(1))};
 }
 
+function updateTotals() {
+	var prices = $("strong.price"), qtys = $(".qtyBuy"),
+			pArr = [], qArr = [];
+	prices.each(function() {
+		var p = $(this).text();
+		pArr.push(Number.parseFloat(p.substring(4)));
+	});
+	qtys.each(function() {
+		qArr.push(Number.parseFloat($(this).text()));
+	});
+
+	var tPrice = 0.0, tQty = 0;
+	for (var i = 0; i < pArr.length; i++) {
+		tPrice += pArr[i]*qArr[i];
+		tQty += qArr[i];
+	}
+
+	$(".tPrice").text('Total: Php ' + tPrice.toFixed(2));
+	$(".tQty").text('Items: ' + tQty);
+}
+
 /* Sends a POST request to update the user's cart based on the submitted pCodes and qty
  * - get the product rows
  * - extract the product code and qty from each
@@ -43,26 +64,6 @@ function updateCartQty() {
 $(document).ready(function () {
 	// for cart page
 	updateTotals();
-	function updateTotals() {
-		var prices = $("strong.price"), qtys = $(".qtyBuy"),
-				pArr = [], qArr = [];
-		prices.each(function() {
-			var p = $(this).text();
-			pArr.push(Number.parseFloat(p.substring(4)));
-		});
-		qtys.each(function() {
-			qArr.push(Number.parseFloat($(this).text()));
-		});
-		
-		var tPrice = 0.0, tQty = 0;
-		for (var i = 0; i < pArr.length; i++) {
-			tPrice += pArr[i]*qArr[i];
-			tQty += qArr[i];
-		}
-		
-		$(".tPrice").text('Total: Php ' + tPrice.toFixed(2));
-		$(".tQty").text('Items: ' + tQty);
-	}
 	
 	$(".minus").click(function() {
 		var qty = Number.parseInt($(this).next().text());
@@ -112,10 +113,25 @@ $(document).ready(function () {
 	});
 	
 	$("button.delCart").click(function() {
-		let code = $(this).siblings(".desc").text(), codeDel = code.substring(22, 33).trim();
-		
+		let code = $(this).siblings(".desc").text(), codeDel = code.trim().split(/(\s)/)[4];
+		let row = $(this).closest('.row');
+		console.log(codeDel);
 		$.post('/delCartItem', {code: codeDel}, function(result) {
-			console.log('result: ' + result);
+			if (result) {
+				row.remove();
+				updateTotals();
+			} else alert('Error removing from cart!');
+		});
+	});
+	
+	$("button.delWish").click(function() {
+		let code = $(this).siblings("div").text(), codeDel = code.trim().split(/(\s)/)[4];
+		let row = $(this).closest('.row');
+		
+		$.post('/delWishItem', {code: codeDel}, function(result) {
+			if (result) {
+				row.remove();
+			} else alert('Error removing from wishlist!');
 		});
 	});
 });

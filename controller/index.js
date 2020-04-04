@@ -405,21 +405,19 @@ const indexFunctions = {
 		let {code} = req.body;
 		let emailO = {email: req.session.logUser.email};
 		var user = await userModel.findOne(emailO).populate('cart.item');
-		console.log(user.cart);
 		
 		// find the cart item
 		var cartItem = user.cart.find(function(cartElem) {
-			return cartElem.code === code;
+			return cartElem.item.code === code;
 		});
 		
-		// remove from cart
+		// remove from cart, TRUE means successful removal
 		await userModel.findOneAndUpdate(emailO, {'$pull': {cart: cartItem}},
 				{useFindAndModify: false, 'new': true}, function(err, doc) {
-			if (err) res.send(false);
-			else {
-				console.log(doc);
-				res.send(true);
-			}
+			if (err) {
+				console.log(err);
+				res.send(false);
+			} else res.send(true);
 		});
 	},
 	
@@ -427,21 +425,19 @@ const indexFunctions = {
 		let {code} = req.body;
 		let emailO = {email: req.session.logUser.email};
 		var user = await userModel.findOne(emailO).populate('wishlist');
-		console.log(user.wishlist);
 		
 		// find the wishlist item
 		var wishItem = user.wishlist.find(function(wishElem) {
-			return wishElem.code === code;
+			return wishElem.item.code === code;
 		});
 		
-		// remove from cart
-		await userModel.findOneAndUpdate(emailO, {'$pull': {wishlist: wishItem}},
+		// remove from wishlist, TRUE means successful removal
+		await userModel.findOneAndUpdate(emailO, /*{'$pull': {wishlist: wishItem}},*/
 				{useFindAndModify: false, 'new': true}, function(err, doc) {
-			if (err) res.send(false);
-			else {
-				console.log(doc);
-				res.send(true);
-			}
+			if (err) {
+				console.log(err);
+				res.send(false);
+			} else res.send(true);
 		});
 	},
 	
