@@ -426,7 +426,7 @@ const indexFunctions = {
 		});
 		
 		// remove from wishlist, TRUE means successful removal
-		await userModel.findOneAndUpdate(emailO, /*{'$pull': {wishlist: wishItem}},*/
+		await userModel.findOneAndUpdate(emailO, {'$pull': {wishlist: wishItem}},
 				{useFindAndModify: false, 'new': true}, function(err, doc) {
 			if (err) {
 				console.log(err);
