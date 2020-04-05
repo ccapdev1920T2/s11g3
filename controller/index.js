@@ -124,6 +124,20 @@ const indexFunctions = {
 		});
 	},
 	
+	getProdSort: async function(req, res) {
+		var prods;
+		if (req.url.split('/')[2].substring(4) === 'price')
+			prods = await prodModel.find({}).sort('price');
+		else if (req.url.split('/')[2].substring(4) === 'qty')
+			prods = await prodModel.find({}).sort('qty');
+		else prods = await prodModel.find({}).sort('code');
+		
+		res.render('products', {
+			title: 'TheShop - All Products',
+			prods: JSON.parse(JSON.stringify(prods))
+		});
+	},
+	
 	getSearchPName: function(req, res) {
 		let query = new RegExp(req.query.sQuery, 'gi');
 		// use regex to make search queries much easier

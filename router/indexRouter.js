@@ -10,6 +10,7 @@ router.get('/account', controller.getAccount);
 router.get('/registration', controller.getRegister);
 router.get('/changepass', controller.getChangePW);
 router.get('/products', controller.getProducts);
+router.get('/products/sort*', controller.getProdSort);
 router.get('/search', controller.getSearchPName);
 router.get('/category/*', controller.getSearchCat);
 router.get('/products/*', controller.getProdPage);
