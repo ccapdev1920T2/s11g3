@@ -384,7 +384,6 @@ const indexFunctions = {
 				});
 				
 				// #4
-//				console.log(new Order(buyer._id, buyCart));
 				ordModel.create(new Order(buyer._id, buyCart), function(err) {
 					if (err) return res.status(500).end('500, ?????????');
 					res.redirect("/cart");
@@ -396,43 +395,51 @@ const indexFunctions = {
 	},
 	
 	postDelCartItem: async function(req, res) {
-		let {code} = req.body;
-		let emailO = {email: req.session.logUser.email};
-		var user = await userModel.findOne(emailO).populate('cart.item');
-		
-		// find the cart item
-		var cartItem = user.cart.find(function(cartElem) {
-			return cartElem.item.code === code;
-		});
-		
-		// remove from cart, TRUE means successful removal
-		await userModel.findOneAndUpdate(emailO, {'$pull': {cart: cartItem}},
-				{useFindAndModify: false, 'new': true}, function(err, doc) {
-			if (err) {
-				console.log(err);
-				res.send(false);
-			} else res.send(true);
-		});
+		try {
+			let {code} = req.body;
+			let emailO = {email: req.session.logUser.email};
+			var user = await userModel.findOne(emailO).populate('cart.item');
+
+			// find the cart item
+			var cartItem = user.cart.find(function(cartElem) {
+				return cartElem.item.code === code;
+			});
+
+			// remove from cart, TRUE means successful removal
+			await userModel.findOneAndUpdate(emailO, {'$pull': {cart: cartItem}},
+					{useFindAndModify: false, 'new': true}, function(err, doc) {
+				if (err) {
+					console.log(err);
+					res.send(false);
+				} else res.send(true);
+			});
+		} catch (e) {
+			console.log(e);
+		}
 	},
 	
 	postDelWishItem: async function(req, res) {
-		let {code} = req.body;
-		let emailO = {email: req.session.logUser.email};
-		var user = await userModel.findOne(emailO).populate('wishlist');
-		
-		// find the wishlist item
-		var wishItem = user.wishlist.find(function(wishElem) {
-			return wishElem.item.code === code;
-		});
-		
-		// remove from wishlist, TRUE means successful removal
-		await userModel.findOneAndUpdate(emailO, {'$pull': {wishlist: wishItem}},
-				{useFindAndModify: false, 'new': true}, function(err, doc) {
-			if (err) {
-				console.log(err);
-				res.send(false);
-			} else res.send(true);
-		});
+		try {
+			let {code} = req.body;
+			let emailO = {email: req.session.logUser.email};
+			var user = await userModel.findOne(emailO).populate('wishlist');
+
+			// find the wishlist item
+			var wishItem = user.wishlist.find(function(wishElem) {
+				return wishElem.item.code === code;
+			});
+
+			// remove from wishlist, TRUE means successful removal
+			await userModel.findOneAndUpdate(emailO, {'$pull': {wishlist: wishItem}},
+					{useFindAndModify: false, 'new': true}, function(err, doc) {
+				if (err) {
+					console.log(err);
+					res.send(false);
+				} else res.send(true);
+			});
+		} catch (e) {
+			console.log(e);
+		}
 	},
 	
 	/*
@@ -440,12 +447,17 @@ const indexFunctions = {
 	 */
 	
 	putUpdateCart: function(req, res) {
-		req.body.forEach(async function(elem) {
-			var prod = await prodModel.findOne({code: elem.code});
-			userModel.updateOne({email: req.session.logUser.email, 'cart.item': prod._id},
-					{$set: {'cart.$.prodQty': elem.qty}}, function(e, m) {  });
-		});
-		res.redirect(303, '/products');
+		try {
+			req.body.forEach(async function(elem) {
+				var prod = await prodModel.findOne({code: elem.code});
+				userModel.updateOne({email: req.session.logUser.email, 'cart.item': prod._id},
+						{$set: {'cart.$.prodQty': elem.qty}}, function(e, m) {  });
+			});
+			res.redirect(303, '/products');
+		} catch (e) {
+			console.log(e);
+			res.redirect('/');
+		}
 	}
 	
 	
