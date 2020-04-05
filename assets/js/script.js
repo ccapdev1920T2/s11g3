@@ -98,6 +98,7 @@ $(document).ready(function () {
 	// check if username already exists in db
 	$('#username').keyup(function() {
 		var userIn = $('#username').val();
+		console.log(userIn);
 		$.get('/checkUser', {user: userIn}, function(result) { // result is bool
 			if(result) {
 				$('#username').css('border-color', 'red');

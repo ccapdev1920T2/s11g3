@@ -6,7 +6,7 @@
 .register-photo .image-holder {
   display: table-cell;
   width: auto;
-  background: url(../../assets/img/regimage.jpg);
+  background: url(../img/regimage.jpg);
   background-size: cover;
   margin-left: 30%;
 }
