@@ -360,3 +360,9 @@ li a:hover:not(.active) {
   margin-left: 340px;
 }
 
+.cartcheck {
+  height: 25px;
+  width: 25px;
+  background-color: #eee;
+}
+

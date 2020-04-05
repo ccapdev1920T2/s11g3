@@ -7,20 +7,20 @@
 	<div class="container">
 		{{#each wishlist}}
 			<div class="row" style="margin-top: 5px;margin-bottom: 10px;">
-				<div class="col-xl-6 d-flex" style="padding: 5px;width: 50%;">
-					<div style="width: 500px;">
+				<div class="d-flex" style="padding: 5px;">
+					<div style="width: auto;">
 						<div><img style="width: 200px;height: 150px;" src="{{{getPImg this.filename}}}"></div>
 						<div style="width: auto;margin-left: 214px;margin-top: -150px;">
 							<p style="margin-bottom: 0px;width: auto;font-size: 20px;">Product Code: <strong>{{this.code}}</strong></p>
 							<p style="margin-bottom: 0px;width: auto;">Product Name: {{this.name}}</p>
-							<p style="margin-bottom: 0px;width: auto;">Category: {{#each this.category}}{{this}}{{/each}}</p>
+							<p style="margin-bottom: 0px;width: auto;">Categories: {{categToString this.category}}</p>
 							<p style="margin-bottom: 0px;width: auto;">Price: Php {{getPrice price}}</p>
 							<p style="margin-bottom: 0px;width: auto;">Quantity: {{this.qty}}</p>
 							<a href="{{{getPLink this.code 1}}}" style="margin-right: 16px;">Look</a>
 						</div>
 					</div>
 				</div>
-				<button class="btn btn-primary text-center float-right delWish" style="height: 37px; background-color: #a3b76a;">Delete</button>
+				<button class="btn btn-primary text-center float-right delWish" style="height: 37px;background-color: #a3b76a;margin: auto;">Delete</button>
 			</div>
 		{{/each}}
 		

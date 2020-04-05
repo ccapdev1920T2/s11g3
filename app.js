@@ -30,7 +30,6 @@ app.engine('hbs', exphbs.create({
 		getPImg: function(filename) {
 			return '../assets/img/' + filename;
 		},
-
 		getPLink: function(code, linktype) {
 			/* link types:
 			 * 1: product page
@@ -43,7 +42,6 @@ app.engine('hbs', exphbs.create({
 				case 3: return '/wishlist/' + code;
 			}
 		},
-		
 		getSize: function(size) {
 			switch(size) {
 				case 'S': return "Small";
@@ -51,51 +49,46 @@ app.engine('hbs', exphbs.create({
 				case 'L': return "Large";
 			}
 		},
-		
 		getPrice: function(price) {
 			return price.toFixed(2);
 		},
-		
 		getPriceTotal: function(cart) {
 			return cart.reduce(function(total, item) {
 				return total + item.price * item.qty;
 			}, 0.00).toFixed(2);
 		},
-		
 		getQtyTotal: function(cart) {
 			return cart.reduce(function(total, item) {
 				return total + item.qty;
 			}, 0);
 		},
-		
 		stringifyDate: function(mili) {
 			return new Date(mili).toISOString().substring(0, 10);
 		},
-		
 		getOrdPrice: function(prods) {
 			var price = prods.reduce(function(a, b) {
 				return a + (b.prodQty * b.price);
 			}, 0.0);
 			return price.toFixed(2);
 		},
-		
 		getOrdQty: function(prods) {
 			var qty = prods.reduce(function(a, b) {
 				return a + b.prodQty;
 			}, 0);
 			return qty;
 		},
-		
 		getOrdCode: function(objID) {
 			return objID.toString().substring(4);
 		},
-		
 		getOrdHeadClass: function(ordStatus) {
 			switch(ordStatus) {
 				case 'PROCESSING': return "order-header-processing";
 				case 'COMPLETE': return "order-header-complete";
 				case 'CANCELLED': return "order-header-cancelled";
 			}
+		},
+		categToString: function(cats) {
+			return cats.join(', ');
 		}
 	}
 }).engine);
