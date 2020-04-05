@@ -52,7 +52,10 @@ function updateCartQty() {
 	
 	// make state change callback: print data from server
 	xhr.onreadystatechange = function() {
-		// window.location.replace('/products');
+		if (xhr.status === 303 && xhr.readyState === 4) {
+			alert('Cart has been saved!');
+			window.location.href = '/products';
+		}
 	};
 	 
 	// stringify JSON data and PUT to server

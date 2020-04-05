@@ -467,7 +467,7 @@ const indexFunctions = {
 				userModel.updateOne({email: req.session.logUser.email, 'cart.item': prod._id},
 						{$set: {'cart.$.prodQty': elem.qty}}, function(e, m) {  });
 			});
-			res.redirect(303, '/products');
+			res.sendStatus(303);
 		} catch (e) {
 			console.log(e);
 			res.redirect('/');
