@@ -426,7 +426,7 @@ const indexFunctions = {
 
 			// find the wishlist item
 			var wishItem = user.wishlist.find(function(wishElem) {
-				return wishElem.item.code === code;
+				return wishElem.code === code;
 			});
 
 			// remove from wishlist, TRUE means successful removal
