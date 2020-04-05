@@ -7,7 +7,7 @@
 			{{#each cart}}
 				{{> cartrow this}}
 			{{/each}}
-			<button class="btn btn-primary text-center float-right" type="submit" style="margin-right: 44%;background-color: #a3b76a;width: 139px;padding-left: 0;margin-top: 11px;">
+			<button class="btn btn-primary text-center float-right" type="button" onclick="postChOut()" style="margin-right: 44%;background-color: #a3b76a;width: 139px;padding-left: 0;margin-top: 11px;">
 				<a style="color: rgb(255,255,255);margin-right: 0px;margin-left: 11px;">Check Out</a>
 			</button>
 		</form>
@@ -23,8 +23,5 @@
 		<button class="btn btn-primary text-center float-right" type="button" onclick="updateCartQty()" style="margin-right: 44%;background-color: rgb(90,106,123);width: 139px;">
 			Save Cart
 		</button>
-		<a href="/products" class="btn btn-primary text-center float-right" type="button" style="margin-right: 44%;background-color: rgb(90,106,123);width: 139px;">
-			Return to Products
-		</a>
 	</div>
 </div>

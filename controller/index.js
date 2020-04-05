@@ -384,23 +384,19 @@ const indexFunctions = {
 					// #2
 					buyCart.push({item: cartItem.item._id, prodQty: cartItem.prodQty});
 					
-					// #1
-					await prodModel.findOneAndUpdate({code: e}, {"$inc": {qty: -cartItem.prodQty}},
-							{useFindAndModify: false, 'new': true}, function(err, doc) {
-						console.log(doc);
-					});
-					
 					// #3
 					await userModel.findOneAndUpdate(emailO, {'$pull': {cart: cartItem}},
-							{useFindAndModify: false, 'new': true}, function(err, doc) {
-						console.log(doc);
-					});
+							{useFindAndModify: false, 'new': true});
+					
+					// #1
+					await prodModel.findOneAndUpdate({code: e}, {"$inc": {qty: -cartItem.prodQty}},
+							{useFindAndModify: false, 'new': true});
 				});
 				
 				// #4
 				ordModel.create(new Order(buyer._id, buyCart), function(err) {
 					if (err) return res.status(500).end('500, ?????????');
-					res.redirect("/cart");
+					res.sendStatus(200);
 				});
 			} else res.status(401).end('401, how the heck are you seeing this???');
 		} catch(e) {

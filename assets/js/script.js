@@ -54,7 +54,7 @@ function updateCartQty() {
 	xhr.onreadystatechange = function() {
 		if (xhr.status === 303 && xhr.readyState === 4) {
 			alert('Cart has been saved!');
-			window.location.href = '/products';
+			window.location.href = '/cart';
 		}
 	};
 	 
@@ -63,7 +63,28 @@ function updateCartQty() {
 	xhr.send(data);
 }
 
-$(document).ready(function () {
+function postChOut() {
+	// make XHR object and prep it
+	let xhr = new XMLHttpRequest();
+	let data = $('input:checked').map(function() {
+		return $(this).attr('name');
+	}).get();
+	
+	xhr.open("POST", "/checkout", true);
+	xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+	
+	// make state change callback: print data from server
+	xhr.onreadystatechange = function() {
+		if (xhr.status === 200 && xhr.readyState === 4) {
+			alert('Checked out successfully!');
+			window.location.href = '/cart';
+		}
+	};
+	
+	xhr.send(data);
+}
+
+$(document).ready(function() {
 	// for cart page
 	updateTotals();
 	
