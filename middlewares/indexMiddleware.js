@@ -62,7 +62,7 @@ const indexMiddleware = {
 		userModel.findOne({user: userIn}, function(err, match) {
 			if (match)
 				res.send(match.user === userIn);
-			else res.send(true);
+			else res.send(false);
 		});
 	}
 };

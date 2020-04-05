@@ -98,7 +98,7 @@ $(document).ready(function () {
 	// check if username already exists in db
 	$('#username').keyup(function() {
 		var userIn = $('#username').val();
-		console.log(userIn);
+		
 		$.get('/checkUser', {user: userIn}, function(result) { // result is bool
 			if(result) {
 				$('#username').css('border-color', 'red');
@@ -115,7 +115,7 @@ $(document).ready(function () {
 	$("button.delCart").click(function() {
 		let code = $(this).siblings(".desc").text(), codeDel = code.trim().split(/(\s)/)[4];
 		let row = $(this).closest('.row');
-		console.log(codeDel);
+		
 		$.post('/delCartItem', {code: codeDel}, function(result) {
 			if (result) {
 				row.remove();
@@ -127,7 +127,7 @@ $(document).ready(function () {
 	$("button.delWish").click(function() {
 		let code = $(this).siblings("div").text(), codeDel = code.trim().split(/(\s)/)[4];
 		let row = $(this).closest('.row');
-		
+		console.log(codeDel);
 		$.post('/delWishItem', {code: codeDel}, function(result) {
 			if (result) {
 				row.remove();
