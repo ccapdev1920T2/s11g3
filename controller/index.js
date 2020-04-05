@@ -341,7 +341,7 @@ const indexFunctions = {
 			} catch (e) {
 				console.log(e);
 			}
-		} else res.redirect("/product/" + req.params.id);
+		} else res.redirect("/");
 	},
 	
 	postAddWish: function(req, res) {
@@ -357,7 +357,7 @@ const indexFunctions = {
 					});
 				}
 			});
-		} else res.redirect("/product/" + req.params.id);
+		} else res.redirect("/");
 	},
 	
 	/* CHECK OUT SEQUENCE
