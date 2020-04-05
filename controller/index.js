@@ -459,8 +459,6 @@ const indexFunctions = {
 			res.redirect('/');
 		}
 	}
-	
-	
 };
 
 module.exports = indexFunctions;
