@@ -8,7 +8,7 @@ function closeNav() {
 
 function extractCodeQty(string) {
 	var arr = string.split('\n\t\t\t\t\t\t\t');
-	return {code: arr[6].substring(15), qty: Number.parseInt(arr[15].substring(1))};
+	return {code: arr[7].substring(15), qty: Number.parseInt(arr[16].substring(1))};
 }
 
 function updateTotals() {
