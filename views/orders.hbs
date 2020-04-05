@@ -14,20 +14,18 @@
 			<div class="trx-container">
 				<div class="trx-summary">
 					<div class="order-content" id="order-number">
-						Order#: {{getOrdCode _id}}
+						<b> Order#: </b> {{getOrdCode _id}}
 					</div>
 					<div class="order-content" id="order-numitems">
-						Total items: {{getOrdQty this.prods}}
+						<b> Total Items: </b> {{getOrdQty this.prods}}
 					</div>
 					<br>
 					<div class="order-content" id="order-address">
-						<b> Shipping Address </b> <br>
-						{{buyer.0.addr}}
+						<b> Shipping Address: </b> {{buyer.0.addr}}
 					</div>
 					<br>
 					<div class="order-content" id="order-totalprice">
-						<b> TOTAL </b>
-						<br> Php {{getOrdPrice this.prods}}
+						<b> Total Price: </b> Php {{getOrdPrice this.prods}}
 					</div>
 				</div>
 				
