@@ -274,50 +274,6 @@ li a:hover:not(.active) {
   font-size: 20px;
 }
 
-.stats-dropdown {
-  position: relative;
-  display: inline-block;
-  margin: 10px;
-  margin-left: 20px;
-  margin-right: 20px;
-}
-
-.stats-dropdown-content {
-  display: none;
-  position: absolute;
-  background-color: #f9f9f9;
-  min-width: 160px;
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-  z-index: 1;
-  font-family: Abel, sans-serif;
-  height: 200px;
-  overflow: auto;
-}
-
-.stats-dropdown-content a {
-  color: black;
-  padding: 12px 16px;
-  text-decoration: none;
-  display: block;
-}
-
-.stats-dropdown-content a:hover {
-  background-color: #f1f1f1;
-}
-
-.stats-dropdown:hover .stats-dropdown-content {
-  display: block;
-}
-
-.stats-dropbtn {
-  color: black;
-  cursor: pointer;
-  font-family: Abel, sans-serif;
-  font-size: 20px;
-  display: flex;
-  flex-direction: row;
-}
-
 .stats-container {
   font-family: Abel, sans-serif;
   font-size: 20px;

@@ -46,6 +46,11 @@ function getCateg(categ) {
 	}
 }
 
+function getStrMonth(mon) {
+	var d = Date.parse(mon + " 1, 2020");
+	return !isNaN(d) ? new Date(d).getMonth() + 1 : -1;
+}
+
 /** Indexian of functions used for app functions
  */
 const indexFunctions = {
@@ -80,9 +85,41 @@ const indexFunctions = {
 	
 	getStats: function(req, res) {
 		res.render('stats', {
-			// idk yet huehue
 			title: 'TheShop - My Stats'
 		});
+	},
+	
+	getStatsQuery: async function(req, res) {
+		let {statmonth, statyear} = req.query;
+		if (!statmonth || !statyear) {
+			let aggrPipelines = [
+				{'$lookup': {
+					'from': 'Users',
+					'localField': 'buyer',
+					'foreignField': '_id',
+					'as': 'buyer'
+				}},
+				{'$match': { '$and': [
+					{'buyer.email': req.session.logUser.email},
+					{'$expr': {'$eq': [{'$month': '$dateOrd'}, getStrMonth(statmonth)]}},
+					{'$expr': {'$eq': [{'$year': '$dateOrd'}, Number.parseInt(statyear)]}}
+				]
+				}},
+				{'$lookup': {
+					'from': 'Products',
+					'localField': 'products.item',
+					'foreignField': '_id',
+					'as': 'prods'
+				}}
+			];
+			var ords = await ordModel.aggregate(aggrPipelines);
+			console.log(ords);
+			
+		} else {
+			res.render('stats', {
+				title: 'TheShop - My Stats'
+			});
+		}
 	},
 	
 	getAccount: function(req, res) {

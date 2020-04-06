@@ -5,7 +5,8 @@ const middleware = require('../middlewares/indexMiddleware');
 
 router.get('/', controller.getHome);
 router.get('/login', controller.getLogin);
-// router.get('/stats', controller.getStats);
+router.get('/stats', controller.getStats);
+router.get('/statquery', controller.getStatsQuery);
 router.get('/account', controller.getAccount);
 router.get('/registration', controller.getRegister);
 router.get('/changepass', controller.getChangePW);

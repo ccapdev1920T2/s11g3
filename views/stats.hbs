@@ -1,60 +1,50 @@
 {{> navbar}}
-<div id="stats-nav">
-	<div class="stats-dropdown">   
-        <div class="stats-dropbtn" id="stats-month"> Month <i class="icon ion-arrow-down-b"> </i></div>
-		<div class="stats-dropdown-content">
-			<a href="#" id="statsall"> All Months </a>
-			<a href="#" id="statsjan"> January </a>
-			<a href="#" id="statsfeb"> February </a>
-			<a href="#" id="statsmar"> March </a>
-			<a href="#" id="statsapr"> April </a>
-			<a href="#" id="statsmay"> May </a>
-			<a href="#" id="statsjun"> June </a>
-			<a href="#" id="statsjul"> July </a>
-			<a href="#" id="statsaug"> August </a>
-			<a href="#" id="statssep"> September </a>
-			<a href="#" id="statsoct"> October </a>
-			<a href="#" id="statsnov"> November </a>
-			<a href="#" id="statsdec"> December </a>
-		</div>
-	</div>
-	<div class="stats-dropdown">   
-		<div class="stats-dropbtn" id="stats-year"> Year <i class="icon ion-arrow-down-b"></i></div>
-		<div class="stats-dropdown-content">
-			<a href="#" id="stats2020"> 2020 </a>
-			<a href="#" id="stats2019"> 2019 </a>
-			<a href="#" id="stats2018"> 2018 </a>
-			<a href="#" id="stats2017"> 2017 </a>
-			<a href="#" id="stats2016"> 2016 </a>
-			<a href="#" id="stats2015"> 2015 </a>
-			<a href="#" id="stats2014"> 2014 </a>
-			<a href="#" id="stats2013"> 2013 </a>
-			<a href="#" id="stats2012"> 2012 </a>
-			<a href="#" id="stats2011"> 2011 </a>
-			<a href="#" id="stats2010"> 2010 </a>
-		</div>
-	</div>
-    
-	<div><div class="stats-go-btn"><button class="stats-go-btn" id="stats-go"> Submit </a></div></div>
-</div>
+<form id="stats-nav" method="GET" action="/statquery">
+	<select class="custom-select" style="margin-top:auto;margin-bottom:auto;" name="statmonth">
+		<option val="all">All Months</option>
+		<option val="jan">January</option>
+		<option val="feb">February</option>
+		<option val="mar">March</option>
+		<option val="apr">April</option>
+		<option val="may">May</option>
+		<option val="jun">June</option>
+		<option val="jul">July</option>
+		<option val="aug">August</option>
+		<option val="sep">September</option>
+		<option val="oct">October</option>
+		<option val="nov">November</option>
+		<option val="dec">December</option>
+	</select>
+	<select class="custom-select" style="margin-top:auto;margin-bottom:auto;" name="statyear">
+		<option val="2020">2020</option>
+		<option val="2019">2019</option>
+		<option val="2018">2018</option>
+		<option val="2017">2017</option>
+		<option val="2016">2016</option>
+		<option val="2015">2015</option>
+		<option val="2014">2014</option>
+		<option val="2013">2013</option>
+		<option val="2012">2012</option>
+		<option val="2011">2011</option>
+		<option val="2010">2010</option>
+	</select>
+	<div class="stats-go-btn"><button class="stats-go-btn" type="submit"> Submit </a></div>
+</form>
 <div id="stats">
-    <div class="stats-date">
-        <div id="stats-month" style="padding-left: 20px">{{month}}</div>
-        <div id="stats-year" style="padding-left: 10px">{{year}}</div>
-    </div>
-    
+	<div class="stats-date">
+		<div id="stats-month" style="padding-left: 20px">{{month}}</div>
+		<div id="stats-year" style="padding-left: 10px">{{year}}</div>
+	</div>
+
 	<div class="stats-container">
 		<div class="stats-column" id="stats-itemsbought">
 			<b>ITEMS BOUGHT</b> <br>
-			{{}}
 		</div>
 		<div class="stats-column" id="stats-totalqty" style="margin-left:40px">
 			<b>TOTAL QUANTITY</b> <br>
-			{{}}
-        </div>
-        <div class="stats-column" id="stats-totalprice">
+		</div>
+		<div class="stats-column" id="stats-totalprice">
 			<b>TOTAL PRICE</b> <br>
-			{{}}
 		</div>
 	</div>
 </div>
