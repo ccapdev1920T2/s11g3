@@ -117,7 +117,10 @@ const indexFunctions = {
 			
 		} else {
 			res.render('stats', {
-				title: 'TheShop - My Stats'
+				title: 'TheShop - My Stats',
+				month: statmonth,
+				year: statyear,
+				ords: ords
 			});
 		}
 	},
