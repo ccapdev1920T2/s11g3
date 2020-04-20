@@ -32,9 +32,10 @@ The following users may be used to log in:
 - Dotenv
 - Mongoose
 - Nodemon (for developmental purposes)
+- validator.js
+- express-validator
 
 ## Dependencies to be Added
-- Passport
 - bcryptjs
 
 ## Members of the Group
