@@ -92,10 +92,13 @@ $(document).ready(function() {
 	$('#submitLogin').click(function() {
 		var email = $('#emailLogin').val();
 		var pass = $('#passwordLogin').val();
-		if (!validator.isEmpty(email)) {
+		if (validator.isEmpty(email)) {
+			$('#emailLogin').attr();
 			console.log('empty email');
+		} else if (!validator.isEmail(email)) {
+			console.log('not email');
 		}
-		if (!validator.isEmpty(pass)) {
+		if (validator.isEmpty(pass)) {
 			console.log('empty password');
 		}
 		
