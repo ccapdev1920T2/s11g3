@@ -89,7 +89,17 @@ $(document).ready(function() {
 	/* LOGIN METHODS */
 	
 	// LOGIN: validation of form when submitting
-	$();
+	$('#submitLogin').click(function() {
+		var email = $('#emailLogin').val();
+		var pass = $('#passwordLogin').val();
+		if (!validator.isEmpty(email)) {
+			console.log('empty email');
+		}
+		if (!validator.isEmpty(pass)) {
+			console.log('empty password');
+		}
+		
+	});
 	
 	/* REGISTER METHODS */
 	
@@ -100,11 +110,11 @@ $(document).ready(function() {
 			if(result) { // if result is true, either NOT email or EXISTING user
 				$('#email').css('border-color', 'red');
 				// $('#error').text('email already exists');
-				$('#regSub').prop('disabled', true);
+				$('#submitReg').prop('disabled', true);
 			} else {
 				$('#email').css('border-color', '#dfe7f1');
 				// $('#error').text('');
-				$('#regSub').prop('disabled', false);
+				$('#submitReg').prop('disabled', false);
 			}
 		});
 	});
@@ -117,11 +127,11 @@ $(document).ready(function() {
 			if(result) {
 				$('#username').css('border-color', 'red');
 				// $('#error').text('email already exists');
-				$('#regSub').prop('disabled', true);
+				$('#submitReg').prop('disabled', true);
 			} else {
 				$('#username').css('border-color', '#dfe7f1');
 				// $('#error').text('');
-				$('#regSub').prop('disabled', false);
+				$('#submitReg').prop('disabled', false);
 			}
 		});
 	});
