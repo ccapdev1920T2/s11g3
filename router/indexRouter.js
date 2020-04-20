@@ -18,7 +18,7 @@ router.get('/orders', controller.getOrders);
 router.get('/wishlist', controller.getWishlist);
 router.get('/cart', controller.getCart);
 
-router.post('/login', middleware.validateLogin, controller.postLogin);
+router.post('/login', /*middleware.validateLogin,*/ controller.postLogin);
 router.post('/logout', controller.postLogout);
 router.post('/registration', middleware.validateReg, controller.postReg);
 router.post('/changepass', middleware.validateChangePW, controller.postChangePW);

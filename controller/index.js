@@ -305,23 +305,16 @@ const indexFunctions = {
 	},
 	
 	postLogin: function(req, res) {
-		let { email, password } = req.body;
-		userModel.findOne({ email: email, pass: password }, function (err, match) {
-			if (err) return res.status(500).end('500 Internal Server error, something bad happened');
-			if (!match) return res.status(401).end('401 Unauthorized error, no user found!');
-			
-			// if no match found, return 401 error
-			req.session.logUser = match;
-			
-			return res.status(200).render('account', {
-				title: 'TheShop - My Acount',
-				user: match.user,
-				fName: match.fName,
-				lName: match.lName,
-				email: match.email,
-				addr: match.addr,
-				contact: match.contact
-			});
+		let { email, pass } = req.body;
+		userModel.findOne({ email: email, pass: pass }, function (err, match) {
+			if (err)
+				res.send({status: 500});
+			else if (!match)
+				res.send({status: 401});
+			else {
+				req.session.logUser = match;
+				res.send({status: 200});
+			}
 		});
 	},
 	

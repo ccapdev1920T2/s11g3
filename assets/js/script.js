@@ -105,9 +105,18 @@ $(document).ready(function() {
 		
 		if (!validator.isEmpty(email) || validator.isEmail(email) || !validator.isEmpty(pass)) {
 			// send post request, check if user exists
-			$.post('/login', {email: email, pass: pass}, function(result, q, w, e, r) {
-				console.log(result);
-				console.log(q, w, e, r);
+			$.post('/login', {email: email, pass: pass}, function(res) {
+				switch (res.status) {
+					case 200: {
+						window.location.href = '/'; break;
+					}
+					case 401: {
+						$('#pwErr').text('No user found!'); break;
+					}
+					case 500: {
+						$('#pwErr').text('Server error!'); break;
+					}
+				}
 			});
 		}
 	});
