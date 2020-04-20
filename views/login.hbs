@@ -3,8 +3,14 @@
 	<form id="loginform" method="post">
 		<h2 class="sr-only">Login Form</h2>
 		<div class="illustration"><i class="icon ion-ios-person" style="color: #a3b76a;"></i></div>
-		<div class="form-group"><input class="form-control" type="text" id="emailLogin" name="email" placeholder="Email"></div>
-		<div class="form-group"><input class="form-control" type="password" id="passwordLogin" name="password" placeholder="Password"></div>
+		<div class="form-group">
+			<input class="form-control" type="text" id="emailLogin" name="email" placeholder="Email">
+			<p class="text-danger p-1" id="emErr"></p>
+		</div>
+		<div class="form-group">
+			<input class="form-control" type="password" id="passwordLogin" name="password" placeholder="Password">
+			<p class="text-danger p-1" id="pwErr"></p>
+		</div>
 		<div class="form-group"><button class="btn btn-primary btn-block" id="submitLogin" type="button" style="background-color: #a3b76a;">Log In</button></div>
 	</form>
 </div>

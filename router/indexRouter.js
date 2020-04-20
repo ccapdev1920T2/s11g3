@@ -5,7 +5,6 @@ const middleware = require('../middlewares/indexMiddleware');
 
 router.get('/', controller.getHome);
 router.get('/login', controller.getLogin);
-router.get('/stats', controller.getStats);
 router.get('/statquery', controller.getStatsQuery);
 router.get('/account', controller.getAccount);
 router.get('/registration', controller.getRegister);
@@ -19,7 +18,6 @@ router.get('/orders', controller.getOrders);
 router.get('/wishlist', controller.getWishlist);
 router.get('/cart', controller.getCart);
 
-router.post('/stats', controller.postStats);
 router.post('/login', middleware.validateLogin, controller.postLogin);
 router.post('/logout', controller.postLogout);
 router.post('/registration', middleware.validateReg, controller.postReg);

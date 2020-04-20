@@ -89,21 +89,27 @@ $(document).ready(function() {
 	/* LOGIN METHODS */
 	
 	// LOGIN: validation of form when submitting
+	// checking if fields are not empty + email is in right format
 	$('#submitLogin').click(function() {
-		var errors = {};
 		var email = $('#emailLogin').val();
 		var pass = $('#passwordLogin').val();
 		
 		if (validator.isEmpty(email)) {
-			$('#emailLogin').attr();
-			console.log('empty email');
+			$('#emErr').text('Empty field!');
 		} else if (!validator.isEmail(email)) {
-			console.log('not email');
+			$('#emErr').text('Wrong email format!');
 		}
 		if (validator.isEmpty(pass)) {
-			console.log('empty password');
+			$('#pwErr').text('Empty field!');
 		}
 		
+		if (!validator.isEmpty(email) || validator.isEmail(email) || !validator.isEmpty(pass)) {
+			// send post request, check if user exists
+			$.post('/login', {email: email, pass: pass}, function(result, q, w, e, r) {
+				console.log(result);
+				console.log(q, w, e, r);
+			});
+		}
 	});
 	
 	/* REGISTER METHODS */
