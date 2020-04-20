@@ -85,25 +85,15 @@ function postChOut() {
 }
 
 $(document).ready(function() {
-	// for cart page
-	updateTotals();
 	
-	$(".minus").click(function() {
-		var qty = Number.parseInt($(this).next().text());
-		if (qty > 1)
-			$(this).next().text(qty-1);
-		updateTotals();
-	});
+	/* LOGIN METHODS */
 	
-	$(".plus").click(function() {
-		var qty = Number.parseInt($(this).prev().text());
-		var max = Number.parseInt($(this).parent().prev().children("a").prev().children("strong").text());
-		if (qty < max)
-			$(this).prev().text(qty+1);
-		updateTotals();
-	});
+	// LOGIN: validation of form when submitting
+	$();
 	
-	// check if email already exists in db and if email is email
+	/* REGISTER METHODS */
+	
+	// REGISTER: check if email already exists in db and if email is email
 	$('#email').keyup(function() {
 		var emailIn = $('#email').val();
 		$.get('/checkEmail', {email: emailIn}, function(result) { // result is bool
@@ -119,7 +109,7 @@ $(document).ready(function() {
 		});
 	});
 	
-	// check if username already exists in db
+	// REGISTER: check if username already exists in db
 	$('#username').keyup(function() {
 		var userIn = $('#username').val();
 		
@@ -136,6 +126,32 @@ $(document).ready(function() {
 		});
 	});
 	
+	// REGISTER: validation of form when submitting
+	$();
+	
+	/* CART METHODS */
+	
+	// CART: for cart page, initial get totals
+	updateTotals();
+	
+	// CART: changing cart qty -
+	$(".minus").click(function() {
+		var qty = Number.parseInt($(this).next().text());
+		if (qty > 1)
+			$(this).next().text(qty-1);
+		updateTotals();
+	});
+	
+	// CART: changing cart qty +
+	$(".plus").click(function() {
+		var qty = Number.parseInt($(this).prev().text());
+		var max = Number.parseInt($(this).parent().prev().children("a").prev().children("strong").text());
+		if (qty < max)
+			$(this).prev().text(qty+1);
+		updateTotals();
+	});
+	
+	// CART: delete item from cart
 	$("button.delCart").click(function() {
 		let code = $(this).siblings(".desc").text(), codeDel = code.trim().split(/(\s)/)[4];
 		let row = $(this).closest('.row');
@@ -148,6 +164,9 @@ $(document).ready(function() {
 		});
 	});
 	
+	/* WISHLIST METHOD */
+	
+	// WISHLIST: delete item from wishlist
 	$("button.delWish").click(function() {
 		let code = $(this).siblings("div").text(), codeDel = code.trim().split(/(\s)/)[4];
 		let row = $(this).closest('.row');
