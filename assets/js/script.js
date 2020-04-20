@@ -90,8 +90,10 @@ $(document).ready(function() {
 	
 	// LOGIN: validation of form when submitting
 	$('#submitLogin').click(function() {
+		var errors = {};
 		var email = $('#emailLogin').val();
 		var pass = $('#passwordLogin').val();
+		
 		if (validator.isEmpty(email)) {
 			$('#emailLogin').attr();
 			console.log('empty email');
