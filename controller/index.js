@@ -309,19 +309,18 @@ const indexFunctions = {
 	
 	postLogin: function(req, res) {
 		let { email, pass } = req.body;
-		userModel.findOne({ email: email, pass: pass }, function (err, match) {
-			if (err)
-				res.send({status: 500});
-			else if (!match)
-				res.send({status: 401});
+		userModel.findOne({ email: email }, function (err, match) {
+			if (err) res.send({status: 500});
+			else if (!match) res.send({status: 401}); // opportunity to 
 			else {
-				req.session.logUser = match;
-				res.send({status: 200});
+				bcrypt.compare(pass, match.pass, function(err, result) {
+					if (result) {
+						req.session.logUser = match;
+						res.send({status: 200});
+					} else res.send({status: 401});
+				});
 			}
 		});
-		
-		// res.send({}) ONLY accepts 1 PARAM, of type String OR object but NOT int
-		
 	},
 	
 	postLogout: function(req, res) {
@@ -333,17 +332,19 @@ const indexFunctions = {
 		let { fname, lname, username, email, password, address, phone } = req.body;
 		
 		userModel.find({email: email}, function(err, match) {
-			if (err) return res.status(500).end('500 Internal Server error, this shouldnt happen');
-			if (match.length !== 0) { // check if email already exists in db
-				return res.status(401).end('401 Unauth error, user already exists');
+			if (err) return res.status(500).end('500, error connecting to db');
+			// check if email already exists in db
+			else if (match.length !== 0) return res.status(401).end('401 Unauth error, user already exists');
+			else {
+				bcrypt.hash(password, saltRounds, function(err, hash) {
+					// insert user in db if reg is successful
+					var insertUser = new User(fname, lname, email, username, hash, phone, address);
+					userModel.create(insertUser, function(err) {
+						if (err) return res.status(500).end('500 Internal Server error, cant register');
+						else res.redirect('/');
+					});
+				});
 			}
-			
-			// insert user in db if reg is successful
-			var insertUser = new User(fname, lname, email, username, password, phone, address);
-			userModel.create(insertUser, function(err) {
-				if (err) return res.status(500).end('500 Internal Server error, cant register');
-				res.redirect('/');
-			});
 		});
 	},
 	
