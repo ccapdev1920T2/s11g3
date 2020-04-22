@@ -94,6 +94,9 @@ $(document).ready(function() {
 		var email = $('#emailLogin').val();
 		var pass = $('#passwordLogin').val();
 		
+		$('#emErr').text('');
+		$('#pwErr').text('');
+		
 		if (validator.isEmpty(email)) {
 			$('#emErr').text('Empty field!');
 		} else if (!validator.isEmail(email)) {
@@ -105,8 +108,8 @@ $(document).ready(function() {
 		
 		if (!validator.isEmpty(email) || validator.isEmail(email) || !validator.isEmpty(pass)) {
 			// send post request, check if user exists
-			$.post('/login', {email: email, pass: pass}, function(res) {
-				switch (res.status) {
+			$.post('/login', {email: email, pass: pass}, function(result) {
+				switch (result.status) {
 					case 200: {
 						window.location.href = '/'; break;
 					}
@@ -123,9 +126,12 @@ $(document).ready(function() {
 	
 	/* REGISTER METHODS */
 	
-	// REGISTER: check if email already exists in db and if email is email
-	$('#email').keyup(function() {
+	// REGISTER: validation of form when submitting
+	$('blahblah register button').click(function() {
 		var emailIn = $('#email').val();
+		var userIn = $('#username').val();
+		
+		// REGISTER: check if email already exists in db and if email is email
 		$.get('/checkEmail', {email: emailIn}, function(result) { // result is bool
 			if(result) { // if result is true, either NOT email or EXISTING user
 				$('#email').css('border-color', 'red');
@@ -137,12 +143,8 @@ $(document).ready(function() {
 				$('#submitReg').prop('disabled', false);
 			}
 		});
-	});
-	
-	// REGISTER: check if username already exists in db
-	$('#username').keyup(function() {
-		var userIn = $('#username').val();
 		
+		// REGISTER: check if username already exists in db
 		$.get('/checkUser', {user: userIn}, function(result) { // result is bool
 			if(result) {
 				$('#username').css('border-color', 'red');
@@ -155,9 +157,6 @@ $(document).ready(function() {
 			}
 		});
 	});
-	
-	// REGISTER: validation of form when submitting
-	$();
 	
 	/* CART METHODS */
 	

@@ -4,6 +4,9 @@ const userModel = require('../model/userdb');
 const prodModel = require('../model/productdb');
 const ordModel = require('../model/orderdb');
 
+const bcrypt = require('bcrypt');
+const saltRounds = 10;
+
 /* Object constructors */
 function User(fName, lName, email, user, pass, contact, addr) {
 	this.fName = fName;
@@ -316,6 +319,9 @@ const indexFunctions = {
 				res.send({status: 200});
 			}
 		});
+		
+		// res.send({}) ONLY accepts 1 PARAM, of type String OR object but NOT int
+		
 	},
 	
 	postLogout: function(req, res) {
