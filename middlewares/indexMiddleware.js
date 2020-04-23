@@ -34,11 +34,11 @@ const indexMiddleware = {
 	},
 	
 	validateChangePW: function(req, res, next) {
+		// validate pw length!!!
+		
 		let { oldpass, newpass, confnewpass } = req.body;
 		
-		if (req.session.logUser.pass !== oldpass)
-			return res.status(401).end('401, wrong oldpass');
-		else if (!oldpass || !newpass || !confnewpass)
+		if (!oldpass || !newpass || !confnewpass)
 			return res.status(401).end('401, missing credentials');
 		else if (newpass !== confnewpass)
 			return res.status(401).end('401, bad newpass/newconf');

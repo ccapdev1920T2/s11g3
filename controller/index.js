@@ -139,7 +139,7 @@ const indexFunctions = {
 				addr: req.session.logUser.addr,
 				contact: req.session.logUser.contact
 			});
-		} else res.status(403).end('403 forbidden, please log in');
+		} else res.redirect('/');
 	},
 	
 	getRegister: function(req, res) {
@@ -216,8 +216,6 @@ const indexFunctions = {
 		// chop off again the /product/
 		prodModel.findOne({code: req.url.substring(10)}, function(err, match) {
 			if (err) return res.status(500).end('500 Internal Server error, this shouldnt happen');
-			if (!match) return res.status(500).end('500, no products found');
-			
 			// pp === product details
 			let pp = JSON.parse(JSON.stringify(match));
 			
@@ -311,7 +309,7 @@ const indexFunctions = {
 		let { email, pass } = req.body;
 		userModel.findOne({ email: email }, function (err, match) {
 			if (err) res.send({status: 500});
-			else if (!match) res.send({status: 401}); // opportunity to 
+			else if (!match) res.send({status: 401});
 			else {
 				bcrypt.compare(pass, match.pass, function(err, result) {
 					if (result) {
@@ -332,15 +330,16 @@ const indexFunctions = {
 		let { fname, lname, username, email, password, address, phone } = req.body;
 		
 		userModel.find({email: email}, function(err, match) {
-			if (err) return res.status(500).end('500, error connecting to db');
+			if (err) res.send({status: 500, msg: '500, error connecting to db'});
 			// check if email already exists in db
-			else if (match.length !== 0) return res.status(401).end('401 Unauth error, user already exists');
+			else if (match.length !== 0)
+				res.send({status: 401, msg: '401 Unauth error, user already exists'});
 			else {
 				bcrypt.hash(password, saltRounds, function(err, hash) {
 					// insert user in db if reg is successful
 					var insertUser = new User(fname, lname, email, username, hash, phone, address);
 					userModel.create(insertUser, function(err) {
-						if (err) return res.status(500).end('500 Internal Server error, cant register');
+						if (err) res.send({status: 500, msg: '500, error connecting to db'});
 						else res.redirect('/');
 					});
 				});
@@ -348,16 +347,26 @@ const indexFunctions = {
 		});
 	},
 	
-	postChangePW: function(req, res) {
+	postChangePW: async function(req, res) {
 		let { oldpass, newpass } = req.body;
 		
-		// search entries with oldpass, then set them to newpass
-		userModel.findOneAndUpdate({pass: oldpass}, { $set:{pass: newpass} }, {useFindAndModify: false}, function(err, match) {
-			if (err) return res.status(500).end('500 internal error, this shouldnt happen wtf');
-			if (!match) return res.status(401).end('401, password forbidden');
-		});
-		
-		res.redirect('/');
+		if (req.session.logUser) {
+			// search entries with registered, then set them to newpass
+			var user = await userModel.findOne({email: req.session.logUser.email});
+			var comp = await bcrypt.compare(oldpass, user.pass);
+			var newHash = await bcrypt.hash(newpass, saltRounds);
+			
+			if (comp) {
+				// now replace the password with new hashed
+				userModel.findOneAndUpdate({email: req.session.logUser.email},
+						{ $set:{pass: newHash} }, {useFindAndModify: false},
+						function(err, match) {
+					if (err) res.send({status: 500});
+					else if (!match) res.send({status: 401, msg: 'No user found.'});
+					else res.send({status: 200});
+				});
+			} else res.send({status: 401, msg: 'Old password does not match.'});
+		} else res.send({status: 401, msg: 'Unauthorised user, you are not logged in.'});
 	},
 	
 	/* Both postAddCart and postAddWish function exactly the same way, with the exception

@@ -31,12 +31,10 @@ The following users may be used to log in:
 - Cookie-Parser
 - Dotenv
 - Mongoose
-- Nodemon (for developmental purposes)
 - validator.js
 - express-validator
-
-## Dependencies to be Added
 - bcryptjs
+- Nodemon (for developmental purposes)
 
 ## Members of the Group
 - Estella, Julia
