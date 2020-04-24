@@ -158,6 +158,41 @@ $(document).ready(function() {
 		});
 	});
 	
+	/* CHANGE PW METHODS */
+	
+	// CHANGE PW: validation of form when submitting
+	$('button#changepwsubmit').click(function() {
+		var oldpass = $('#oldpass').val();
+		var newpass = $('#newpass').val();
+		var cnewpass = $('#confnewpass').val();
+		
+		if (validator.isEmpty(oldpass)) {
+			$('#emErr').text('Empty field!');
+		}
+		if (validator.isEmpty(newpass)) {
+			$('#pwErr').text('Empty field!');
+		}
+		if (validator.isEmpty(cnewpass)) {
+			$('#pwErr').text('Empty field!');
+		}
+		// check if equal
+		
+		
+		if (  ) {
+			// send post request, check if user exists
+			$.post('/', {}, function(result) {
+				switch (result.status) {
+					case 200: {
+					}
+					case 401: {
+					}
+					case 500: {
+					}
+				}
+			});
+		}
+	});
+	
 	/* CART METHODS */
 	
 	// CART: for cart page, initial get totals

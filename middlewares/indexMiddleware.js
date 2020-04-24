@@ -14,9 +14,9 @@ const indexMiddleware = {
 		let { email, password } = req.body;
 		
 		if (!email || !password) { // check if fields are empty
-			res.send(401);
+			res.send({status: 401, msg: 'Missing fields!'});
 		} else if (!isEmail(email)) { // check if it is a valid email
-			res.send(401);
+			res.send({status: 401, msg: 'Email should be in the right format!'});
 		}
 		
 		next(); // calls the next function
@@ -34,14 +34,18 @@ const indexMiddleware = {
 	},
 	
 	validateChangePW: function(req, res, next) {
-		// validate pw length!!!
+		/* Things to validate:
+		 * - no empty fields
+		 * - newpass matches with confirmed
+		 * - 
+		 */
 		
 		let { oldpass, newpass, confnewpass } = req.body;
 		
 		if (!oldpass || !newpass || !confnewpass)
-			return res.status(401).end('401, missing credentials');
+			res.send({status: 401, msg: 'Missing fields!'});
 		else if (newpass !== confnewpass)
-			return res.status(401).end('401, bad newpass/newconf');
+			res.send({status: 401, msg: 'New passwords does not match!'});
 		else next();
 	},
 	
