@@ -127,9 +127,21 @@ $(document).ready(function() {
 	/* REGISTER METHODS */
 	
 	// REGISTER: validation of form when submitting
-	$('blahblah register button').click(function() {
-		var emailIn = $('#email').val();
-		var userIn = $('#username').val();
+	$('button#submitReg').click(function() {
+		var formArr = $('form#regForm').serializeArray();
+		
+		/* debugging, expected to get:
+		 * - fname
+		 * - lname
+		 * - username
+		 * - email
+		 * - password
+		 * - password_conf
+		 * - address
+		 * - phone
+		 * - checkbox
+		 */
+		console.log(formArr);
 		
 		// REGISTER: check if email already exists in db and if email is email
 		$.get('/checkEmail', {email: emailIn}, function(result) { // result is bool
@@ -167,18 +179,18 @@ $(document).ready(function() {
 		var cnewpass = $('#confnewpass').val();
 		
 		if (validator.isEmpty(oldpass)) {
-			$('#emErr').text('Empty field!');
+			$('#oldpassErr').text('Empty field!');
 		}
 		if (validator.isEmpty(newpass)) {
-			$('#pwErr').text('Empty field!');
+			$('#newpassErr').text('Empty field!');
 		}
 		if (validator.isEmpty(cnewpass)) {
-			$('#pwErr').text('Empty field!');
+			$('#cnewpassErr').text('Empty field!');
 		}
 		// check if equal
 		
 		
-		if (  ) {
+		if ( true ) {
 			// send post request, check if user exists
 			$.post('/', {}, function(result) {
 				switch (result.status) {
