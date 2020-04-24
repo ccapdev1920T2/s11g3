@@ -141,33 +141,50 @@ $(document).ready(function() {
 		 * - phone
 		 * - checkbox
 		 */
-		console.log(formArr);
+		console.table(formArr);
+		formArr.forEach(function(e) {
+			e.value = validator.trim(e.value);
+			$('p#' + e.name + 'Error').text(''); // resetting form
+		});
 		
-		// REGISTER: check if email already exists in db and if email is email
-		$.get('/checkEmail', {email: emailIn}, function(result) { // result is bool
-			if(result) { // if result is true, either NOT email or EXISTING user
-				$('#email').css('border-color', 'red');
-				// $('#error').text('email already exists');
-				$('#submitReg').prop('disabled', true);
-			} else {
-				$('#email').css('border-color', '#dfe7f1');
-				// $('#error').text('');
-				$('#submitReg').prop('disabled', false);
+		// empty, isEmail, username length 8-15, password length 8-20, password match, checkbox ticked
+		var checks = [true, true, true, true, true, true];/*Array(6).fill(true); */
+		
+		formArr.forEach(function(e) {
+			if (validator.isEmpty(e.value)) {
+				$('p#' + e.name + 'Error').text('This field is required.');
+				checks[0] = false;
 			}
 		});
 		
-		// REGISTER: check if username already exists in db
-		$.get('/checkUser', {user: userIn}, function(result) { // result is bool
-			if(result) {
-				$('#username').css('border-color', 'red');
-				// $('#error').text('email already exists');
-				$('#submitReg').prop('disabled', true);
-			} else {
-				$('#username').css('border-color', '#dfe7f1');
-				// $('#error').text('');
-				$('#submitReg').prop('disabled', false);
+		if (checks[0]) {
+			if (!validator.isEmail(formArr[].value)) { 
+				$('p#emailError').text('Invalid email inputted.');
+				checks[1] = false;
 			}
-		});
+			if (!validator.isLength(formArr[].value, {min: 8, max: 15})) {
+				$('p#passwordError').text('Username must be 8 to 15 characters long.');
+				checks[2] = false;
+			}
+			if (!validator.isLength(formArr[].value, {min: 8, max: 20})) {
+				$('p#passwordError').text('Password must be 8 to 20 characters long.');
+				checks[3] = false;
+			}
+			if (!validator.equals(formArr[].value, formArr[].value)) {
+				$('p#cpassError').text('Passwords do not match.');
+				checks[4] = false;
+			}
+			if (!validator.(formArr[].)) {
+				$('p#passwordError').text('');
+				checks[5] = false;
+			}
+		}
+		
+		if (checks.every(Boolean)) {
+			$.post('', {}, function(result) {
+				
+			});
+		}
 	});
 	
 	/* CHANGE PW METHODS */

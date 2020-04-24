@@ -23,6 +23,8 @@ const indexMiddleware = {
 	},
 	
 	validateReg: function(req, res, next) {
+		// REGISTER: check if email already exists in db and if email is email
+		// REGISTER: check if username already exists in db
 		let { fname, lname, username, email, password, password_conf, address, phone, checkbox } = req.body;
 		if (!fname || !lname || !username || !email || !password || !password_conf || !address || !phone || !checkbox)
 			res.send(401);
