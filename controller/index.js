@@ -328,22 +328,14 @@ const indexFunctions = {
 	
 	postReg: function(req, res, next) {
 		let { fname, lname, username, email, password, address, phone } = req.body;
+		console.log(req.body);
 		
-		userModel.find({email: email}, function(err, match) {
-			if (err) res.send({status: 500, msg: '500, error connecting to db'});
-			// check if email already exists in db
-			else if (match.length !== 0)
-				res.send({status: 401, msg: '401 Unauth error, user already exists'});
-			else {
-				bcrypt.hash(password, saltRounds, function(err, hash) {
-					// insert user in db if reg is successful
-					var insertUser = new User(fname, lname, email, username, hash, phone, address);
-					userModel.create(insertUser, function(err) {
-						if (err) res.send({status: 500, msg: '500, error connecting to db'});
-						else res.redirect('/');
-					});
-				});
-			}
+		bcrypt.hash(password, saltRounds, function(err, hash) {
+			var insertUser = new User(fname, lname, email, username, hash, phone, address);
+			userModel.create(insertUser, function(err) {
+				if (err) res.send({status: 500, msg: 'Server error, could not add user.'});
+				else res.send({status: 200, msg: 'Success!'});
+			});
 		});
 	},
 	

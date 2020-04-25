@@ -114,10 +114,10 @@ $(document).ready(function() {
 						window.location.href = '/'; break;
 					}
 					case 401: {
-						$('#pwErr').text('No user found!'); break;
+						alert('No user found!'); break;
 					}
 					case 500: {
-						$('#pwErr').text('Server error!'); break;
+						alert('Server error. Please try again in a while.'); break;
 					}
 				}
 			});
@@ -146,7 +146,7 @@ $(document).ready(function() {
 			e.value = validator.trim(e.value);
 		});
 		
-		// empty, isEmail, username length 8-15, password length 8-20, password match, contact num is num, checkbox ticked
+		// empty, isEmail, username length 8-15, password length 8-inf, password match, contact is num, checkbox ticked
 		var checks = Array(7).fill(true);
 		
 		formArr.forEach(function(e) {
@@ -177,17 +177,26 @@ $(document).ready(function() {
 				$('p#confirmError').text('Passwords do not match.');
 				checks[4] = false;
 			}
-			if (!/^09[0-9]{2}( |-)?[0-9]{3}( |-)?[0-9]{4}$/.match(formArr[7].value)) {
+			if (!/^09[0-9]{2}( |-)?[0-9]{3}( |-)?[0-9]{4}$/.test(formArr[7].value)) {
 				$('p#phoneError').text('Please enter a mobile number (11 digits).');
 				checks[5] = false;
 			}
 		}
 		
 		if (checks.every(Boolean)) {
-			alert('form is all cleared and ready to go!'); // TODO: delete this when done
-//			$.post('', {}, function(result) {
-//				
-//			});
+			$.post('/registration', formArr, function(res) {
+				switch(res.status) {
+					case 200: {
+						window.location.href = '/login'; break;
+					}
+					case 401: {
+						alert(res.msg); break;
+					}
+					case 500: {
+						alert(res.msg); break;
+					}
+				}
+			});
 		}
 	});
 	

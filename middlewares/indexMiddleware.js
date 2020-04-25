@@ -1,9 +1,5 @@
-/* Accessing the models (db) of each class
- */
+/* Accessing the Users model */
 const userModel = require('../model/userdb');
-const prodModel = require('../model/productdb');
-const ordModel = require('../model/orderdb');
-
 const regex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
 const indexMiddleware = {
@@ -24,7 +20,7 @@ const indexMiddleware = {
 			}
 			else return next();
 		} catch (e) {
-			res.send({status: 500, mssg: 'Server error.'});
+			res.send({status: 500, msg: 'Server error. Could not validate.'});
 		}
 	}
 };
