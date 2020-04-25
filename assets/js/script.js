@@ -177,7 +177,7 @@ $(document).ready(function() {
 				$('p#confirmError').text('Passwords do not match.');
 				checks[4] = false;
 			}
-			if (!validator.isInt(formArr[7].value, {allow_leading_zeroes: true}) || !validator.isLength(formArr[7].value, {min: 11, max: 11})) {
+			if (!/^09[0-9]{2}( |-)?[0-9]{3}( |-)?[0-9]{4}$/.match(formArr[7].value)) {
 				$('p#phoneError').text('Please enter a mobile number (11 digits).');
 				checks[5] = false;
 			}
