@@ -198,28 +198,37 @@ $(document).ready(function() {
 		var oldpass = $('#oldpass').val();
 		var newpass = $('#newpass').val();
 		var cnewpass = $('#confnewpass').val();
+		var checks = Array(4).fill(true);
 		
 		if (validator.isEmpty(oldpass)) {
 			$('#oldpassErr').text('Empty field!');
+			checks[0] = false;
 		}
 		if (validator.isEmpty(newpass)) {
 			$('#newpassErr').text('Empty field!');
+			checks[1] = false;
 		}
 		if (validator.isEmpty(cnewpass)) {
 			$('#cnewpassErr').text('Empty field!');
+			checks[2] = false;
 		}
-		// check if equal
+		if (!validator.equals(newpass, cnewpass)) {
+			$('#cnewpassErr').text('Empty field!');
+			checks[3] = false;
+		}
 		
-		
-		if ( true ) {
-			// send post request, check if user exists
-			$.post('/', {}, function(result) {
+		if (checks.every(Boolean)) {
+			// send post request
+			$.post('/changepass', {oldpass: oldpass, newpass: newpass, confnewpass: cnewpass}, function(result) {
 				switch (result.status) {
 					case 200: {
+						window.location.href = '/account'; break;
 					}
 					case 401: {
+						alert(result.msg); break;
 					}
 					case 500: {
+						alert(result.msg); break;
 					}
 				}
 			});

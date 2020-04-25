@@ -350,23 +350,21 @@ const indexFunctions = {
 	postChangePW: async function(req, res) {
 		let { oldpass, newpass } = req.body;
 		
-		if (req.session.logUser) {
-			// search entries with registered, then set them to newpass
-			var user = await userModel.findOne({email: req.session.logUser.email});
-			var comp = await bcrypt.compare(oldpass, user.pass);
-			var newHash = await bcrypt.hash(newpass, saltRounds);
-			
-			if (comp) {
-				// now replace the password with new hashed
-				userModel.findOneAndUpdate({email: req.session.logUser.email},
-						{ $set:{pass: newHash} }, {useFindAndModify: false},
-						function(err, match) {
-					if (err) res.send({status: 500});
-					else if (!match) res.send({status: 401, msg: 'No user found.'});
-					else res.send({status: 200});
-				});
-			} else res.send({status: 401, msg: 'Old password does not match.'});
-		} else res.send({status: 401, msg: 'Unauthorised user, you are not logged in.'});
+		// search entries with registered, then set them to newpass
+		var user = await userModel.findOne({email: req.session.logUser.email});
+		var comp = await bcrypt.compare(oldpass, user.pass);
+		var newHash = await bcrypt.hash(newpass, saltRounds);
+
+		if (comp) {
+			// now replace the password with new hashed
+			userModel.findOneAndUpdate({email: req.session.logUser.email},
+					{ $set:{pass: newHash} }, {useFindAndModify: false},
+					function(err, match) {
+				if (err) res.send({status: 500, msg: 'Server error, please try again later.'});
+				else if (!match) res.send({status: 401, msg: 'No user found.'});
+				else res.send({status: 200});
+			});
+		} else res.send({status: 401, msg: 'Wrong old password.'});
 	},
 	
 	/* Both postAddCart and postAddWish function exactly the same way, with the exception

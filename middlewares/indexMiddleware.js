@@ -35,22 +35,6 @@ const indexMiddleware = {
 		else next();
 	},
 	
-	validateChangePW: function(req, res, next) {
-		/* Things to validate:
-		 * - no empty fields
-		 * - newpass matches with confirmed
-		 * - 
-		 */
-		
-		let { oldpass, newpass, confnewpass } = req.body;
-		
-		if (!oldpass || !newpass || !confnewpass)
-			res.send({status: 401, msg: 'Missing fields!'});
-		else if (newpass !== confnewpass)
-			res.send({status: 401, msg: 'New passwords does not match!'});
-		else next();
-	},
-	
 	getCheckEmail: function(req, res) {
 		var emailIn = req.query.email;
 		userModel.findOne({email: emailIn}, function(err, match) {
