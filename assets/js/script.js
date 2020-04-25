@@ -204,6 +204,7 @@ $(document).ready(function() {
 	
 	// CHANGE PW: validation of form when submitting
 	$('button#changepwsubmit').click(function() {
+		$('p.text-danger').text(''); // resetting form
 		var oldpass = $('#oldpass').val();
 		var newpass = $('#newpass').val();
 		var cnewpass = $('#confnewpass').val();
@@ -222,10 +223,10 @@ $(document).ready(function() {
 			checks[2] = false;
 		}
 		if (!validator.equals(newpass, cnewpass)) {
-			$('#cnewpassErr').text('Empty field!');
+			$('#cnewpassErr').text('Passwords must match!');
 			checks[3] = false;
 		}
-		if (!checks[2] && !validator.isLength(newpass, {min: 8})) {
+		if (checks[2] && !validator.isLength(newpass, {min: 8})) {
 			$('#newpassErr').text('New password must be at least 8 characters long!');
 			checks[4] = false;
 		}
