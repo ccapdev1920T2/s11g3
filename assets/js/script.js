@@ -198,7 +198,7 @@ $(document).ready(function() {
 		var oldpass = $('#oldpass').val();
 		var newpass = $('#newpass').val();
 		var cnewpass = $('#confnewpass').val();
-		var checks = Array(4).fill(true);
+		var checks = Array(5).fill(true);
 		
 		if (validator.isEmpty(oldpass)) {
 			$('#oldpassErr').text('Empty field!');
@@ -215,6 +215,10 @@ $(document).ready(function() {
 		if (!validator.equals(newpass, cnewpass)) {
 			$('#cnewpassErr').text('Empty field!');
 			checks[3] = false;
+		}
+		if (!checks[2] && !validator.isLength(newpass, {min: 8})) {
+			$('#newpassErr').text('New password must be at least 8 characters long!');
+			checks[4] = false;
 		}
 		
 		if (checks.every(Boolean)) {
