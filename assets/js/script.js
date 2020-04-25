@@ -89,7 +89,6 @@ $(document).ready(function() {
 	/* LOGIN METHODS */
 	
 	// LOGIN: validation of form when submitting
-	// checking if fields are not empty + email is in right format
 	$('#submitLogin').click(function() {
 		var email = $('#emailLogin').val();
 		var pass = $('#passwordLogin').val();
@@ -97,6 +96,7 @@ $(document).ready(function() {
 		$('#emErr').text('');
 		$('#pwErr').text('');
 		
+		// checking if fields are not empty + email is in right format
 		if (validator.isEmpty(email)) {
 			$('#emErr').text('Empty field!');
 		} else if (!validator.isEmail(email)) {
@@ -128,27 +128,26 @@ $(document).ready(function() {
 	
 	// REGISTER: validation of form when submitting
 	$('button#submitReg').click(function() {
+		$('p.text-danger').text(''); // resetting form
 		var formArr = $('form#regForm').serializeArray();
 		
-		/* debugging, expected to get:
-		 * - fname
-		 * - lname
-		 * - username
-		 * - email
-		 * - password
-		 * - password_conf
-		 * - address
-		 * - phone
-		 * - checkbox
+		/* expected to get:
+		 * 0 - fname
+		 * 1 - lname
+		 * 2 - username
+		 * 3 - email
+		 * 4 - password
+		 * 5 - confirm
+		 * 6 - address
+		 * 7 - phone
+		 * 8 - checkbox
 		 */
-		console.table(formArr);
 		formArr.forEach(function(e) {
 			e.value = validator.trim(e.value);
-			$('p#' + e.name + 'Error').text(''); // resetting form
 		});
 		
-		// empty, isEmail, username length 8-15, password length 8-20, password match, checkbox ticked
-		var checks = [true, true, true, true, true, true];/*Array(6).fill(true); */
+		// empty, isEmail, username length 8-15, password length 8-20, password match, contact num is num, checkbox ticked
+		var checks = Array(7).fill(true);
 		
 		formArr.forEach(function(e) {
 			if (validator.isEmpty(e.value)) {
@@ -157,33 +156,38 @@ $(document).ready(function() {
 			}
 		});
 		
+		if (formArr.length !== 9) {
+			$('p#checkboxError').text('This must be checked.');
+			checks[6] = false;
+		}
 		if (checks[0]) {
-			if (!validator.isEmail(formArr[].value)) { 
+			if (!validator.isEmail(formArr[3].value)) {
 				$('p#emailError').text('Invalid email inputted.');
 				checks[1] = false;
 			}
-			if (!validator.isLength(formArr[].value, {min: 8, max: 15})) {
-				$('p#passwordError').text('Username must be 8 to 15 characters long.');
+			if (!validator.isLength(formArr[2].value, {min: 8, max: 15})) {
+				$('p#usernameError').text('Username must be 8 to 15 characters long.');
 				checks[2] = false;
 			}
-			if (!validator.isLength(formArr[].value, {min: 8, max: 20})) {
-				$('p#passwordError').text('Password must be 8 to 20 characters long.');
+			if (!validator.isLength(formArr[4].value, {min: 8})) {
+				$('p#passwordError').text('Password must be at least 8 characters long.');
 				checks[3] = false;
 			}
-			if (!validator.equals(formArr[].value, formArr[].value)) {
-				$('p#cpassError').text('Passwords do not match.');
+			if (!validator.equals(formArr[4].value, formArr[5].value)) {
+				$('p#confirmError').text('Passwords do not match.');
 				checks[4] = false;
 			}
-			if (!validator.(formArr[].)) {
-				$('p#passwordError').text('');
+			if (!validator.isInt(formArr[7].value, {allow_leading_zeroes: true}) || !validator.isLength(formArr[7].value, {min: 11, max: 11})) {
+				$('p#phoneError').text('Please enter a mobile number (11 digits).');
 				checks[5] = false;
 			}
 		}
 		
 		if (checks.every(Boolean)) {
-			$.post('', {}, function(result) {
-				
-			});
+			alert('form is all cleared and ready to go!'); // TODO: delete this when done
+//			$.post('', {}, function(result) {
+//				
+//			});
 		}
 	});
 	
