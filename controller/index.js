@@ -353,7 +353,6 @@ const indexFunctions = {
 			};
 			smtpTransport.sendMail(mailOpts, function(err, result) {
 				if (err) console.log(err);
-				else console.log(result);
 				smtpTransport.close();
 			});
 			
