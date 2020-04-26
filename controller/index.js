@@ -1,3 +1,5 @@
+const nodemailer = require('nodemailer');
+
 /* Accessing the models (db) of each class
  */
 const userModel = require('../model/userdb');
@@ -64,9 +66,6 @@ const indexFunctions = {
 	
 	getHome: function(req, res) {
 		if (req.session.logUser) { // check if there's a logged in user
-
-// something's supposed to go here?
-
 			res.render('home', {
 				title: 'TheShop',
 				signedIn: true,
@@ -337,6 +336,27 @@ const indexFunctions = {
 		
 		bcrypt.hash(password, saltRounds, function(err, hash) {
 			var insertUser = new User(fname, lname, email, username, hash, phone, address);
+			
+			// sending email to user
+			var smtpTransport = nodemailer.createTransport({
+				service: "Gmail",
+				auth: {
+					user: process.env.EMAIL_ADDR,
+					pass: process.env.EMAIL_PASS
+				}
+			});
+			var mailOpts = {
+				from: 'TheShopPH',
+				to: email, 
+				subject: 'Welcome to TheShop!',
+				text: 'Welcome, ' + fname + '! We hope you have a great time with us.'
+			};
+			smtpTransport.sendMail(mailOpts, function(err, result) {
+				if (err) console.log(err);
+				else console.log(result);
+				smtpTransport.close();
+			});
+			
 			userModel.create(insertUser, function(err) {
 				if (err) res.send({status: 500, msg: 'Server error, could not add user.'});
 				else res.send({status: 200, msg: 'Success!'});
