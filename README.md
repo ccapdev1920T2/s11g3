@@ -19,9 +19,9 @@ Complete details and features of the application may be found in the program spe
 The following users may be used to log in:
 | Username | Password |
 |:-----------:|:--------:|
-|  | helloPass |
-|  | parkJimin143 |
-|  | HaHeHiHoHu |
+| neallithic | helloPass |
+| hoolyuuh | parkJimin143 |
+| shannyHoHoHo | HaHeHiHoHu |
 |  |  |
 
 ## Current Dependencies
