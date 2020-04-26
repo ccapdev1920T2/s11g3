@@ -25,17 +25,19 @@ The following users may be used to log in:
 |  |  |
 
 ## Current Dependencies
-- Express
-- Express-Handlebars
-- Express-Session
-- Body-Parser
-- Cookie-Parser
-- Dotenv
-- Mongoose
-- validator.js
-- express-validator
-- bcryptjs
-- Nodemon (for developmental purposes)
+- [express](https://www.npmjs.com/package/express)
+- [express-handlebars](https://www.npmjs.com/package/express-handlebars)
+- [express-session](https://www.npmjs.com/package/express-session)
+- [body-parser](https://www.npmjs.com/package/body-parser)
+- [cookie-parser](https://www.npmjs.com/package/cookie-parser)
+- [dotenv](https://www.npmjs.com/package/dotenv)
+- [mongoose](https://www.npmjs.com/package/mongoose)
+- [validator](https://www.npmjs.com/package/validator)
+- [express-validator](https://www.npmjs.com/package/express-validation)
+- [bcryptjs](https://www.npmjs.com/package/bcrypt)
+- [nodemailer](https://www.npmjs.com/package/nodemailer)
+- [notp](https://www.npmjs.com/package/notp)
+- [nodemon](https://www.npmjs.com/package/nodemon) (for developmental purposes)
 
 ## Members of the Group
 - Estella, Julia

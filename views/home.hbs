@@ -1,4 +1,5 @@
-{{> navbar-home }}
+{{#if signedIn}} {{> navbar }} {{else}} {{> navbar-home }} {{/if}}
+
 <div class="row">
 	<div class="container bg-light col text-center">
 		<h1>{{ message }}</h1>

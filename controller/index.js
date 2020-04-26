@@ -66,12 +66,14 @@ const indexFunctions = {
 		if (req.session.logUser) { // check if there's a logged in user
 			res.render('home', {
 				title: 'TheShop',
+				signedIn: true,
 				message: 'Welcome, ' + req.session.logUser.fName + " " + req.session.logUser.lName + ', to TheShop!'
 			});
 		} else {
-			res.render('home', {
+			res.render('home', { // message if no user logged in
 				title: 'TheShop',
-				message: "Welcome to TheShop! Log in or sign up to access our features." // message if no user logged in
+				signedIn: false,
+				message: "Welcome to TheShop! Log in or sign up to access our features." 
 			});
 		}
 	},
