@@ -64,13 +64,16 @@ const indexFunctions = {
 	
 	getHome: function(req, res) {
 		if (req.session.logUser) { // check if there's a logged in user
+
+// something's supposed to go here?
+
 			res.render('home', {
 				title: 'TheShop',
 				signedIn: true,
 				message: 'Welcome, ' + req.session.logUser.fName + " " + req.session.logUser.lName + ', to TheShop!'
 			});
-		} else {
-			res.render('home', { // message if no user logged in
+		} else { // if no user logged in
+			res.render('home', {
 				title: 'TheShop',
 				signedIn: false,
 				message: "Welcome to TheShop! Log in or sign up to access our features." 

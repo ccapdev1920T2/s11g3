@@ -5,9 +5,13 @@ const bodyParser = require('body-parser');
 const session = require('express-session');
 const cookieParser = require('cookie-parser');
 const mongoose = require('mongoose');
+const nodemailer = require('nodemailer');
+
+// dotenv inclusion
+require('dotenv').config();
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = 3000;
 
 // Making a session with a given key
 app.use(cookieParser());
