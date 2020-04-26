@@ -14,6 +14,8 @@ var userSchema = new mongoose.Schema({
 	email: String,
 	addr: String,
 	contact: Number,
+	otp: String,
+	isConfirmed: Boolean,
 	cart: [{item: {type: mongoose.Schema.Types.ObjectId, ref: 'Products'}, prodQty: Number}],
 	wishlist: [{type: mongoose.Schema.Types.ObjectId, ref: 'Products'}]
 }, {collection: "Users"});

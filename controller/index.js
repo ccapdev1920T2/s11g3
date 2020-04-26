@@ -1,4 +1,7 @@
+const fs = require('fs');
+const handlebars = require('handlebars');
 const nodemailer = require('nodemailer');
+const randtoken = require('rand-token');
 
 /* Accessing the models (db) of each class
  */
@@ -10,7 +13,7 @@ const bcrypt = require('bcrypt');
 const saltRounds = 10;
 
 /* Object constructors */
-function User(fName, lName, email, user, pass, contact, addr) {
+function User(fName, lName, email, user, pass, contact, addr, otp) {
 	this.fName = fName;
 	this.lName = lName;
 	this.email = email;
@@ -18,6 +21,8 @@ function User(fName, lName, email, user, pass, contact, addr) {
 	this.pass = pass;
 	this.contact = contact;
 	this.addr = addr;
+	this.otp = otp;
+	this.isConfirmed = false;
 	this.cart = [];
 	this.wishlist = [];
 }
@@ -55,6 +60,36 @@ function getStrMonth(mon) {
 	var d = Date.parse(mon + " 1, 2020");
 	return !isNaN(d) ? new Date(d).getMonth() + 1 : -1;
 }
+
+function sendConfEmail(email, name, otp) {
+	// get html of email body
+	fs.readFile('./assets/email.html', 'utf8', function(e, bodyData) {
+		// render it with hbs, filling in data
+		var template = handlebars.compile(bodyData);
+		var htmlToSend = template({name: name, otp: otp});
+		
+		// sending email
+		var smtpTransport = nodemailer.createTransport({
+			service: "Gmail",
+			auth: {
+				user: process.env.EMAIL_ADDR,
+				pass: process.env.EMAIL_PASS
+			}
+		});
+		var mailOpts = {
+			from: 'TheShopPH',
+			to: email, 
+			subject: 'Welcome to TheShop!',
+			html: htmlToSend
+		};
+		smtpTransport.sendMail(mailOpts, function(err) {
+			if (err) console.log(err);
+			smtpTransport.close();
+		});
+	});
+}
+
+
 
 /** Indexian of functions used for app functions
  */
@@ -330,36 +365,19 @@ const indexFunctions = {
 		res.redirect("/");
 	},
 	
-	postReg: function(req, res, next) {
+	postReg: async function(req, res, next) {
 		let { fname, lname, username, email, password, address, phone } = req.body;
-		console.log(req.body);
 		
-		bcrypt.hash(password, saltRounds, function(err, hash) {
-			var insertUser = new User(fname, lname, email, username, hash, phone, address);
-			
-			// sending email to user
-			var smtpTransport = nodemailer.createTransport({
-				service: "Gmail",
-				auth: {
-					user: process.env.EMAIL_ADDR,
-					pass: process.env.EMAIL_PASS
-				}
-			});
-			var mailOpts = {
-				from: 'TheShopPH',
-				to: email, 
-				subject: 'Welcome to TheShop!',
-				text: 'Welcome, ' + fname + '! We hope you have a great time with us.'
-			};
-			smtpTransport.sendMail(mailOpts, function(err, result) {
-				if (err) console.log(err);
-				smtpTransport.close();
-			});
-			
-			userModel.create(insertUser, function(err) {
-				if (err) res.send({status: 500, msg: 'Server error, could not add user.'});
-				else res.send({status: 200, msg: 'Success!'});
-			});
+		var hash = await bcrypt.hash(password, saltRounds);
+		var otp = randtoken.generate(8);
+		var insertUser = new User(fname, lname, email, username, hash, phone, address, otp);
+		
+		userModel.create(insertUser, function(err) {
+			if (err) res.send({status: 500, msg: 'Server error, could not add user.'});
+			else {
+				sendConfEmail(email, fname, otp);
+				res.send({status: 200, msg: 'Success!'});
+			}
 		});
 	},
 	

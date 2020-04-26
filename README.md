@@ -36,7 +36,7 @@ The following users may be used to log in:
 - [express-validator](https://www.npmjs.com/package/express-validator)
 - [bcryptjs](https://www.npmjs.com/package/bcrypt)
 - [nodemailer](https://www.npmjs.com/package/nodemailer)
-- [notp](https://www.npmjs.com/package/notp)
+- [rand-token](https://www.npmjs.com/package/rand-token)
 - [nodemon](https://www.npmjs.com/package/nodemon) (for developmental purposes)
 
 ## Members of the Group

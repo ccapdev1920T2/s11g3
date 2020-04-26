@@ -15,7 +15,7 @@ const PORT = 3000;
 // Making a session with a given key
 app.use(cookieParser());
 app.use(session({
-	secret: "Secret key",
+	secret: process.env.COOKIE_SECRET,
 	name: "cookie",
 	resave: true,
 	saveUninitialized: true

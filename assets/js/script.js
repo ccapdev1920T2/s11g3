@@ -64,24 +64,26 @@ function updateCartQty() {
 }
 
 function postChOut() {
-	// make XHR object and prep it
-	let xhr = new XMLHttpRequest();
 	let data = $('input:checked').map(function() {
 		return $(this).attr('name');
 	}).get();
+	console.log(data);
 	
-	xhr.open("POST", "/checkout", true);
-	xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-	
-	// make state change callback: print data from server
-	xhr.onreadystatechange = function() {
-		if (xhr.status === 200 && xhr.readyState === 4) {
-			alert('Checked out successfully!');
-			window.location.href = '/cart';
-		}
-	};
-	
-	xhr.send(data);
+	if (false) {
+		// make XHR object and prep it
+		let xhr = new XMLHttpRequest();
+		xhr.open("POST", "/checkout", true);
+		xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+		
+		// make state change callback: print data from server
+		xhr.onreadystatechange = function() {
+			if (xhr.status === 200 && xhr.readyState === 4) {
+				alert('Checked out successfully!');
+				window.location.href = '/cart';
+			}
+		};
+		xhr.send(data);
+	}
 }
 
 $(document).ready(function() {
