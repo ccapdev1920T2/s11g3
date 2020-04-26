@@ -90,25 +90,23 @@ $(document).ready(function() {
 	
 	// LOGIN: validation of form when submitting
 	$('#submitLogin').click(function() {
-		var email = $('#emailLogin').val();
+		var user = $('#usernameLogin').val();
 		var pass = $('#passwordLogin').val();
 		
-		$('#emErr').text('');
+		$('#usErr').text('');
 		$('#pwErr').text('');
 		
-		// checking if fields are not empty + email is in right format
-		if (validator.isEmpty(email)) {
-			$('#emErr').text('Empty field!');
-		} else if (!validator.isEmail(email)) {
-			$('#emErr').text('Wrong email format!');
+		// checking if fields are not empty
+		if (validator.isEmpty(user)) {
+			$('#usErr').text('Empty field!');
 		}
 		if (validator.isEmpty(pass)) {
 			$('#pwErr').text('Empty field!');
 		}
 		
-		if (!validator.isEmpty(email) || validator.isEmail(email) || !validator.isEmpty(pass)) {
+		if (!validator.isEmpty(user) && !validator.isEmpty(pass)) {
 			// send post request, check if user exists
-			$.post('/login', {email: email, pass: pass}, function(result) {
+			$.post('/login', {user: user, pass: pass}, function(result) {
 				switch (result.status) {
 					case 200: {
 						window.location.href = '/'; break;

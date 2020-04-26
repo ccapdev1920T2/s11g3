@@ -310,8 +310,8 @@ const indexFunctions = {
 	},
 	
 	postLogin: function(req, res) {
-		let { email, pass } = req.body;
-		userModel.findOne({ email: email }, function (err, match) {
+		let { user, pass } = req.body;
+		userModel.findOne({ user: user }, function (err, match) {
 			if (err) res.send({status: 500});
 			else if (!match) res.send({status: 401});
 			else {

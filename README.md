@@ -17,7 +17,7 @@ Complete details and features of the application may be found in the program spe
 
 ## On Logging In
 The following users may be used to log in:
-| E-mail | Password |
+| Username | Password |
 |:-----------:|:--------:|
 |  | helloPass |
 |  | parkJimin143 |
