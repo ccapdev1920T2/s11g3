@@ -33,7 +33,7 @@ The following users may be used to log in:
 - [dotenv](https://www.npmjs.com/package/dotenv)
 - [mongoose](https://www.npmjs.com/package/mongoose)
 - [validator](https://www.npmjs.com/package/validator)
-- [express-validator](https://www.npmjs.com/package/express-validation)
+- [express-validator](https://www.npmjs.com/package/express-validator)
 - [bcryptjs](https://www.npmjs.com/package/bcrypt)
 - [nodemailer](https://www.npmjs.com/package/nodemailer)
 - [notp](https://www.npmjs.com/package/notp)
