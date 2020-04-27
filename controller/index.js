@@ -195,6 +195,10 @@ const indexFunctions = {
 		} else res.redirect('/');
 	},
 	
+	getConfirm: function(req, res) {
+		
+	},
+	
 	getProducts: function(req, res) {
 		prodModel.find({}, function(err, match) {
 			if (err) return res.status(500).end('500 Internal Server error, this shouldnt happen');
@@ -399,6 +403,14 @@ const indexFunctions = {
 				else res.send({status: 200});
 			});
 		} else res.send({status: 401, msg: 'Wrong old password.'});
+	},
+	
+	postConfirm: function(req, res) {
+		userModel.findOneAndUpdate({email: req.session.logUser.email}, {$set: {isConfirmed: true}}, {useFindAndModify: false},
+				function(e) {
+			if (e) res.send({status: 500, msg: "Server error, please try again later."});
+			else res.send({status: 200, msg: 'Confirmed!'});
+		});
 	},
 	
 	/* Both postAddCart and postAddWish function exactly the same way, with the exception

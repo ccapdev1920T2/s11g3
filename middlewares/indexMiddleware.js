@@ -22,6 +22,24 @@ const indexMiddleware = {
 		} catch (e) {
 			res.send({status: 500, msg: 'Server error. Could not validate.'});
 		}
+	},
+	
+	validateConfirm: async function(req, res) {
+		let {confcode} = req.body;
+		
+		try {
+			let user = await userModel.findOne({email: req.session.logUser.email});
+			if (user.isConfirmed) {
+				res.send({status: 401, msg: 'You are already verified!'});
+			}
+			else if(confcode !== user.otp){
+				res.send({status: 401, msg: 'Wrong OTP inputted.'});
+			}
+			else return next();
+		}
+		catch (e) {
+			res.send({status: 500, msg: 'Server error. Could not validate.'});
+		}
 	}
 };
 

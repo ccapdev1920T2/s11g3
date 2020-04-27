@@ -205,12 +205,26 @@ $(document).ready(function() {
 	// CONFIRM EMAIL: validation of form when submitting
 	$('button#confemailsubmit').click(function() {
 		$('p.text-danger').text(''); // resetting form
-		var code = $('#otp').val();
-		var checks = Array(5).fill(true);
+		var code = $('#conf').val();
 		
 		if (validator.isEmpty(code)) {
-			$('#otpErrErr').text('Empty field!');
-			checks[0] = false;
+			$('#confErr').text('Empty field!');
+		} else {
+			$.post('/confirm', {confcode: code}, function(result) {
+				switch(result.status) {
+					case 200: {
+						alert('Account is now confirmed!');
+						window.location.href = '/';
+						break;
+					}
+					case 401: {
+						$('#confErr').text(result.msg); break;
+					}
+					case 500: {
+						$('#confErr').text(result.msg); break;
+					}
+				}
+			});
 		}
 	});
 	
