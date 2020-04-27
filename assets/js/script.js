@@ -200,6 +200,15 @@ $(document).ready(function() {
 		}
 	});
 	
+	/* CONFIRM EMAIL METHOD */
+	
+	// CONFIRM EMAIL: validation of form when submitting
+	$('button#confemailsubmit').click(function() {
+		$('p.text-danger').text(''); // resetting form
+		var code = $('#otp').val();
+		
+	});
+	
 	/* CHANGE PW METHODS */
 	
 	// CHANGE PW: validation of form when submitting
