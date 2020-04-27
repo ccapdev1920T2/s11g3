@@ -206,7 +206,12 @@ $(document).ready(function() {
 	$('button#confemailsubmit').click(function() {
 		$('p.text-danger').text(''); // resetting form
 		var code = $('#otp').val();
+		var checks = Array(5).fill(true);
 		
+		if (validator.isEmpty(code)) {
+			$('#otpErrErr').text('Empty field!');
+			checks[0] = false;
+		}
 	});
 	
 	/* CHANGE PW METHODS */
