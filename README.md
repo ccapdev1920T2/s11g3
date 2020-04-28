@@ -3,7 +3,7 @@ This is a shopping application. As a user, you may register and log in as a buye
 Complete details and features of the application may be found in the program specifications, which may be found [here](https://github.com/ccapdev1920T2/s11g3/blob/master/%5BREVISED%5D%20Group3%20S11%20MP%20Specifications.pdf.pdf).
 
 ## Heroku Deployed App
-Status: **OFFLINE**  
+Status: **ONLINE**  
 Link: https://theshoplive.herokuapp.com/
 
 ## Important Notes
