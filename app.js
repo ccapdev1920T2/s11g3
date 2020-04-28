@@ -10,7 +10,7 @@ const mongoose = require('mongoose');
 require('dotenv').config();
 
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 
 // Making a session with a given key
 app.use(cookieParser());
@@ -113,6 +113,6 @@ app.get('*', function(req, res) {
 });
 
 // log this in console when ran
-app.listen(3000, () => {
+app.listen(PORT, () => {
 	console.log(`Listening to localhost on port ${PORT}`);
 });
