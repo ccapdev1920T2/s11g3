@@ -3,7 +3,7 @@ This is a shopping application. As a user, you may register and log in as a buye
 Complete details and features of the application may be found in the program specifications, which may be found [here](https://github.com/ccapdev1920T2/s11g3/blob/master/%5BREVISED%5D%20Group3%20S11%20MP%20Specifications.pdf.pdf).
 
 ## Heroku Deployed App
-Status: **ONLINE**  
+Status: **OFFLINE**  
 Link: https://theshoplive.herokuapp.com/
 
 ## Important Notes
@@ -23,9 +23,8 @@ Link: https://theshoplive.herokuapp.com/
 The following users may be used to log in:
 | Username | Password |
 |:-----------:|:--------:|
-| neallithic | helloPass |
-| hoolyuuh | parkJimin143 |
-| shannyHoHoHo | HaHeHiHoHu |
+|  |  |
+|  |  |
 |  |  |
 
 ## Current Dependencies
