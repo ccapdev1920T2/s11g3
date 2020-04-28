@@ -350,18 +350,19 @@ const indexFunctions = {
 	
 	postLogin: async function(req, res) {
 		let { user, pass } = req.body;
-		userModel.findOne({ user: user }, function (err, match) {
-			if (err) res.send({status: 500});
-			else if (!match) res.send({status: 401});
-			else {
-				bcrypt.compare(pass, match.pass, function(err, result) {
+		try {
+			let user = await userModel.findOne({ user: user });
+			if (user) {
+				bcrypt.compare(pass, user.pass, function(err, result) {
 					if (result) {
-						req.session.logUser = match;
+						req.session.logUser = user;
 						res.send({status: 200});
 					} else res.send({status: 401});
 				});
 			}
-		});
+		} catch (e) {
+			res.send({status: 500, msg: e});
+		}
 	},
 	
 	postLogout: function(req, res) {
