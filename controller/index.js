@@ -349,9 +349,9 @@ const indexFunctions = {
 	},
 	
 	postLogin: async function(req, res) {
-		let { user, pass } = req.body;
+		var { user, pass } = req.body;
 		try {
-			let user = await userModel.findOne({ user: user });
+			var user = await userModel.findOne({ user: user });
 			if (user) {
 				bcrypt.compare(pass, user.pass, function(err, result) {
 					if (result) {
