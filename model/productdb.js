@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
-
-mongoose.connect('mongodb://localhost/TheShop', {useNewUrlParser: true, useUnifiedTopology: true})
+// 'mongodb://localhost/TheShop'
+mongoose.connect(`mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@theshopcluster-nywp8.mongodb.net/TheShop?retryWrites=true&w=majority`,
+		{useNewUrlParser: true, useUnifiedTopology: true})
 		.then(() => { console.log('prod'); },
 		err => { console.log('theres problems');
 });
