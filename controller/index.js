@@ -115,7 +115,7 @@ const indexFunctions = {
 		}
 	},
 	
-	getLogin: function(req, res) {
+	getLogin: async function(req, res) {
 		if (req.session.logUser) { // check if there's a user logged in
 			res.redirect('/'); // go back to home
 		} else {
@@ -348,17 +348,17 @@ const indexFunctions = {
 		});
 	},
 	
-	postLogin: function(req, res) {
+	postLogin: async function(req, res) {
 		let { user, pass } = req.body;
 		userModel.findOne({ user: user }, function (err, match) {
-			if (err) return res.send({status: 500});
-			else if (!match) return res.send({status: 401});
+			if (err) res.send({status: 500});
+			else if (!match) res.send({status: 401});
 			else {
 				bcrypt.compare(pass, match.pass, function(err, result) {
 					if (result) {
 						req.session.logUser = match;
-						return res.send({status: 200});
-					} else return res.send({status: 401});
+						res.send({status: 200});
+					} else res.send({status: 401});
 				});
 			}
 		});
