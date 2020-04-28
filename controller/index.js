@@ -196,7 +196,12 @@ const indexFunctions = {
 	},
 	
 	getConfirm: function(req, res) {
-		
+		if (req.session.logUser) {
+			res.render('confirmemail', {
+				title: 'TheShop - Confirm Email',
+				isConfirmed: !req.session.logUser.isConfirmed
+			});
+		} else res.redirect('/');
 	},
 	
 	getProducts: async function(req, res) {
@@ -409,7 +414,8 @@ const indexFunctions = {
 	},
 	
 	postConfirm: function(req, res) {
-		userModel.findOneAndUpdate({email: req.session.logUser.email}, {$set: {isConfirmed: true}}, {useFindAndModify: false},
+		userModel.findOneAndUpdate({email: req.session.logUser.email},
+				{$set: {isConfirmed: true}}, {useFindAndModify: false},
 				function(e) {
 			if (e) res.send({status: 500, msg: "Server error, please try again later."});
 			else res.send({status: 200, msg: 'Confirmed!'});

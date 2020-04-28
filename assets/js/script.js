@@ -113,9 +113,7 @@ $(document).ready(function() {
 					case 200: {
 						window.location.href = '/'; break;
 					}
-					case 401: {
-						alert(result.msg); break;
-					}
+					case 401:
 					case 500: {
 						alert(result.msg); break;
 					}
@@ -189,9 +187,7 @@ $(document).ready(function() {
 					case 200: {
 						window.location.href = '/login'; break;
 					}
-					case 401: {
-						alert(res.msg); break;
-					}
+					case 401:
 					case 500: {
 						alert(res.msg); break;
 					}
@@ -217,9 +213,7 @@ $(document).ready(function() {
 						window.location.href = '/';
 						break;
 					}
-					case 401: {
-						$('#confErr').text(result.msg); break;
-					}
+					case 401:
 					case 500: {
 						$('#confErr').text(result.msg); break;
 					}
@@ -266,9 +260,7 @@ $(document).ready(function() {
 					case 200: {
 						window.location.href = '/account'; break;
 					}
-					case 401: {
-						alert(result.msg); break;
-					}
+					case 401:
 					case 500: {
 						alert(result.msg); break;
 					}

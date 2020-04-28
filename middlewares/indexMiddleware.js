@@ -11,13 +11,10 @@ const indexMiddleware = {
 			// check if id and email are already in db
 			let userExist = await userModel.findOne({user: username});
 			let emailExist = await userModel.findOne({email: email});
-			
-			if (userExist) {
+			if (userExist)
 				res.send({status: 401, msg: 'That username already exists.'});
-			}
-			else if (emailExist) {
+			else if (emailExist)
 				res.send({status: 401, msg: 'That email address already exists.'});
-			}
 			else return next();
 		} catch (e) {
 			res.send({status: 500, msg: 'Server error. Could not validate.'});
@@ -25,16 +22,14 @@ const indexMiddleware = {
 	},
 	
 	validateConfirm: async function(req, res) {
-		let {confcode} = req.body;
+		let { confcode } = req.body;
 		
 		try {
 			let user = await userModel.findOne({email: req.session.logUser.email});
-			if (user.isConfirmed) {
+			if (user.isConfirmed)
 				res.send({status: 401, msg: 'You are already verified!'});
-			}
-			else if(confcode !== user.otp){
+			else if (confcode !== user.otp)
 				res.send({status: 401, msg: 'Wrong OTP inputted.'});
-			}
 			else return next();
 		}
 		catch (e) {

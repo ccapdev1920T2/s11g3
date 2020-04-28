@@ -1,15 +1,22 @@
 <div class="login-clean" style="margin-left: 25%;background-color: #f0f0f0;">
 	<form method="post" action="/confemail" style="background-color: #555;background-image: none;">
 		<h2 class="sr-only">Confirm Email</h2>
-		<div class="illustration">
-			<i class="icon ion-ios-locked" style="color: #a3b76a;"></i>
-		</div>
-		<div class="form-group">
-			<input class="form-control" type="text" id="conf" name="conf" placeholder="Confirmation code">
-			<p class="text-danger p-1" id="confErr"></p>
-		</div>
-		<div class="form-group">
-			<button class="btn btn-primary btn-block" type="button" id="confemailsubmit" style="background-color: #a3b76a;color: black;">Change Password</button>
-		</div>
+		{{if isConfirmed}}
+			<div class="illustration">
+				<i class="icon ion-ios-locked" style="color: #a3b76a;"></i>
+			</div>
+			<div class="form-group">
+				<input class="form-control" type="text" id="conf" name="conf" placeholder="Confirmation code">
+				<p class="text-danger p-1" id="confErr"></p>
+			</div>
+			<div class="form-group">
+				<button class="btn btn-primary btn-block" type="button" id="confemailsubmit" style="background-color: #a3b76a;color: black;">Change Password</button>
+			</div>
+		{{else}}
+			<div class="container bg-light col text-center">
+				<h6>You're already confirmed.</h6>
+			</div>
+			<a class="btn btn-light border rounded action-button" role="button" href="/account" style="background-color: #a3b76a;font-family: Abel, sans-serif;font-size: 20px;">Back to Account</a>
+		{{/if}}
 	</form>
 </div>
