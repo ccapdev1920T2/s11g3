@@ -69,7 +69,7 @@ function postChOut() {
 	}).get();
 	console.log(data);
 	
-	if (false) {
+	if (data.length > 0) {
 		// make XHR object and prep it
 		let xhr = new XMLHttpRequest();
 		xhr.open("POST", "/checkout", true);
@@ -83,7 +83,7 @@ function postChOut() {
 			}
 		};
 		xhr.send(data);
-	}
+	} else alert('Please select at least 1 item to check out.');
 }
 
 $(document).ready(function() {
