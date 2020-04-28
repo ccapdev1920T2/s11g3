@@ -11,13 +11,14 @@ Link: https://theshoplive.herokuapp.com/
 2. Make sure that Node.js is installed in your system
 3. Before running the application, make sure to have `mongod.exe` running in the background
 
-## Setting Up and Running
+## Setting Up and Running Locally
 1. Clone the repository through Git with `git clone`
-2. Run `mongod.exe` in the background
-3. To import the data, run `mongorestore -d TheShop \model\db_import` (or wherever the directory is stored)
+2. In `cmd.exe`, run `mongod.exe` in the background
+3. In another `cmd.exe` window, to import the data, run `mongorestore -d TheShop \model\db_import` (or locate the directory is stored)
 4. Prepare the npm modules by running `npm install`
 5. Set up the Node.js server with `node app.js`
-6. Access the application through localhost at port 3000
+6. Access the application through localhost at port 3000 (`localhost:3000`)
+7. Enjoy.
 
 ## On Logging In
 The following users may be used to log in:
