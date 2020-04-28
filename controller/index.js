@@ -349,17 +349,18 @@ const indexFunctions = {
 	},
 	
 	postLogin: async function(req, res) {
-		var { user, pass } = req.body;
+		var { user, pass } = req.body; console.log(req.body);
 		try {
 			var user = await userModel.findOne({ user: user });
 			if (user) {
+				console.log('LOGIN: user found');
 				bcrypt.compare(pass, user.pass, function(err, result) {
 					if (result) {
 						req.session.logUser = user;
-						res.send({status: 200});
+						return res.send({status: 200});
 					} else res.send({status: 401, msg: 'Incorrect password.'});
 				});
-			} else  res.send({status: 401, msg: 'Incorrect login credentials, no user found.'});
+			} else res.send({status: 401, msg: 'Incorrect login credentials, no user found.'});
 		} catch (e) {
 			console.log(e);
 			res.send({status: 500, msg: e});
