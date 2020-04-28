@@ -199,7 +199,7 @@ const indexFunctions = {
 		
 	},
 	
-	getProducts: function(req, res) {
+	getProducts: async function(req, res) {
 		prodModel.find({}, function(err, match) {
 			if (err) return res.status(500).end('500 Internal Server error, this shouldnt happen');
 			var prods = JSON.parse(JSON.stringify(match));
