@@ -361,6 +361,7 @@ const indexFunctions = {
 				});
 			} else  res.send({status: 401, msg: 'Incorrect login credentials, no user found.'});
 		} catch (e) {
+			console.log(e);
 			res.send({status: 500, msg: e});
 		}
 	},

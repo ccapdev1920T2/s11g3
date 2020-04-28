@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 mongoose.connect(`mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@theshopcluster-nywp8.mongodb.net/TheShop?retryWrites=true&w=majority`,
 		{useNewUrlParser: true, useUnifiedTopology: true})
 		.then(() => { console.log('ords'); },
-		err => { console.log('theres problems');
+		err => { console.log('theres problems'); console.log(err);
 });
 var db = mongoose.connection;
 
