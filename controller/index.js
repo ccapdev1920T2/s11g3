@@ -351,14 +351,14 @@ const indexFunctions = {
 	postLogin: function(req, res) {
 		let { user, pass } = req.body;
 		userModel.findOne({ user: user }, function (err, match) {
-			if (err) res.send({status: 500});
-			else if (!match) res.send({status: 401});
+			if (err) return res.send({status: 500});
+			else if (!match) return res.send({status: 401});
 			else {
 				bcrypt.compare(pass, match.pass, function(err, result) {
 					if (result) {
 						req.session.logUser = match;
-						res.send({status: 200});
-					} else res.send({status: 401});
+						return res.send({status: 200});
+					} else return res.send({status: 401});
 				});
 			}
 		});
