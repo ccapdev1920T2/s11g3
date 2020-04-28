@@ -200,14 +200,16 @@ const indexFunctions = {
 	},
 	
 	getProducts: async function(req, res) {
-		prodModel.find({}, function(err, match) {
-			if (err) return res.status(500).end('500 Internal Server error, this shouldnt happen');
-			var prods = JSON.parse(JSON.stringify(match));
+		try {
+			var matches = await prodModel.find({});
+			console.log(matches[0]);
 			res.render('products', {
 				title: 'TheShop - All Products',
-				prods: prods
+				prods: JSON.parse(JSON.stringify(matches))
 			});
-		});
+		} catch (e) {
+			console.log(e);
+		}
 	},
 	
 	getProdSort: async function(req, res) {
