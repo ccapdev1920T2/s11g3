@@ -114,10 +114,10 @@ $(document).ready(function() {
 						window.location.href = '/'; break;
 					}
 					case 401: {
-						alert('No user found!'); break;
+						alert(result.msg); break;
 					}
 					case 500: {
-						alert('Server error. Please try again in a while.'); break;
+						alert(result.msg); break;
 					}
 				}
 			});

@@ -357,9 +357,9 @@ const indexFunctions = {
 					if (result) {
 						req.session.logUser = user;
 						res.send({status: 200});
-					} else res.send({status: 401});
+					} else res.send({status: 401, msg: 'Incorrect password.'});
 				});
-			}
+			} else  res.send({status: 401, msg: 'Incorrect login credentials, no user found.'});
 		} catch (e) {
 			res.send({status: 500, msg: e});
 		}
