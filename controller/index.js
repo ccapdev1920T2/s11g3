@@ -351,20 +351,18 @@ const indexFunctions = {
 	},
 	
 	postLogin: async function(req, res) {
-		var { user, pass } = req.body; console.log(req.body);
+		var { user, pass } = req.body;
 		try {
 			var user = await userModel.findOne({ user: user });
 			if (user) {
-				console.log('LOGIN: user found');
 				bcrypt.compare(pass, user.pass, function(err, result) {
 					if (result) {
 						req.session.logUser = user;
-						return res.send({status: 200});
+						res.send({status: 200});
 					} else res.send({status: 401, msg: 'Incorrect password.'});
 				});
-			} else res.send({status: 401, msg: 'Incorrect login credentials, no user found.'});
+			} else res.send({status: 401, msg: 'No user found.'});
 		} catch (e) {
-			console.log(e);
 			res.send({status: 500, msg: e});
 		}
 	},
@@ -469,8 +467,8 @@ const indexFunctions = {
 		var buyCart = [];
 		var emailO = {email: req.session.logUser.email};
 		
-		try {
-			if (req.session.logUser) {
+		if (req.session.logUser) {
+			try {
 				var buyer = await userModel.findOne(emailO).populate('cart.item');
 				
 				pCodes.forEach(async function(e) {
@@ -496,9 +494,9 @@ const indexFunctions = {
 					if (err) return res.status(500).end('500, ?????????');
 					res.sendStatus(200);
 				});
-			} else res.status(401).end('401, how the heck are you seeing this???');
-		} catch(e) {
-			console.log(e);
+			} catch (e) {
+				console.log(e);
+			}
 		}
 	},
 	
