@@ -33,7 +33,7 @@ const indexMiddleware = {
 			else return next();
 		}
 		catch (e) {
-			res.send({status: 500, msg: 'Server error. Could not validate.'});
+			res.send({status: 500, msg: e});
 		}
 	}
 };
