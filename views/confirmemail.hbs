@@ -1,7 +1,7 @@
 <div class="login-clean" style="margin-left: 25%;background-color: #f0f0f0;">
 	<form method="post" action="/confemail" style="background-color: #555;background-image: none;">
 		<h2 class="sr-only">Confirm Email</h2>
-		{{if isConfirmed}}
+		{{#if isConfirmed}}
 			<div class="illustration">
 				<i class="icon ion-ios-locked" style="color: #a3b76a;"></i>
 			</div>
@@ -10,7 +10,7 @@
 				<p class="text-danger p-1" id="confErr"></p>
 			</div>
 			<div class="form-group">
-				<button class="btn btn-primary btn-block" type="button" id="confemailsubmit" style="background-color: #a3b76a;color: black;">Change Password</button>
+				<button class="btn btn-primary btn-block" type="button" id="confemailsubmit" style="background-color: #a3b76a;color: black;">Confirm Email</button>
 			</div>
 		{{else}}
 			<div class="container bg-light col text-center">
