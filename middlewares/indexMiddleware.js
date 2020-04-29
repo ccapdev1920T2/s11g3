@@ -21,7 +21,7 @@ const indexMiddleware = {
 		}
 	},
 	
-	validateConfirm: async function(req, res) {
+	validateConfirm: async function(req, res, next) {
 		let { confcode } = req.body;
 		
 		try {
@@ -30,11 +30,10 @@ const indexMiddleware = {
 				res.send({status: 401, msg: 'You are already verified!'});
 			else if (confcode !== user.otp)
 				res.send({status: 401, msg: 'Wrong OTP inputted.'});
-			else next();
+			else return next();
 		}
 		catch (e) {
-			console.log(e);
-			res.send({status: 500, msg: e});
+			res.send({status: 500, msg: 'Server error. Could not validate.'});
 		}
 	}
 };
