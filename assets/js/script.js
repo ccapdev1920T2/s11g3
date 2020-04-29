@@ -67,7 +67,6 @@ function postChOut() {
 	let data = $('input:checked').map(function() {
 		return $(this).attr('name');
 	}).get();
-	console.log(data);
 	
 	if (data.length > 0) {
 		// make XHR object and prep it

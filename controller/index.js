@@ -272,17 +272,25 @@ const indexFunctions = {
 	},
 	
 	getProdPage: function(req, res) {
-		// chop off again the /product/
-		prodModel.findOne({code: req.url.substring(10)}, function(err, match) {
-			if (err) return res.status(500).end('500 Internal Server error, this shouldnt happen');
-			// pp === product details
-			let pp = JSON.parse(JSON.stringify(match));
-			
-			res.render('prodpage', {
-				title: 'TheShop - ' + pp.code,
-				p: pp
+		if (req.session.logUser.isConfirmed) {
+			// chop off again the /product/
+			prodModel.findOne({code: req.url.substring(10)}, function(err, match) {
+				if (err) return res.status(500).end('500 Internal Server error, this shouldnt happen');
+				// pp === product details
+				let pp = JSON.parse(JSON.stringify(match));
+
+				res.render('prodpage', {
+					title: 'TheShop - ' + pp.code,
+					p: pp
+				});
 			});
-		});
+		} else {
+			res.render('error', {
+				title: 'The Shop - 403 Error',
+				status: '403',
+				errormsg: 'Please confirm your email at the My Account page.'
+			});
+		}
 	},
 	
 	getOrders: async function(req, res) {
@@ -443,34 +451,50 @@ const indexFunctions = {
 	 */
 	postAddCart: async function(req, res) {
 		if (req.session.logUser) {
-			try {
-				var prod = await prodModel.findOne({code: req.params.id});
-				console.log(JSON.parse(JSON.stringify(prod)));
-				userModel.findOneAndUpdate({email: req.session.logUser.email},
-						{$push: {cart: {item: prod, prodQty: prod.qty}}},
-						{useFindAndModify: false}, function(err) {
-					if (err) res.status(500).end('500, db err');
-					else res.redirect("/products");
+			if (res.session.logUser.isConfirmed) {
+				try {
+					var prod = await prodModel.findOne({code: req.params.id});
+					console.log(JSON.parse(JSON.stringify(prod)));
+					userModel.findOneAndUpdate({email: req.session.logUser.email},
+							{$push: {cart: {item: prod, prodQty: prod.qty}}},
+							{useFindAndModify: false}, function(err) {
+						if (err) res.status(500).end('500, db err');
+						else res.redirect("/products");
+					});
+				} catch (e) {
+					console.log(e);
+				}
+			} else {
+				res.render('error', {
+					title: 'The Shop - 403 Error',
+					status: '403',
+					errormsg: 'Please confirm your email at the My Account page.'
 				});
-			} catch (e) {
-				console.log(e);
 			}
 		} else res.redirect("/");
 	},
 	
 	postAddWish: function(req, res) {
 		if (req.session.logUser) {
-			prodModel.findOne({code: req.params.id}, function(err, match) {
-				if (err) res.status(500).end('500, db err');
-				else {
-					userModel.findOneAndUpdate({email: req.session.logUser.email},
-							{$push: {wishlist: match}},
-							{useFindAndModify: false}, function(err) {
-						if (err) res.status(500).end('500, db err');
-						res.redirect("/products");
-					});
-				}
-			});
+			if (res.session.logUser.isConfirmed) {
+				prodModel.findOne({code: req.params.id}, function(err, match) {
+					if (err) res.status(500).end('500, db err');
+					else {
+						userModel.findOneAndUpdate({email: req.session.logUser.email},
+								{$push: {wishlist: match}},
+								{useFindAndModify: false}, function(err) {
+							if (err) res.status(500).end('500, db err');
+							res.redirect("/products");
+						});
+					}
+				});
+			} else {
+				res.render('error', {
+					title: 'The Shop - 403 Error',
+					status: '403',
+					errormsg: 'Please confirm your email at the My Account page.'
+				});
+			}
 		} else res.redirect("/");
 	},
 	
@@ -510,7 +534,7 @@ const indexFunctions = {
 				// #4
 				ordModel.create(new Order(buyer._id, buyCart), function(err) {
 					if (err) return res.status(500).end('500, ?????????');
-					res.sendStatus(200);
+					else res.sendStatus(200);
 				});
 			} catch (e) {
 				console.log(e);

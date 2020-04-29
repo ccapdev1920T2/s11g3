@@ -108,7 +108,9 @@ app.use('/', indexRouter);
 // handling 404 requests
 app.get('*', function(req, res) {
 	res.render('error', {
-		title: 'The Shop - 404 Error'
+		title: 'The Shop - 404 Error',
+		status: '404',
+		errormsg: 'Page not found'
 	});
 });
 
