@@ -165,7 +165,6 @@ const indexFunctions = {
 			];
 			var ords = await ordModel.aggregate(aggrPipelines);
 			console.log(ords);
-			
 		} else {
 			res.render('stats', {
 				title: 'TheShop - My Stats',
