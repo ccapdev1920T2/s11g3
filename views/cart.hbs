@@ -11,6 +11,9 @@
 			<button class="btn btn-primary text-center float-right" type="button" onclick="postChOut()" style="margin-right: 44%;background-color: #a3b76a;width: 139px;padding-left: 0;margin-top: 11px;">
 				<a style="color: rgb(255,255,255);margin-right: 0px;margin-left: 11px;">Check Out</a>
 			</button>
+			<button class="btn btn-primary text-center float-right" type="button" onclick="updateCartQty()" style="margin-right: 44%;background-color: rgb(90,106,123);width: 139px;">
+				Save Cart
+			</button>
 		</form>
 	</div>
 	
@@ -19,10 +22,5 @@
 			<h1 class="text-center tQty" style="margin-right: 0;margin-left: 0;width: 600px;">Items: {{getQtyTotal cart}}</h1>
 			<h1 class="text-center tPrice" style="width: 600px;padding-left: 100px;">Total: Php {{getPriceTotal cart}}</h1>
 		</div>
-	</div>
-	<div>
-		<button class="btn btn-primary text-center float-right" type="button" onclick="updateCartQty()" style="margin-right: 44%;background-color: rgb(90,106,123);width: 139px;">
-			Save Cart
-		</button>
 	</div>
 </div>

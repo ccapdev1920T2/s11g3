@@ -427,7 +427,10 @@ const indexFunctions = {
 				{$set: {isConfirmed: true}}, {useFindAndModify: false},
 				function(e) {
 			if (e) res.send({status: 500, msg: "Server error, please try again later."});
-			else res.send({status: 200, msg: 'Confirmed!'});
+			else {
+				res.send({status: 200, msg: 'Confirmed!'});
+				req.session.logUser.isConfirmed = true;
+			}
 		});
 	},
 	
