@@ -112,7 +112,7 @@ const indexFunctions = {
 					title: 'TheShop',
 					signedIn: true,
 					message: 'Welcome, ' + req.session.logUser.fName + ' ' + req.session.logUser.lName
-							+ ', to TheShop! Please confirm your email to access the features.'
+							+ ', to TheShop! Please confirm your email in My Account to access the features.'
 				});
 			}
 		} else { // if no user logged in
