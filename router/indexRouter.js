@@ -24,8 +24,8 @@ router.post('/logout', controller.postLogout);
 router.post('/registration', middleware.validateReg, controller.postReg);
 router.post('/changepass', controller.postChangePW);
 router.post('/confirm', middleware.validateConfirm, controller.postConfirm);
-router.post('/addtocart/:id', controller.postAddCart);
-router.post('/wishlist/:id', controller.postAddWish);
+router.post('/addtocart', middleware.validateAddCart, controller.postAddCart);
+router.post('/wishlist', middleware.validateAddWish, controller.postAddWish);
 router.post('/checkout', controller.postCheckOut);
 
 router.put('/updateCart', controller.putUpdateCart);

@@ -268,6 +268,44 @@ $(document).ready(function() {
 		}
 	});
 	
+	/* PRODPAGE METHODS */
+	
+	// addToCart
+	$("#addCart").click(function() {
+		var button = $(this).attr('class'), code = button.split(' ')[5];
+		$.post('/addtocart', {id: code}, function(result) {
+			switch (result.status) {
+				case 200: {
+					alert('Item added to cart successfully!');
+					window.location.href = '/products';
+					break;
+				}
+				case 401:
+				case 500: {
+					alert(result.msg); break;
+				}
+			}
+		});
+	});
+	
+	// addToWish
+	$("#addWish").click(function() {
+		var button = $(this).attr('class'), code = button.split(' ')[5];
+		$.post('/wishlist', {id: code}, function(result) {
+			switch (result.status) {
+				case 200: {
+					alert('Item added to wishlist successfully!');
+					window.location.href = '/products';
+					break;
+				}
+				case 401:
+				case 500: {
+					alert(result.msg); break;
+				}
+			}
+		});
+	});
+	
 	/* CART METHODS */
 	
 	// CART: for cart page, initial get totals

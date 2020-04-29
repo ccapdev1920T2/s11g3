@@ -1,5 +1,6 @@
 /* Accessing the Users model */
 const userModel = require('../model/userdb');
+const prodModel = require('../model/productdb');
 const regex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
 const indexMiddleware = {
@@ -33,6 +34,26 @@ const indexMiddleware = {
 			else return next();
 		}
 		catch (e) {
+			res.send({status: 500, msg: 'Server error. Could not validate.'});
+		}
+	},
+	
+	validateAddCart: async function(req, res, next) {
+		try {
+			var prod = await prodModel.findOne({code: req.body.id});
+			if (!prod) return next();
+			else res.send({status: 401, msg: 'Item already exists in your cart.'});
+		} catch (e) {
+			res.send({status: 500, msg: 'Server error. Could not validate.'});
+		}
+	},
+	
+	validateAddWish: async function(req, res, next) {
+		try {
+			var prod = await prodModel.findOne({code: req.body.id});
+			if (!prod) return next();
+			else res.send({status: 401, msg: 'Item already exists in your wishlist.'});
+		} catch (e) {
 			res.send({status: 500, msg: 'Server error. Could not validate.'});
 		}
 	}

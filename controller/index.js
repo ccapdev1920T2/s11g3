@@ -453,8 +453,7 @@ const indexFunctions = {
 		if (req.session.logUser) {
 			if (res.session.logUser.isConfirmed) {
 				try {
-					var prod = await prodModel.findOne({code: req.params.id});
-					console.log(JSON.parse(JSON.stringify(prod)));
+					var prod = await prodModel.findOne({code: req.body.id});
 					userModel.findOneAndUpdate({email: req.session.logUser.email},
 							{$push: {cart: {item: prod, prodQty: prod.qty}}},
 							{useFindAndModify: false}, function(err) {
@@ -474,20 +473,20 @@ const indexFunctions = {
 		} else res.redirect("/");
 	},
 	
-	postAddWish: function(req, res) {
+	postAddWish: async function(req, res) {
 		if (req.session.logUser) {
 			if (res.session.logUser.isConfirmed) {
-				prodModel.findOne({code: req.params.id}, function(err, match) {
-					if (err) res.status(500).end('500, db err');
-					else {
-						userModel.findOneAndUpdate({email: req.session.logUser.email},
-								{$push: {wishlist: match}},
-								{useFindAndModify: false}, function(err) {
-							if (err) res.status(500).end('500, db err');
-							res.redirect("/products");
-						});
-					}
-				});
+				try {
+					var prod = await prodModel.findOne({code: req.body.id});
+					userModel.findOneAndUpdate({email: req.session.logUser.email},
+							{$push: {wishlist: prod}},
+							{useFindAndModify: false}, function(err) {
+						if (err) res.status(500).end('500, db err');
+						res.redirect("/products");
+					});
+				} catch (e) {
+					console.log(e);
+				}
 			} else {
 				res.render('error', {
 					title: 'The Shop - 403 Error',
