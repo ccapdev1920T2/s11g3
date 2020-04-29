@@ -33,17 +33,8 @@ app.engine('hbs', exphbs.create({
 		getPImg: function(filename) {
 			return '../assets/img/' + filename;
 		},
-		getPLink: function(code, linktype) {
-			/* link types:
-			 * 1: product page
-			 * 2: add to cart
-			 * 3: wishlist
-			 */
-			switch (linktype) {
-				case 1: return '/products/' + code;
-				case 2: return '/addtocart/' + code;
-				case 3: return '/wishlist/' + code;
-			}
+		getPLink: function(code) {
+			return '/products/' + code;
 		},
 		getSize: function(size) {
 			switch(size) {
