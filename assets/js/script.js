@@ -208,8 +208,8 @@ $(document).ready(function() {
 			$.post('/confirm', {confcode: code}, function(result) {
 				switch(result.status) {
 					case 200: {
-						alert('Account is now confirmed!');
-						window.location.href = '/';
+						alert('Email is now confirmed!');
+						window.location.href = '/account';
 						break;
 					}
 					case 401:
@@ -257,7 +257,9 @@ $(document).ready(function() {
 			$.post('/changepass', {oldpass: oldpass, newpass: newpass, confnewpass: cnewpass}, function(result) {
 				switch (result.status) {
 					case 200: {
-						window.location.href = '/account'; break;
+						alert('Password changed successfully!');
+						window.location.href = '/account';
+						break;
 					}
 					case 401:
 					case 500: {
@@ -276,9 +278,7 @@ $(document).ready(function() {
 		$.post('/addtocart', {id: code}, function(result) {
 			switch (result.status) {
 				case 200: {
-					alert('Item added to cart successfully!');
-					window.location.href = '/products';
-					break;
+					window.location.href = '/products'; break;
 				}
 				case 401:
 				case 500: {
@@ -294,9 +294,7 @@ $(document).ready(function() {
 		$.post('/wishlist', {id: code}, function(result) {
 			switch (result.status) {
 				case 200: {
-					alert('Item added to wishlist successfully!');
-					window.location.href = '/products';
-					break;
+					window.location.href = '/products'; break;
 				}
 				case 401:
 				case 500: {
@@ -347,7 +345,7 @@ $(document).ready(function() {
 	$("button.delWish").click(function() {
 		let code = $(this).siblings("div").text(), codeDel = code.trim().split(/(\s)/)[4];
 		let row = $(this).closest('.row');
-		console.log(codeDel);
+		
 		$.post('/delWishItem', {code: codeDel}, function(result) {
 			if (result) {
 				row.remove();
