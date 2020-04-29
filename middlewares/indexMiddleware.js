@@ -43,10 +43,9 @@ const indexMiddleware = {
 			var prod = await prodModel.findOne({code: req.body.id});
 			var userCart = await userModel.findOne({email: req.session.logUser.email}).populate('cart.item');
 			var doesExist = userCart.cart.filter(item => item.item.code === prod.code);
-			console.log(prod);
-			if (doesExist.length === 0) return next();
+			if (doesExist.length > 0) res.send({status: 401, msg: 'Item already exists in your cart.'});
 			else if (prod.qty === 0) res.send({status: 401, msg: 'This item is out-of-stock.'});
-			else res.send({status: 401, msg: 'Item already exists in your cart.'});
+			else return next();
 		} catch (e) {
 			console.log(e);
 			res.send({status: 500, msg: 'Server error. Could not validate.'});
@@ -58,8 +57,8 @@ const indexMiddleware = {
 			var prod = await prodModel.findOne({code: req.body.id});
 			var userWish = await userModel.findOne({email: req.session.logUser.email}).populate('wishlist');
 			var doesExist = userWish.wishlist.filter(item => item.code === prod.code);
-			if (doesExist.length === 0) return next();
-			else res.send({status: 401, msg: 'Item already exists in your wishlist.'});
+			if (doesExist.length > 0) res.send({status: 401, msg: 'Item already exists in your wishlist.'});
+			else return next();
 		} catch (e) {
 			res.send({status: 500, msg: 'Server error. Could not validate.'});
 		}
