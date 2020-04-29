@@ -27,6 +27,7 @@ The following users may be used to log in:
 | neallithic64 | helloTesting |
 | hoolyuuh | parkJimin143 |
 | shannonpooper | hohoho123 |
+| joejoejoe | stoopeed |
 
 ## Current Dependencies
 - [express](https://www.npmjs.com/package/express)
