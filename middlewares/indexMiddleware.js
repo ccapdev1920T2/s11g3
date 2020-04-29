@@ -30,9 +30,10 @@ const indexMiddleware = {
 				res.send({status: 401, msg: 'You are already verified!'});
 			else if (confcode !== user.otp)
 				res.send({status: 401, msg: 'Wrong OTP inputted.'});
-			else return next();
+			else next();
 		}
 		catch (e) {
+			console.log(e);
 			res.send({status: 500, msg: e});
 		}
 	}
