@@ -101,11 +101,20 @@ const indexFunctions = {
 	
 	getHome: function(req, res) {
 		if (req.session.logUser) { // check if there's a logged in user
-			res.render('home', {
-				title: 'TheShop',
-				signedIn: true,
-				message: 'Welcome, ' + req.session.logUser.fName + " " + req.session.logUser.lName + ', to TheShop!'
-			});
+			if (req.session.logUser.isConfirmed) { // confirmed?
+				res.render('home', {
+					title: 'TheShop',
+					signedIn: true,
+					message: 'Welcome, ' + req.session.logUser.fName + ' ' + req.session.logUser.lName + ', to TheShop!'
+				});
+			} else {
+				res.render('home', {
+					title: 'TheShop',
+					signedIn: true,
+					message: 'Welcome, ' + req.session.logUser.fName + ' ' + req.session.logUser.lName
+							+ ', to TheShop! Please confirm your account to access the features.'
+				});
+			}
 		} else { // if no user logged in
 			res.render('home', {
 				title: 'TheShop',

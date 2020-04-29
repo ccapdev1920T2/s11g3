@@ -9,7 +9,7 @@
 			<div class="desc" style="width: 55%;padding-left: 5%;">
 				<p style="margin-bottom: 0px;width: auto;font-size: 20px;">Product Code: <strong class="code">{{item.code}}</strong></p>
 				<p style="margin-bottom: 0px;width: auto;">Product Name: <strong>{{item.name}}</strong></p>
-				<p style="margin-bottom: 0px;width: auto;">Category: <strong>{{#each item.category}}{{this}}{{/each}}</strong></p>
+				<p style="margin-bottom: 0px;width: auto;">Category: <strong>{{categToString item.category}}</strong></p>
 				<p style="margin-bottom: 0px;width: auto;">Price: <strong class="price">Php {{getPrice item.price}}</strong></p>
 				<p style="margin-bottom: 0px;width: auto;">Quantity: <strong class="qty">{{item.qty}}</strong></p>
 				<a href="{{{getPLink item.code 1}}}">Look</a>
