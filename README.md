@@ -24,9 +24,9 @@ Link: https://theshoplive.herokuapp.com/
 The following users may be used to log in:
 | Username | Password |
 |:-----------:|:--------:|
-|  |  |
-|  |  |
-|  |  |
+| neallithic64 | helloTesting |
+| hoolyuuh | parkJimin143 |
+| shannonpooper | hohoho123 |
 
 ## Current Dependencies
 - [express](https://www.npmjs.com/package/express)
