@@ -216,7 +216,6 @@ const indexFunctions = {
 	getProducts: async function(req, res) {
 		try {
 			var matches = await prodModel.find({});
-			console.log(matches[0]);
 			res.render('products', {
 				title: 'TheShop - All Products',
 				prods: JSON.parse(JSON.stringify(matches))
@@ -451,14 +450,14 @@ const indexFunctions = {
 	 */
 	postAddCart: async function(req, res) {
 		if (req.session.logUser) {
-			if (res.session.logUser.isConfirmed) {
+			if (req.session.logUser.isConfirmed) {
 				try {
 					var prod = await prodModel.findOne({code: req.body.id});
 					userModel.findOneAndUpdate({email: req.session.logUser.email},
 							{$push: {cart: {item: prod, prodQty: prod.qty}}},
 							{useFindAndModify: false}, function(err) {
-						if (err) res.status(500).end('500, db err');
-						else res.redirect("/products");
+						if (err) res.send({status: 500, msg: 'Cannot connect to db.'});
+						else res.send({status: 200, msg: 'Item added successfully.'});
 					});
 				} catch (e) {
 					console.log(e);
@@ -475,14 +474,14 @@ const indexFunctions = {
 	
 	postAddWish: async function(req, res) {
 		if (req.session.logUser) {
-			if (res.session.logUser.isConfirmed) {
+			if (req.session.logUser.isConfirmed) {
 				try {
 					var prod = await prodModel.findOne({code: req.body.id});
 					userModel.findOneAndUpdate({email: req.session.logUser.email},
 							{$push: {wishlist: prod}},
 							{useFindAndModify: false}, function(err) {
-						if (err) res.status(500).end('500, db err');
-						res.redirect("/products");
+						if (err) res.send({status: 500, msg: 'Cannot connect to db.'});
+						else res.send({status: 200, msg: 'Item added successfully.'});
 					});
 				} catch (e) {
 					console.log(e);
