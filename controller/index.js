@@ -558,7 +558,7 @@ const indexFunctions = {
 	 * 4. make new Order object
 	 */
 	postCheckOut: async function(req, res) {
-		let pCodes = Object.keys(req.body); // array of product codes to buy
+		let pCodes = Object.keys(req.body)[0].split(','); // array of product codes to buy
 		var buyCart = [];
 		var emailO = {email: req.session.logUser.email};
 		
