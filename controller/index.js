@@ -270,25 +270,33 @@ const indexFunctions = {
 	},
 	
 	getProdPage: function(req, res) {
-		if (req.session.logUser.isConfirmed) {
-			// chop off again the /product/
-			prodModel.findOne({code: req.url.substring(10)}, function(err, match) {
-				if (err) return res.status(500).end('500 Internal Server error, this shouldnt happen');
-				// pp === product details
-				let pp = JSON.parse(JSON.stringify(match));
+		if (req.session.logUser) {
+			if (req.session.logUser.isConfirmed) {
+				// chop off again the /product/
+				prodModel.findOne({code: req.url.substring(10)}, function(err, match) {
+					if (err) return res.status(500).end('500 Internal Server error, this shouldnt happen');
+					// pp === product details
+					let pp = JSON.parse(JSON.stringify(match));
 
-				res.render('prodpage', {
-					title: 'TheShop - ' + pp.code,
-					p: pp
+					res.render('prodpage', {
+						title: 'TheShop - ' + pp.code,
+						p: pp
+					});
 				});
-			});
+			} else {
+				res.render('error', {
+					title: 'The Shop - 403 Error',
+					status: '403',
+					errormsg: 'Please confirm your email at the My Account page.'
+				});
+			}
 		} else {
-			res.render('error', {
-				title: 'The Shop - 403 Error',
-				status: '403',
-				errormsg: 'Please confirm your email at the My Account page.'
-			});
-		}
+				res.render('error', {
+					title: 'The Shop - 403 Error',
+					status: '403',
+					errormsg: 'Please log in.'
+				});
+			}
 	},
 	
 	getOrders: async function(req, res) {
