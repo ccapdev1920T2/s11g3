@@ -186,7 +186,13 @@ const indexFunctions = {
 				addr: req.session.logUser.addr,
 				contact: req.session.logUser.contact
 			});
-		} else res.redirect('/');
+		} else {
+			res.render('error', {
+				title: 'The Shop - 403 Error',
+				status: '403',
+				errormsg: 'Please log in.'
+			});
+		}
 	},
 	
 	getRegister: function(req, res) {
@@ -200,7 +206,13 @@ const indexFunctions = {
 			res.render('changepass', {
 				title: 'TheShop - Change Password'
 			});
-		} else res.redirect('/');
+		} else {
+			res.render('error', {
+				title: 'The Shop - 403 Error',
+				status: '403',
+				errormsg: 'Please log in.'
+			});
+		}
 	},
 	
 	getConfirm: function(req, res) {
@@ -209,7 +221,13 @@ const indexFunctions = {
 				title: 'TheShop - Confirm Email',
 				isConfirmed: !req.session.logUser.isConfirmed
 			});
-		} else res.redirect('/');
+		} else {
+			res.render('error', {
+				title: 'The Shop - 403 Error',
+				status: '403',
+				errormsg: 'Please log in.'
+			});
+		}
 	},
 	
 	getProducts: async function(req, res) {
@@ -291,12 +309,12 @@ const indexFunctions = {
 				});
 			}
 		} else {
-				res.render('error', {
-					title: 'The Shop - 403 Error',
-					status: '403',
-					errormsg: 'Please log in.'
-				});
-			}
+			res.render('error', {
+				title: 'The Shop - 403 Error',
+				status: '403',
+				errormsg: 'Please log in.'
+			});
+		}
 	},
 	
 	getOrders: async function(req, res) {
@@ -334,7 +352,13 @@ const indexFunctions = {
 			} catch (e) {
 				console.log(e);
 			}
-		} else res.redirect("/");
+		} else {
+			res.render('error', {
+				title: 'The Shop - 403 Error',
+				status: '403',
+				errormsg: 'Please log in.'
+			});
+		}
 	},
 	
 	getWishlist: async function(req, res) {
@@ -348,7 +372,13 @@ const indexFunctions = {
 			} catch (e) {
 				console.log(e);
 			}
-		} else res.redirect("/");
+		} else {
+			res.render('error', {
+				title: 'The Shop - 403 Error',
+				status: '403',
+				errormsg: 'Please log in.'
+			});
+		}
 	},
 	
 	getCart: async function(req, res) {
@@ -362,7 +392,13 @@ const indexFunctions = {
 			} catch (e) {
 				console.log(e);
 			}
-		} else res.redirect("/");
+		} else {
+			res.render('error', {
+				title: 'The Shop - 403 Error',
+				status: '403',
+				errormsg: 'Please log in.'
+			});
+		}
 	},
 	
 	/*
@@ -476,7 +512,13 @@ const indexFunctions = {
 					errormsg: 'Please confirm your email at the My Account page.'
 				});
 			}
-		} else res.redirect("/");
+		} else {
+			res.render('error', {
+				title: 'The Shop - 403 Error',
+				status: '403',
+				errormsg: 'Please log in.'
+			});
+		}
 	},
 	
 	postAddWish: async function(req, res) {
@@ -500,7 +542,13 @@ const indexFunctions = {
 					errormsg: 'Please confirm your email at the My Account page.'
 				});
 			}
-		} else res.redirect("/");
+		} else {
+			res.render('error', {
+				title: 'The Shop - 403 Error',
+				status: '403',
+				errormsg: 'Please log in.'
+			});
+		}
 	},
 	
 	/* CHECK OUT SEQUENCE
@@ -544,6 +592,12 @@ const indexFunctions = {
 			} catch (e) {
 				console.log(e);
 			}
+		} else {
+			res.render('error', {
+				title: 'The Shop - 403 Error',
+				status: '403',
+				errormsg: 'Please log in.'
+			});
 		}
 	},
 	
