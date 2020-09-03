@@ -17,13 +17,13 @@
     "express": "^4.17.1",
     "express-handlebars": "^3.1.0",
     "express-session": "^1.17.1",
-    "express-validator": "^6.4.0",
-    "mongoose": "^5.9.10",
+    "express-validator": "^6.5.0",
+    "mongoose": "^5.9.15",
     "nodemailer": "^6.4.6",
     "rand-token": "^1.0.1",
     "validator": "^13.0.0"
   },
   "devDependencies": {
-    "nodemon": "^2.0.3"
+    "nodemon": "^2.0.4"
   }
 }
